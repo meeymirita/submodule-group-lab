@@ -143,13 +143,14 @@
 
   .card {
     position: relative; height: 100%; display: flex; flex-direction: column;
-    border-radius: 18px; border: 1px solid var(--border);
+    border-radius: 18px; border: 1px solid var(--accent-soft, var(--border));
+    border-top: 3px solid var(--accent);
     background: var(--card-bg); overflow: hidden; box-shadow: 0 1px 3px rgba(43,34,48,.04);
     transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease, border-color .35s ease;
   }
-  .card:hover { transform: translateY(-6px); border-color: var(--accent); box-shadow: 0 24px 55px -22px var(--accent-shadow); }
+  .card:hover { transform: translateY(-6px); box-shadow: 0 24px 55px -22px var(--accent-shadow); }
 
-  .card-media { position: relative; aspect-ratio: 4/3; overflow: hidden; background: #fdf1f7; }
+  .card-media { position: relative; aspect-ratio: 4/3; overflow: hidden; background: var(--accent-soft, #f5dfe9); }
   .card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s ease; }
   .card:hover .card-media img { transform: scale(1.1); }
   .card-media::after {
@@ -174,7 +175,7 @@
   .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
   .chip {
     font-size: 11px; font-family: "SFMono-Regular", Consolas, monospace; padding: 4px 9px;
-    border-radius: 6px; background: #fdf1f7; border: 1px solid var(--border); color: #a25a7f;
+    border-radius: 6px; background: var(--accent-soft, #fdf1f7); border: 1px solid var(--accent-soft, var(--border)); color: var(--accent);
   }
 
   .card-actions { display: flex; gap: 8px; margin-top: auto; padding-top: 20px; }
@@ -329,8 +330,9 @@
       difficulty: 'Высокая',
       open: 'rabbitmq/docs/RabbitMQ_Lab_Plan_v1_pro_max.html',
       repo: 'https://github.com/meeymirita/rabbitmq-lab',
-      accent: '#f43f5e',
-      accentShadow: 'rgba(244,63,94,.25)',
+      accent: '#FF6600',
+      accentSoft: '#FF660022',
+      accentShadow: 'rgba(255,102,0,.28)',
     },
     {
       key: 'redis',
@@ -344,8 +346,9 @@
       difficulty: 'Средняя',
       open: 'redis/Redis_Lab_Plan.html',
       repo: 'https://github.com/meeymirita/redis-lab',
-      accent: '#e11d48',
-      accentShadow: 'rgba(225,29,72,.25)',
+      accent: '#DC382D',
+      accentSoft: '#DC382D22',
+      accentShadow: 'rgba(220,56,45,.28)',
     },
     {
       key: 'traefik',
@@ -359,8 +362,9 @@
       difficulty: 'Низкая–средняя',
       open: 'traefik/Docker_and_Traefik_Lab_Plan.html',
       repo: 'https://github.com/meeymirita/traefik-lab',
-      accent: '#ec4899',
-      accentShadow: 'rgba(236,72,153,.25)',
+      accent: '#14B8A6',
+      accentSoft: '#14B8A622',
+      accentShadow: 'rgba(20,184,166,.28)',
     },
     {
       key: 'php-coffee',
@@ -374,8 +378,9 @@
       difficulty: 'Базовая',
       open: 'php-coffee/docs/OOP_Lab_CoffeeShop.html',
       repo: 'https://github.com/meeymirita/oop-lab',
-      accent: '#d946ef',
-      accentShadow: 'rgba(217,70,239,.25)',
+      accent: '#777BB4',
+      accentSoft: '#777BB422',
+      accentShadow: 'rgba(119,123,180,.28)',
     },
     {
       key: 'vue',
@@ -389,8 +394,9 @@
       difficulty: 'Высокая',
       open: 'vue/Vue_Lab_Helpdesk.html',
       repo: 'https://github.com/meeymirita/vue-lab',
-      accent: '#c026d3',
-      accentShadow: 'rgba(192,38,211,.25)',
+      accent: '#42B883',
+      accentSoft: '#42B88322',
+      accentShadow: 'rgba(66,184,131,.28)',
     },
     {
       key: 'typescript',
@@ -404,8 +410,9 @@
       difficulty: 'Высокая',
       open: 'typescript/TypeScript_Lab_Warehouse.html',
       repo: 'https://github.com/meeymirita/typescript-lab',
-      accent: '#a855f7',
-      accentShadow: 'rgba(168,85,247,.25)',
+      accent: '#3178C6',
+      accentSoft: '#3178C622',
+      accentShadow: 'rgba(49,120,198,.28)',
     },
     {
       key: 'laravel',
@@ -419,8 +426,9 @@
       difficulty: 'Высокая',
       open: 'laravel/Laravel_Lab_TaskFlow.html',
       repo: 'https://github.com/meeymirita/laravel-lab',
-      accent: '#db2777',
-      accentShadow: 'rgba(219,39,119,.25)',
+      accent: '#FF2D20',
+      accentSoft: '#FF2D2022',
+      accentShadow: 'rgba(255,45,32,.28)',
     },
     {
       key: 'docker',
@@ -434,8 +442,9 @@
       difficulty: '—',
       open: 'docker/Docker_Bash_Lab.html',
       repo: 'https://github.com/meeymirita/docker-lab',
-      accent: '#f472b6',
-      accentShadow: 'rgba(244,114,182,.25)',
+      accent: '#2496ED',
+      accentSoft: '#2496ED22',
+      accentShadow: 'rgba(36,150,237,.28)',
     },
   ];
 
@@ -458,7 +467,7 @@
     }).join('');
 
     return (
-      '<article class="card reveal" style="--accent:' + p.accent + ';--accent-shadow:' + p.accentShadow + ';transition-delay:' + (0.05 * i) + 's">' +
+      '<article class="card reveal" style="--accent:' + p.accent + ';--accent-soft:' + p.accentSoft + ';--accent-shadow:' + p.accentShadow + ';transition-delay:' + (0.05 * i) + 's">' +
         '<div class="card-media">' +
           '<img src="' + p.image + '" alt="' + escapeHtml(p.title) + '" loading="lazy">' +
           '<span class="badge badge-status ' + statusClass + '">' + p.statusLabel + '</span>' +
