@@ -19,3 +19,6 @@
 [submodule "laravel"]
 	path = laravel
 	url = https://github.com/meeymirita/laravel-lab.git
+[submodule "docker"]
+	path = docker
+	url = https://github.com/meeymirita/docker-lab.git
