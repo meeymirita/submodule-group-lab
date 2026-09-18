@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Group Lab — лабораторные работы</title>
+<meta name="description" content="Сборный репозиторий лабораторных работ: RabbitMQ, Redis, Traefik, OOP, Vue, TypeScript, Laravel, Docker.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Manrope', 'sans-serif'],
+          mono: ['JetBrains Mono', 'monospace'],
+        },
+        animation: {
+          blob: 'blob 18s infinite ease-in-out',
+          'fade-up': 'fadeUp .7s ease forwards',
+          float: 'float 6s ease-in-out infinite',
+          shimmer: 'shimmer 2.5s linear infinite',
+        },
+        keyframes: {
+          blob: {
+            '0%, 100%': { transform: 'translate(0px, 0px) scale(1)' },
+            '33%': { transform: 'translate(30px, -40px) scale(1.1)' },
+            '66%': { transform: 'translate(-20px, 20px) scale(0.95)' },
+          },
+          fadeUp: {
+            '0%': { opacity: 0, transform: 'translateY(28px)' },
+            '100%': { opacity: 1, transform: 'translateY(0)' },
+          },
+          float: {
+            '0%, 100%': { transform: 'translateY(0px)' },
+            '50%': { transform: 'translateY(-12px)' },
+          },
+          shimmer: {
+            '0%': { backgroundPosition: '-500px 0' },
+            '100%': { backgroundPosition: '500px 0' },
+          },
+        },
+      },
+    },
+  }
+</script>
+<style>
+  body { background-color: #05070d; }
+  .reveal { opacity: 0; }
+  .reveal.in-view { animation: fadeUp .7s ease forwards; }
+  .card-glow::before {
+    content: "";
+    position: absolute; inset: -1px;
+    border-radius: 1rem;
+    padding: 1px;
+    background: linear-gradient(135deg, var(--accent) 0%, transparent 60%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity .4s ease;
+    pointer-events: none;
+  }
+  .card-glow:hover::before { opacity: 1; }
+  .card-glow:hover { transform: translateY(-6px); box-shadow: 0 24px 60px -20px var(--accent-shadow); }
+  .card-glow { transition: transform .4s cubic-bezier(.2,.8,.2,1), box-shadow .4s ease, border-color .4s ease; }
+  .chip {
+    transition: background-color .3s ease, color .3s ease, border-color .3s ease;
+  }
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #05070d; }
+  ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 999px; }
+  .filter-btn.active {
+    background: white;
+    color: #05070d;
+  }
+</style>
+</head>
+<body class="text-slate-200 font-sans antialiased selection:bg-fuchsia-500/30 selection:text-white">
+
+  <!-- decorative background blobs -->
+  <div class="fixed inset-0 overflow-hidden -z-10">
+    <div class="absolute top-[-10%] left-[-10%] w-[36rem] h-[36rem] bg-fuchsia-600/20 rounded-full blur-3xl animate-blob"></div>
+    <div class="absolute top-[20%] right-[-15%] w-[40rem] h-[40rem] bg-indigo-600/20 rounded-full blur-3xl animate-blob" style="animation-delay: -6s"></div>
+    <div class="absolute bottom-[-15%] left-[20%] w-[32rem] h-[32rem] bg-cyan-500/10 rounded-full blur-3xl animate-blob" style="animation-delay: -12s"></div>
+  </div>
+
+  <!-- NAV -->
+  <header class="sticky top-0 z-40 backdrop-blur-xl bg-[#05070d]/70 border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <a href="#top" class="flex items-center gap-2 font-extrabold tracking-tight text-lg">
+        <span class="inline-flex w-8 h-8 rounded-lg bg-gradient-to-br from-fuchsia-500 to-indigo-500 items-center justify-center text-sm">🧪</span>
+        Group Lab
+      </a>
+      <nav class="hidden sm:flex items-center gap-6 text-sm text-slate-400">
+        <a href="#works" class="hover:text-white transition-colors">Работы</a>
+        <a href="#about" class="hover:text-white transition-colors">Об авторе</a>
+        <a href="https://github.com/meeymirita/submodule-group-lab" target="_blank" rel="noopener" class="hover:text-white transition-colors">Репозиторий</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="top" class="relative max-w-6xl mx-auto px-6 pt-16 pb-10">
+    <div class="reveal grid md:grid-cols-[1.1fr,0.9fr] gap-10 items-center" style="animation-delay:.05s">
+      <div>
+        <span class="inline-flex items-center gap-2 text-xs font-medium tracking-wide uppercase text-fuchsia-300 bg-fuchsia-500/10 border border-fuchsia-500/20 px-3 py-1 rounded-full">
+          Личный лабораторный репозиторий
+        </span>
+        <h1 class="mt-5 text-4xl sm:text-5xl font-extrabold leading-[1.08] tracking-tight">
+          RabbitMQ, Redis, Traefik, PHP OOP, Vue, TypeScript, Laravel, Docker —
+          <span class="bg-gradient-to-r from-fuchsia-400 via-violet-400 to-cyan-300 bg-clip-text text-transparent">всё в одном месте</span>
+        </h1>
+        <p class="mt-5 text-slate-400 text-base sm:text-lg leading-relaxed max-w-xl">
+          Каждая работа — отдельный git submodule со своей историей коммитов, методичкой и картинкой.
+          Ниже — витрина всех лаб: что внутри, какой стек и куда открыть, чтобы посмотреть.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#works" class="px-5 py-3 rounded-xl bg-white text-[#05070d] font-semibold text-sm hover:bg-slate-200 transition-colors">
+            Смотреть работы ↓
+          </a>
+          <a href="https://github.com/meeymirita/submodule-group-lab" target="_blank" rel="noopener"
+             class="px-5 py-3 rounded-xl border border-white/15 text-sm font-semibold hover:bg-white/5 transition-colors flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.9 5.33.9 11.6c0 4.96 3.22 9.17 7.68 10.66.56.1.77-.24.77-.54 0-.27-.01-1.15-.02-2.09-3.12.68-3.78-1.34-3.78-1.34-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.94.1-.73.39-1.22.71-1.5-2.49-.28-5.11-1.25-5.11-5.55 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.42.11-2.96 0 0 .95-.3 3.12 1.15.9-.25 1.87-.38 2.83-.38.96 0 1.93.13 2.83.38 2.17-1.45 3.12-1.15 3.12-1.15.61 1.54.23 2.68.11 2.96.72.79 1.16 1.79 1.16 3.02 0 4.31-2.63 5.26-5.13 5.54.4.35.76 1.03.76 2.08 0 1.5-.01 2.71-.01 3.08 0 .3.2.65.78.54A11.1 11.1 0 0 0 23.1 11.6C23.1 5.33 18.27.5 12 .5Z"/></svg>
+            GitHub
+          </a>
+        </div>
+
+        <div class="mt-10 grid grid-cols-3 gap-4 max-w-md">
+          <div>
+            <div class="text-2xl font-extrabold text-white">8</div>
+            <div class="text-xs text-slate-500 mt-1">лабораторных</div>
+          </div>
+          <div>
+            <div class="text-2xl font-extrabold text-emerald-400">1</div>
+            <div class="text-xs text-slate-500 mt-1">пройдено полностью</div>
+          </div>
+          <div>
+            <div class="text-2xl font-extrabold text-white">7</div>
+            <div class="text-xs text-slate-500 mt-1">стеков технологий</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative reveal" style="animation-delay:.15s">
+        <div class="absolute -inset-6 bg-gradient-to-br from-fuchsia-500/20 to-indigo-500/10 blur-3xl rounded-full"></div>
+        <img src="images/banner.png" alt="Group Lab"
+             class="relative rounded-2xl border border-white/10 shadow-2xl shadow-black/50 w-full object-cover animate-float">
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTERS -->
+  <section id="works" class="max-w-6xl mx-auto px-6 pt-12">
+    <div class="reveal flex flex-wrap items-end justify-between gap-4 mb-8">
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Работы</h2>
+        <p class="text-slate-500 text-sm mt-1">Нажми на карточку, чтобы открыть методичку или репозиторий</p>
+      </div>
+      <div class="flex flex-wrap gap-2 text-sm font-medium" id="filters">
+        <button data-filter="all" class="filter-btn active px-4 py-2 rounded-full border border-white/15 transition-colors">Все</button>
+        <button data-filter="done" class="filter-btn px-4 py-2 rounded-full border border-white/15 text-slate-300 hover:text-white transition-colors">✅ Пройдено</button>
+        <button data-filter="progress" class="filter-btn px-4 py-2 rounded-full border border-white/15 text-slate-300 hover:text-white transition-colors">⚪ Не начато</button>
+      </div>
+    </div>
+
+    <div id="grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-24">
+      <!-- cards injected below -->
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="max-w-6xl mx-auto px-6 pb-24">
+    <div class="reveal rounded-3xl border border-white/10 bg-white/[0.03] p-8 sm:p-10 flex flex-col sm:flex-row items-center gap-8">
+      <img src="images/me.png" alt="Автор" class="w-32 h-32 rounded-2xl object-cover border border-white/10">
+      <div>
+        <h3 class="text-xl font-bold">Об авторе</h3>
+        <p class="text-slate-400 mt-2 leading-relaxed max-w-2xl">
+          Все лабы веду и прохожу самостоятельно, попутно ведя заметки и методички по каждой теме.
+          Каждая работа — отдельный репозиторий, подключённый сюда как git submodule.
+        </p>
+        <a href="https://github.com/meeymirita" target="_blank" rel="noopener"
+           class="inline-flex items-center gap-2 mt-4 text-sm font-semibold text-fuchsia-300 hover:text-fuchsia-200">
+          github.com/meeymirita →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="border-t border-white/5 py-8 text-center text-slate-600 text-sm">
+    Group Lab · собрано с ❤ и Tailwind
+  </footer>
+
+<script>
+  const projects = [
+    {
+      key: 'rabbitmq',
+      title: 'RabbitMQ Lab',
+      subtitle: 'Transactional Outbox, воркеры, DLQ',
+      image: 'images/rabbitmq.png',
+      desc: 'Асинхронная обработка заказов через очереди: Transactional Outbox, идемпотентный consumer, prefetch, crash-тесты, retry с TTL→DLX, priority queues, fanout.',
+      stack: ['Laravel 13', 'PostgreSQL 16', 'RabbitMQ', 'Mailpit'],
+      status: 'done',
+      statusLabel: '✅ выполнена',
+      difficulty: 'Высокая',
+      open: 'rabbitmq/docs/RabbitMQ_Lab_Plan_v1_pro_max.html',
+      repo: 'https://github.com/meeymirita/rabbitmq-lab',
+      accent: '#f97316',
+      accentShadow: 'rgba(249,115,22,.25)',
+    },
+    {
+      key: 'redis',
+      title: 'Redis Lab',
+      subtitle: 'Кэш, локи, rate limit, Streams',
+      image: 'images/redis.png',
+      desc: 'Redis как кэш, хранилище сессий, примитив синхронизации и брокер событий: cache-aside, distributed lock, rate limiter, Streams, XAUTOCLAIM, Pub/Sub-дашборд.',
+      stack: ['Laravel 13', 'PostgreSQL 16', 'Redis 7'],
+      status: 'progress',
+      statusLabel: '⚪ не начата',
+      difficulty: 'Средняя',
+      open: 'redis/Redis_Lab_Plan.html',
+      repo: 'https://github.com/meeymirita/redis-lab',
+      accent: '#dc2626',
+      accentShadow: 'rgba(220,38,38,.25)',
+    },
+    {
+      key: 'traefik',
+      title: 'Traefik Lab',
+      subtitle: 'Reverse proxy, service discovery, TLS',
+      image: 'traefik/docker.png',
+      desc: 'Reverse proxy и service discovery для стека из нескольких сервисов без ручной правки конфигов: EntryPoint → Router → Middleware → Service, TLS, canary-деплой.',
+      stack: ['Traefik 3', 'Docker Compose', 'Node.js', 'PostgreSQL'],
+      status: 'progress',
+      statusLabel: '⚪ не начата',
+      difficulty: 'Низкая–средняя',
+      open: 'traefik/Docker_and_Traefik_Lab_Plan.html',
+      repo: 'https://github.com/meeymirita/traefik-lab',
+      accent: '#22d3ee',
+      accentShadow: 'rgba(34,211,238,.25)',
+    },
+    {
+      key: 'php-coffee',
+      title: 'OOP Lab',
+      subtitle: 'Coffee Shop API на PHP 8.4',
+      image: 'images/php.png',
+      desc: 'ООП на PHP 8.4 с нуля на маленьком API кофейни: 4 принципа ООП, Factory, Decorator, Strategy, Repository, SOLID, наследование vs композиция.',
+      stack: ['PHP 8.4', 'Laravel 13', 'PostgreSQL', 'RabbitMQ'],
+      status: 'progress',
+      statusLabel: '⚪ не начата',
+      difficulty: 'Базовая',
+      open: 'php-coffee/docs/OOP_Lab_CoffeeShop.html',
+      repo: 'https://github.com/meeymirita/oop-lab',
+      accent: '#a78bfa',
+      accentShadow: 'rgba(167,139,250,.25)',
+    },
+    {
+      key: 'vue',
+      title: 'Vue Lab',
+      subtitle: 'Helpdesk на Vue 3',
+      image: 'images/vue.png',
+      desc: 'Система тикетов на Vue 3 с нуля: реактивность, компоненты, слоты, Pinia, Vue Router с guard-ами, WebSocket, канбан-доска, тесты на Vitest.',
+      stack: ['Vue 3.5', 'Vite', 'Pinia', 'Vue Router', 'NestJS'],
+      status: 'progress',
+      statusLabel: '⚪ не начата',
+      difficulty: 'Высокая',
+      open: 'vue/Vue_Lab_Helpdesk.html',
+      repo: 'https://github.com/meeymirita/vue-lab',
+      accent: '#34d399',
+      accentShadow: 'rgba(52,211,153,.25)',
+    },
+    {
+      key: 'typescript',
+      title: 'TypeScript Lab',
+      subtitle: 'Warehouse — складской учёт',
+      image: 'images/typescript.png',
+      desc: 'Типизация домена складского учёта с нуля: generics, размеченные объединения, mapped/conditional types, CLI на Zod, сквозная типизация API + Vue.',
+      stack: ['TypeScript 5.6', 'Node 22', 'Zod', 'Vitest'],
+      status: 'progress',
+      statusLabel: '⚪ не начата',
+      difficulty: 'Высокая',
+      open: 'typescript/TypeScript_Lab_Warehouse.html',
+      repo: 'https://github.com/meeymirita/typescript-lab',
+      accent: '#60a5fa',
+      accentShadow: 'rgba(96,165,250,.25)',
+    },
+    {
+      key: 'laravel',
+      title: 'Laravel Lab',
+      subtitle: 'TaskFlow — таск-трекер',
+      image: 'images/laravel.png',
+      desc: 'Laravel 13 «изнутри»: ~30 компонентов illuminate/*, Eloquent-связи, Service Container, Auth/Policy, Observer, очереди, Mailable, кэш, Broadcasting, тесты.',
+      stack: ['Laravel 13', 'PostgreSQL 17', 'Redis', 'RabbitMQ', 'Reverb'],
+      status: 'progress',
+      statusLabel: '⚪ не начата',
+      difficulty: 'Высокая',
+      open: 'laravel/Laravel_Lab_TaskFlow.html',
+      repo: 'https://github.com/meeymirita/laravel-lab',
+      accent: '#fb7185',
+      accentShadow: 'rgba(251,113,133,.25)',
+    },
+    {
+      key: 'docker',
+      title: 'Docker Lab',
+      subtitle: 'Контейнеры и docker-compose',
+      image: 'images/docker.png',
+      desc: 'Лаба по Docker: образы, контейнеры, docker-compose, сети и тома. Материалы и методичка ещё готовятся.',
+      stack: ['Docker', 'Docker Compose'],
+      status: 'progress',
+      statusLabel: '⚪ материалы готовятся',
+      difficulty: '—',
+      open: null,
+      repo: 'https://github.com/meeymirita/docker-lab',
+      accent: '#38bdf8',
+      accentShadow: 'rgba(56,189,248,.25)',
+    },
+  ];
+
+  const grid = document.getElementById('grid');
+
+  function card(p, i) {
+    const statusColor = p.status === 'done'
+      ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
+      : 'bg-slate-500/15 text-slate-300 border-slate-500/30';
+
+    const openBtn = p.open
+      ? `<a href="${p.open}" target="_blank" rel="noopener"
+            class="flex-1 text-center px-4 py-2.5 rounded-xl text-sm font-semibold text-[#05070d] transition-transform hover:scale-[1.03]"
+            style="background:${p.accent}">Открыть методичку</a>`
+      : `<span class="flex-1 text-center px-4 py-2.5 rounded-xl text-sm font-semibold bg-white/5 text-slate-500 border border-white/10 cursor-not-allowed">Методичка скоро</span>`;
+
+    return `
+    <article class="reveal card-glow relative rounded-2xl border border-white/10 bg-white/[0.03] overflow-hidden group"
+         style="--accent:${p.accent}; --accent-shadow:${p.accentShadow}; animation-delay:${0.05 * i}s">
+      <div class="relative aspect-[4/3] overflow-hidden">
+        <img src="${p.image}" alt="${p.title}"
+             class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#05070d] via-[#05070d]/10 to-transparent"></div>
+        <span class="absolute top-3 right-3 text-xs font-semibold px-2.5 py-1 rounded-full border backdrop-blur ${statusColor}">
+          ${p.statusLabel}
+        </span>
+        <span class="absolute bottom-3 left-3 text-xs font-semibold px-2.5 py-1 rounded-full bg-black/50 backdrop-blur border border-white/10">
+          Сложность: ${p.difficulty}
+        </span>
+      </div>
+
+      <div class="p-5">
+        <h3 class="font-extrabold text-lg leading-snug">${p.title}</h3>
+        <p class="text-sm font-medium mt-0.5" style="color:${p.accent}">${p.subtitle}</p>
+        <p class="text-sm text-slate-400 mt-3 leading-relaxed">${p.desc}</p>
+
+        <div class="flex flex-wrap gap-1.5 mt-4">
+          ${p.stack.map(s => `<span class="chip text-[11px] font-mono px-2 py-1 rounded-md bg-white/5 border border-white/10 text-slate-300">${s}</span>`).join('')}
+        </div>
+
+        <div class="flex gap-2 mt-5">
+          ${openBtn}
+          <a href="${p.repo}" target="_blank" rel="noopener"
+             class="px-4 py-2.5 rounded-xl text-sm font-semibold border border-white/15 hover:bg-white/5 transition-colors flex items-center gap-1.5">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.9 5.33.9 11.6c0 4.96 3.22 9.17 7.68 10.66.56.1.77-.24.77-.54 0-.27-.01-1.15-.02-2.09-3.12.68-3.78-1.34-3.78-1.34-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.94.1-.73.39-1.22.71-1.5-2.49-.28-5.11-1.25-5.11-5.55 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.42.11-2.96 0 0 .95-.3 3.12 1.15.9-.25 1.87-.38 2.83-.38.96 0 1.93.13 2.83.38 2.17-1.45 3.12-1.15 3.12-1.15.61 1.54.23 2.68.11 2.96.72.79 1.16 1.79 1.16 3.02 0 4.31-2.63 5.26-5.13 5.54.4.35.76 1.03.76 2.08 0 1.5-.01 2.71-.01 3.08 0 .3.2.65.78.54A11.1 11.1 0 0 0 23.1 11.6C23.1 5.33 18.27.5 12 .5Z"/></svg>
+          </a>
+        </div>
+      </div>
+    </article>`;
+  }
+
+  function render(filter) {
+    const items = projects.filter(p => filter === 'all' ? true : p.status === filter);
+    grid.innerHTML = items.map(card).join('');
+    observeReveal();
+  }
+
+  function observeReveal() {
+    const els = document.querySelectorAll('.reveal:not(.in-view)');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in-view');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(el => io.observe(el));
+  }
+
+  document.getElementById('filters').addEventListener('click', (e) => {
+    const btn = e.target.closest('.filter-btn');
+    if (!btn) return;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    render(btn.dataset.filter);
+  });
+
+  render('all');
+  observeReveal();
+</script>
+</body>
+</html>
