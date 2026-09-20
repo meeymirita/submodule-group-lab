@@ -22,3 +22,6 @@
 [submodule "docker"]
 	path = docker
 	url = https://github.com/meeymirita/docker-lab.git
+[submodule "works"]
+	path = works
+	url = https://github.com/meeymirita/works-lab.git
