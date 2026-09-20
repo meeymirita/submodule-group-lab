@@ -1,6 +1,6 @@
 # Group Lab: RabbitMQ, Redis, Traefik, OOP, Vue, TypeScript, Laravel, Docker
 
-![Group Lab](works/images/banner.png)
+![Group Lab](https://raw.githubusercontent.com/meeymirita/works-lab/main/images/banner.png)
 
 Сборный репозиторий с лабораторными работами. Каждая работа подключена как git submodule в отдельной папке и живёт в собственном репозитории — со своей историей коммитов, независимо от остальных. Репозиторий будет пополняться новыми работами.
 
