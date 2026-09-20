@@ -1002,16 +1002,17 @@
     });
   }
 
+  function goToWork(key) {
+    window.location.href = 'works/' + key + '.html';
+  }
+
   grid.addEventListener('click', function (e) {
     if (e.target.closest('.card-actions')) return;
 
     var card = e.target.closest('.card');
     if (!card) return;
 
-    var key = card.getAttribute('data-key');
-    var project = projects.find(function (item) { return item.key === key; });
-
-    if (project && project.open) window.open(project.open, '_blank');
+    goToWork(card.getAttribute('data-key'));
   });
 
   grid.addEventListener('keydown', function (e) {
@@ -1021,12 +1022,8 @@
     var card = e.target.closest('.card');
     if (!card) return;
 
-    var key = card.getAttribute('data-key');
-    var project = projects.find(function (item) { return item.key === key; });
-    if (!project || !project.open) return;
-
     e.preventDefault();
-    window.open(project.open, '_blank');
+    goToWork(card.getAttribute('data-key'));
   });
 
   var progress = document.querySelector('.progress');
