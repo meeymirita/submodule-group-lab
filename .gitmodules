@@ -25,3 +25,9 @@
 [submodule "works"]
 	path = works
 	url = https://github.com/meeymirita/works-lab.git
+[submodule "php"]
+	path = php
+	url = https://github.com/meeymirita/php-lab.git
+[submodule "js"]
+	path = js
+	url = https://github.com/meeymirita/js-lab.git
