@@ -8,22 +8,20 @@
 
 ## Работы
 
-Порядок — от простого к сложному, с учётом того, что лабы переиспользуют друг друга: OOP-лаба даёт фундамент, который нужен для RabbitMQ и Laravel; RabbitMQ стоит пройти до Redis (проще почувствовать разницу между брокером и Redis-примитивами) и до Laravel-лабы (она прямо ссылается на обе); «Чистый JS» — общий фундамент для Vue и TypeScript, поэтому встал перед ними обеими; Vue — до TypeScript (сессия 5 последней использует Vue). Docker и Traefik самодостаточны и не завязаны на остальные.
+Порядок — от простого к сложному, с учётом того, что лабы переиспользуют друг друга: OOP-лаба даёт фундамент, который нужен для RabbitMQ и Laravel; следом «Чистый PHP» встал рядом с OOP, потому что тоже про язык, но без фреймворка; RabbitMQ стоит пройти до Redis (проще почувствовать разницу между брокером и Redis-примитивами) и до Laravel-лабы (она прямо ссылается на обе); «Чистый JS» — общий фундамент для Vue и TypeScript, поэтому встал перед ними обеими; Vue — до TypeScript (сессия 5 последней использует Vue). Docker и Traefik самодостаточны и не завязаны на остальные.
 
 | № | Папка | Лаба | Сложность | Репозиторий |
 |---|---|---|---|---|
 | 1 | [`docker`](docker) | Docker + Bash — крепкое владение с нуля | Базовая по входу, объёмная | [docker-lab](https://github.com/meeymirita/docker-lab) |
 | 2 | [`php-coffee`](php-coffee) | OOP на PHP/Laravel — Coffee Shop API | Базовая по материалу | [oop-lab](https://github.com/meeymirita/oop-lab) |
-| 3 | [`traefik`](traefik) | Traefik — reverse proxy, service discovery, TLS | Низкая–средняя | [traefik-lab](https://github.com/meeymirita/traefik-lab) |
-| 4 | [`rabbitmq`](rabbitmq) | RabbitMQ — Transactional Outbox, воркеры, DLQ | Высокая | [rabbitmq-lab](https://github.com/meeymirita/rabbitmq-lab) |
-| 5 | [`redis`](redis) | Redis — кэш, локи, rate limit, Streams | Средняя | [redis-lab](https://github.com/meeymirita/redis-lab) |
-| 6 | [`js`](js) | Чистый JS — Vanilla Helpdesk, фундамент без фреймворка | Средняя | [js-lab](https://github.com/meeymirita/js-lab) |
-| 7 | [`vue`](vue) | Vue 3 — Helpdesk (Router, Pinia, WebSocket, тесты) | Высокая | [vue-lab](https://github.com/meeymirita/vue-lab) |
-| 8 | [`typescript`](typescript) | TypeScript 5 — Warehouse (generics, Zod, API + Vue) | Высокая | [typescript-lab](https://github.com/meeymirita/typescript-lab) |
-| 9 | [`laravel`](laravel) | Laravel 13 изнутри — TaskFlow (таск-трекер с ролями) | Высокая | [laravel-lab](https://github.com/meeymirita/laravel-lab) |
-| 10 | [`php`](php) | 🚧 Чистый PHP — фундамент без фреймворка | Базовая | [php-lab](https://github.com/meeymirita/php-lab) |
-
-Лаба 10 ещё не разработана и даже не составлен план — папка и репозиторий уже созданы (заглушка), содержимое появится позже. По смыслу она встанет рядом с OOP-лабой (до RabbitMQ/Laravel) — номер актуализируем, когда лаба будет готова.
+| 3 | [`php`](php) | Чистый PHP — свой роутер, DI-контейнер, PDO, CSRF | Средняя | [php-lab](https://github.com/meeymirita/php-lab) |
+| 4 | [`traefik`](traefik) | Traefik — reverse proxy, service discovery, TLS | Низкая–средняя | [traefik-lab](https://github.com/meeymirita/traefik-lab) |
+| 5 | [`rabbitmq`](rabbitmq) | RabbitMQ — Transactional Outbox, воркеры, DLQ | Высокая | [rabbitmq-lab](https://github.com/meeymirita/rabbitmq-lab) |
+| 6 | [`redis`](redis) | Redis — кэш, локи, rate limit, Streams | Средняя | [redis-lab](https://github.com/meeymirita/redis-lab) |
+| 7 | [`js`](js) | Чистый JS — Vanilla Helpdesk, фундамент без фреймворка | Средняя | [js-lab](https://github.com/meeymirita/js-lab) |
+| 8 | [`vue`](vue) | Vue 3 — Helpdesk (Router, Pinia, WebSocket, тесты) | Высокая | [vue-lab](https://github.com/meeymirita/vue-lab) |
+| 9 | [`typescript`](typescript) | TypeScript 5 — Warehouse (generics, Zod, API + Vue) | Высокая | [typescript-lab](https://github.com/meeymirita/typescript-lab) |
+| 10 | [`laravel`](laravel) | Laravel 13 изнутри — TaskFlow (таск-трекер с ролями) | Высокая | [laravel-lab](https://github.com/meeymirita/laravel-lab) |
 
 > Личный прогресс (моя пометка, не часть плана репозитория): ✅ пройдено — RabbitMQ. 🔵 сейчас прохожу — OOP (`php-coffee`).
 
@@ -64,7 +62,31 @@
 
 ---
 
-## 3. Traefik Lab (`traefik/`)
+## 3. Чистый PHP Lab (`php/`)
+
+> **Сложность: средняя.** Нужен базовый синтаксис PHP и пройденная OOP-лаба (принципы инкапсуляции/полиморфизма используются без повторного объяснения). Сложность растёт к концу: сессии 1–4 — язык, сессии 5–8 — своя инфраструктура (роутер, DI-контейнер, PDO, CSRF).
+
+**О чём:** чистый PHP 8.4 без единого фреймворка — то, что обычно прячет Laravel: `strict_types` и copy-on-write массивы, суперглобалы, исключения, замыкания и генераторы, магические методы, современный синтаксис (`match`, nullsafe), Composer и PSR-4 — и дальше своими руками: роутер, DI-контейнер, PDO-слой, сессии/CSRF. Домен — та же кофейня, что в OOP-лабе, но здесь пишется инфраструктура, которую там давал фреймворк.
+
+**Стек:** PHP 8.4 CLI, встроенный dev-сервер, PostgreSQL через голый PDO, Composer только для автозагрузки (PSR-4) — без единого стороннего пакета до сессии 7.
+
+**Формат:** методичка `PHP_Lab_VanillaCoffee.html` — готова, прохождение впереди.
+
+**Что внутри (8 сессий):**
+- **Сессия 1** — стенд; `declare(strict_types=1)` + таблица `==` (чем PHP 7 отличается от PHP 8)
+- **Сессия 2** — copy-on-write массивов на измерении момента копирования; `array_filter` vs `usort` (ключи, мутация); `mb_*` на кириллице + `sprintf` + regex
+- **Сессия 3** — предсказать → проверить: `$_GET` и приведение типов; `php://input` — JSON-тело запроса; `finally` vs exception handler — порядок выполнения
+- **Сессия 4** — `use ($var)` vs `use (&$var)` в замыканиях; генератор vs жадное чтение — измеряем память; свой фасад через `__callStatic`; `match` + nullsafe на неполных данных
+- **Сессия 5** — PSR-4: автозагрузка до и после; свой роутер v1 (наивный) → v2 (regex-параметры)
+- **Сессия 6** — боль без DI-контейнера (ручное связывание) → контейнер v1 (явные фабрики + singleton) → v2 (autowiring через Reflection)
+- **Сессия 7** — SQL-инъекция: найти → исправить; транзакция с `rollBack` после частичного сбоя; CSRF своими руками (сессия + `hash_equals`); свой `.env`-парсер
+- **Сессия 8** — финал: сборка `index.php`, middleware-цепочка, тесты + таблица «что даёт Laravel»
+
+Разделы 1–12 методички — теория языка и рантайма, раздел 13 — восемь сессий заданий, разделы 14–17 — чек-лист, глоссарий, вопросы для собеседования, что дальше.
+
+---
+
+## 4. Traefik Lab (`traefik/`)
 
 > **Сложность: низкая–средняя** (инфраструктурная, не про код — backend/frontend уже даны готовыми). Нужно перед стартом: Docker Compose на уровне «поднять сервис и почитать логи»; для новичков в контейнерах есть отдельный вводный раздел 0.
 
@@ -83,7 +105,7 @@
 
 ---
 
-## 4. RabbitMQ Lab (`rabbitmq/`)
+## 5. RabbitMQ Lab (`rabbitmq/`)
 
 > **Сложность: высокая.** Нужно перед стартом: уверенный Laravel/PHP (транзакции, Artisan-команды, очереди хотя бы на уровне концепции), базовые транзакции SQL, Docker Compose «запустить и посмотреть логи».
 
@@ -113,7 +135,7 @@
 
 ---
 
-## 5. Redis Lab (`redis/`)
+## 6. Redis Lab (`redis/`)
 
 > **Сложность: средняя.** Нужно перед стартом: то же, что для RabbitMQ-лабы (Laravel, Docker), домен заказов переиспользуется. Ниже порог входа, чем в RabbitMQ — но полезно уже пройти RabbitMQ, чтобы прочувствовать разницу между брокером и Redis-примитивами (Streams — не полноценная очередь).
 
@@ -132,7 +154,7 @@
 
 ---
 
-## 6. Чистый JS Lab — Vanilla Helpdesk (`js/`)
+## 7. Чистый JS Lab — Vanilla Helpdesk (`js/`)
 
 > **Сложность: средняя.** Не требует предыдущих лаб — нужен только базовый синтаксис JS. Это общий фундамент для Vue Lab и TypeScript Lab, поэтому логично проходить её первой из трёх.
 
@@ -156,7 +178,7 @@
 
 ---
 
-## 7. Vue Lab (`vue/`)
+## 8. Vue Lab (`vue/`)
 
 > **Сложность: высокая, если фронтенд — новая территория.** Нужно перед стартом: уверенный JavaScript (ES6+, async/await, деструктуризация); если сомневаетесь в фундаменте — сначала «Чистый JS» (`js/`). Опыт с Vue или другими фреймворками не требуется, бэкенд на NestJS дан готовым.
 
@@ -177,7 +199,7 @@
 
 ---
 
-## 8. TypeScript Lab (`typescript/`)
+## 9. TypeScript Lab (`typescript/`)
 
 > **Сложность: высокая** — абстрактное мышление на уровне типов (generics, conditional/mapped types) непривычно после динамического PHP. Нужно перед стартом: тот же JavaScript, что для Vue-лабы; логично проходить после или параллельно с ней (сессия 5 использует Vue).
 
@@ -196,7 +218,7 @@
 
 ---
 
-## 9. Laravel Lab (`laravel/`)
+## 10. Laravel Lab (`laravel/`)
 
 > **Сложность: высокая.** Нужно перед стартом: базовый Laravel (роутинг, контроллеры, миграции, Blade — даются ссылками на документацию, без разбора), ООП на PHP (см. `php-coffee/`) и общее представление про очереди (см. `rabbitmq/`) — лаба на них ссылается, а не объясняет заново.
 
