@@ -1,8 +1,10 @@
-# Group Lab: RabbitMQ, Redis, Traefik, OOP, Vue, TypeScript, Laravel
+# Group Lab: RabbitMQ, Redis, Traefik, OOP, Vue, TypeScript, Laravel, Docker
 
-![Group Lab](images/banner.png)
+![Group Lab](works/images/banner.png)
 
 Сборный репозиторий с лабораторными работами. Каждая работа подключена как git submodule в отдельной папке и живёт в собственном репозитории — со своей историей коммитов, независимо от остальных. Репозиторий будет пополняться новыми работами.
+
+Витрина всех работ и их описания — на [`index.html`](index.html) (открывается прямо в браузере или через GitHub Pages).
 
 ## Работы
 
@@ -15,6 +17,7 @@
 | [`vue`](vue) | Vue 3 — Helpdesk (Router, Pinia, WebSocket, тесты) | ⚪ не начата | Высокая (новый стек) | [vue-lab](https://github.com/meeymirita/vue-lab) |
 | [`typescript`](typescript) | TypeScript 5 — Warehouse (generics, Zod, API + Vue) | ⚪ не начата | Высокая | [typescript-lab](https://github.com/meeymirita/typescript-lab) |
 | [`laravel`](laravel) | Laravel 13 изнутри — TaskFlow (таск-трекер с ролями) | ⚪ не начата | Высокая | [laravel-lab](https://github.com/meeymirita/laravel-lab) |
+| [`docker`](docker) | Docker + Bash — крепкое владение с нуля | ⚪ методичка готова | Базовая по входу, объёмная | [docker-lab](https://github.com/meeymirita/docker-lab) |
 
 ---
 
@@ -170,6 +173,28 @@
 - **Сессия 10** — фабрики для всех моделей, feature-тесты (`RefreshDatabase`), fakes/моки (Event/Notification/Mail), финальный прогон
 
 Лаба построена вокруг карты Laravel (`Kernel → Middleware → Router → Controller`, плюс сквозные Container/Events/Auth и менеджеры Database/Cache/Queue/Mail/Broadcasting) и проходит по каждому слою последовательно — от жизненного цикла запроса до тестов.
+
+---
+
+## 8. Docker Lab (`docker/`)
+
+> **Сложность: базовая по входу, но объёмная.** Не требует предыдущих лаб — рассчитана на полных новичков в контейнерах; Bash даётся параллельно, ровно в том объёме, который нужен для entrypoint-скриптов.
+
+**О чём:** Docker и Bash разобраны подробно и с нуля — то, на что в Traefik-лабе был выделен всего один вводный раздел. Только сам Docker (образы, контейнеры, Dockerfile, тома, сети, Compose) и Bash как параллельный трек.
+
+**Стек:** Node.js (Express) + PostgreSQL, всё в Docker / Docker Compose.
+
+**Формат:** методичка `Docker_Bash_Lab.html` — методичка готова, прохождение впереди.
+
+**Что внутри (3 сессии):** разбор Docker с нуля (образ vs контейнер vs Dockerfile), Bash параллельным треком (shebang, переменные, циклы, `set -e -u -o pipefail`), ENTRYPOINT vs CMD, тома и сети, Docker Compose (`depends_on` + healthcheck) — пошаговая сборка маленького Node.js + PostgreSQL проекта, заканчивается явной точкой возврата к Traefik Lab.
+
+---
+
+## Витрина работ (`works/`)
+
+Отдельный сабмодуль [`works-lab`](https://github.com/meeymirita/works-lab) со стилизованными обзорными страницами каждой лабы (тёмный неоновый дизайн, тот же, что и у [`index.html`](index.html)): что внутри, стек, куда открыть методичку и репозиторий. Там же лежат превью-картинки лаб (`works/images/`), которые использует и главная страница.
+
+Открыть можно прямо по ссылке `works/<ключ-лабы>.html`, например [`works/rabbitmq.html`](works/rabbitmq.html).
 
 ---
 
