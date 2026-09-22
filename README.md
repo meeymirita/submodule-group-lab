@@ -8,7 +8,7 @@
 
 ## Работы
 
-Порядок — от простого к сложному, с учётом того, что лабы переиспользуют друг друга: OOP-лаба даёт фундамент, который нужен для RabbitMQ и Laravel; следом «Чистый PHP» встал рядом с OOP, потому что тоже про язык, но без фреймворка; Kubernetes-лаба идёт сразу за Traefik — она переносит её же стек из Compose в кластер, поэтому не имеет смысла без пройденной Traefik-лабы; RabbitMQ стоит пройти до Redis (проще почувствовать разницу между брокером и Redis-примитивами) и до Laravel-лабы (она прямо ссылается на обе); «Чистый JS» — общий фундамент для Vue и TypeScript, поэтому встал перед ними обеими; Vue — до TypeScript (сессия 5 последней использует Vue). Docker и Traefik самодостаточны и не завязаны на остальные.
+Порядок — от простого к сложному, с учётом того, что лабы переиспользуют друг друга: OOP-лаба даёт фундамент, который нужен для RabbitMQ и Laravel; следом «Чистый PHP» встал рядом с OOP, потому что тоже про язык, но без фреймворка; Kubernetes-лаба идёт сразу за Traefik — она переносит её же стек из Compose в кластер, поэтому не имеет смысла без пройденной Traefik-лабы; RabbitMQ стоит пройти до Redis (проще почувствовать разницу между брокером и Redis-примитивами) и до Laravel-лабы (она прямо ссылается на обе); «Чистый JS» — общий фундамент для Vue и TypeScript, поэтому встал перед ними обеими; Vue — до TypeScript (сессия 5 последней использует Vue); NestJS-лаба идёт сразу за Vue и TypeScript — она переносит тот же Helpdesk-домен и собирает с нуля тот самый бэкенд, который в Vue-лабе был дан готовым. Docker и Traefik самодостаточны и не завязаны на остальные.
 
 | № | Папка | Лаба | Сложность | Репозиторий |
 |---|---|---|---|---|
@@ -22,7 +22,8 @@
 | 8 | [`js`](js) | Чистый JS — Vanilla Helpdesk, фундамент без фреймворка | Средняя | [js-lab](https://github.com/meeymirita/js-lab) |
 | 9 | [`vue`](vue) | Vue 3 — Helpdesk (Router, Pinia, WebSocket, тесты) | Высокая | [vue-lab](https://github.com/meeymirita/vue-lab) |
 | 10 | [`typescript`](typescript) | TypeScript 5 — Warehouse (generics, Zod, API + Vue) | Высокая | [typescript-lab](https://github.com/meeymirita/typescript-lab) |
-| 11 | [`laravel`](laravel) | Laravel 13 изнутри — TaskFlow (таск-трекер с ролями) | Высокая | [laravel-lab](https://github.com/meeymirita/laravel-lab) |
+| 11 | [`nestjs`](nestjs) | NestJS — Helpdesk API с нуля (DI, Guards, JWT, WebSocket) | Высокая | [nestjs-lab](https://github.com/meeymirita/nestjs-lab) |
+| 12 | [`laravel`](laravel) | Laravel 13 изнутри — TaskFlow (таск-трекер с ролями) | Высокая | [laravel-lab](https://github.com/meeymirita/laravel-lab) |
 
 > Личный прогресс (моя пометка, не часть плана репозитория): ✅ пройдено — RabbitMQ. 🔵 сейчас прохожу — OOP (`php-coffee`).
 
@@ -238,7 +239,29 @@
 
 ---
 
-## 11. Laravel Lab (`laravel/`)
+## 11. NestJS Lab (`nestjs/`)
+
+> **Сложность: высокая.** Нужны пройденные Vue Lab (тот же Helpdesk-домен — бэкенд, который там был дан готовым, здесь собирается с нуля) и сессия 1 TypeScript-лабы (классы, интерфейсы, типы); из Чистого JS нужна сессия 5 (event loop, async/await).
+
+**О чём:** тот же Helpdesk (тикеты, роли `agent`/`customer`, live-обновления), что в Vue Lab — только теперь backend строится слой за слоем, и на каждом шаге видно, что именно скрывает декоратор `@Injectable()`, когда его пишут не глядя: `reflect-metadata` под капотом, DI и provider scopes, DTO/Pipes/валидация, Prisma и N+1, Guards/JWT/refresh-токены, WebSocket Gateway, тестирование.
+
+**Стек:** NestJS 10 + TypeScript, Prisma + PostgreSQL 16, class-validator, Passport + JWT, `@nestjs/websockets` (Socket.IO), Jest + `@nestjs/testing`. Всё в Docker.
+
+**Формат:** методичка [`NestJS_Lab_Plan.html`](nestjs/NestJS_Lab_Plan.html) — открывается в браузере, прогресс по чекбоксам сохраняется локально.
+
+**Что внутри (6 сессий):**
+- **Сессия 1** — стенд и наивная версия; декораторы руками без Nest (`reflect-metadata`, `emitDecoratorMetadata`); первый настоящий модуль (Controller/Service/DI)
+- **Сессия 2** — provider scopes и singleton-ловушка; `useFactory` и токены; `PrismaService` с lifecycle hooks; N+1 — измерить, не декларировать
+- **Сессия 3** — DTO и `ValidationPipe`; свой Pipe; exception filter; полный CRUD тикетов и комментариев
+- **Сессия 4** — JWT-стратегия и логин; `AuthGuard` под капотом; `RolesGuard` и свой декоратор; refresh-токены и ротация
+- **Сессия 5** — WebSocket Gateway и комнаты; эмит из сервиса через `forwardRef`; auth на handshake
+- **Сессия 6** — unit-тест с мок Prisma; e2e-тест контроллера; "Production Hell" — финальный сценарий без подсказок
+
+Разделы 1–7 методички — теория (декораторы и reflect-metadata, Modules и DI, DTO/Pipes, Prisma/N+1, Guards/JWT, WebSocket Gateway, тестирование), раздел 8 — шесть сессий заданий, разделы 9–12 — чек-лист, глоссарий, вопросы для собеседования, что дальше. Следующий шаг после этой лабы — отдельная GraphQL-лаба на том же backend'е.
+
+---
+
+## 12. Laravel Lab (`laravel/`)
 
 > **Сложность: высокая.** Нужно перед стартом: базовый Laravel (роутинг, контроллеры, миграции, Blade — даются ссылками на документацию, без разбора), ООП на PHP (см. `php-coffee/`) и общее представление про очереди (см. `rabbitmq/`) — лаба на них ссылается, а не объясняет заново.
 
