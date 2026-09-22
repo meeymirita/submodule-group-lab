@@ -1175,12 +1175,17 @@
   function closeAboutModal() {
     aboutOverlay.classList.remove('is-open');
     document.body.style.overflow = '';
+    try { localStorage.setItem('about-modal-seen', '1'); } catch (e) {}
   }
 
   document.getElementById('about-modal-trigger').addEventListener('click', openAboutModal);
   document.getElementById('about-modal-close').addEventListener('click', closeAboutModal);
   aboutOverlay.addEventListener('click', function (e) { if (e.target === aboutOverlay) closeAboutModal(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAboutModal(); });
+
+  var aboutModalSeen = false;
+  try { aboutModalSeen = !!localStorage.getItem('about-modal-seen'); } catch (e) {}
+  if (!aboutModalSeen) openAboutModal();
 
   function render() {
     var n = 0;
