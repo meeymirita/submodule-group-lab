@@ -31,3 +31,6 @@
 [submodule "js"]
 	path = js
 	url = https://github.com/meeymirita/js-lab.git
+[submodule "kubernetes"]
+	path = kubernetes
+	url = https://github.com/meeymirita/kubernetes-lab.git

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TECH PERFORMANCE — лабораторные работы</title>
-  <meta name="description" content="Сборный репозиторий лабораторных работ: RabbitMQ, Redis, Traefik, OOP, Vue, TypeScript, Laravel, Docker.">
+  <meta name="description" content="Сборный репозиторий лабораторных работ: RabbitMQ, Redis, Traefik, Kubernetes, OOP, Vue, TypeScript, Laravel, Docker.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -709,12 +709,12 @@
       </h1>
 
       <p class="lead strong">
-        RabbitMQ · Redis · Traefik · PHP OOP · Vue · TypeScript · Laravel · Docker
+        RabbitMQ · Redis · Traefik · Kubernetes · PHP OOP · Vue · TypeScript · Laravel · Docker
       </p>
 
       <div class="system-status mono">
         <span></span>
-        system online / 10 labs loaded
+        system online / 11 labs loaded
       </div>
     </div>
 
@@ -738,7 +738,7 @@
 
       <div class="stats">
         <div class="stat" style="--stat-color:#ff2e88">
-          <div class="stat-num">10</div>
+          <div class="stat-num">11</div>
           <div class="stat-label">лабораторных</div>
         </div>
         <div class="stat" style="--stat-color:#7df9ff">
@@ -752,8 +752,8 @@
 
 <div class="marquee">
   <div class="marquee-track display">
-    <span>group lab · 10 лабораторных · git submodules · методички ·</span>
-    <span>group lab · 10 лабораторных · git submodules · методички ·</span>
+    <span>group lab · 11 лабораторных · git submodules · методички ·</span>
+    <span>group lab · 11 лабораторных · git submodules · методички ·</span>
   </div>
 </div>
 
@@ -766,7 +766,7 @@
           <h2 class="section-h2 display">Работы</h2>
           <p class="mono">Нажми на карточку, чтобы открыть страницу лабы</p>
         </div>
-        <div class="works-count">10</div>
+        <div class="works-count">11</div>
       </div>
     </div>
 
@@ -908,6 +908,18 @@
       open: 'js/JS_Lab_VanillaHelpdesk.html',
       repo: 'https://github.com/meeymirita/js-lab',
       accent: '#F4D35E', accentSoft: '#F4D35E22', accentShadow: 'rgba(244,211,94,.28)'
+    },
+    {
+      key: 'kubernetes',
+      title: 'Kubernetes Lab',
+      subtitle: 'От Compose к оркестрации',
+      image: 'kubernetes/kubernetes.png',
+      desc: 'Миграция стека из Traefik-лабы в Kubernetes (kind): Pod и Deployment, Service и DNS, ConfigMap/Secret, Volumes и PVC, readiness/liveness-пробы, Traefik как Ingress-контроллер, HorizontalPodAutoscaler.',
+      stack: ['Kubernetes', 'kind', 'kubectl', 'Traefik'],
+      difficulty: 'Средняя–высокая',
+      open: 'kubernetes/Kubernetes_Lab_Plan.html',
+      repo: 'https://github.com/meeymirita/kubernetes-lab',
+      accent: '#326CE5', accentSoft: '#326CE522', accentShadow: 'rgba(50,108,229,.28)'
     }
   ];
 
