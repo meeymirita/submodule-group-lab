@@ -8,7 +8,7 @@
 
 ## Работы
 
-Порядок — от простого к сложному, с учётом того, что лабы переиспользуют друг друга: OOP-лаба даёт фундамент, который нужен для RabbitMQ и Laravel; следом «Чистый PHP» встал рядом с OOP, потому что тоже про язык, но без фреймворка; Kubernetes-лаба идёт сразу за Traefik — она переносит её же стек из Compose в кластер, поэтому не имеет смысла без пройденной Traefik-лабы; RabbitMQ стоит пройти до Redis (проще почувствовать разницу между брокером и Redis-примитивами) и до Laravel-лабы (она прямо ссылается на обе); «Чистый JS» — общий фундамент для Vue и TypeScript, поэтому встал перед ними обеими; Vue — до TypeScript (сессия 5 последней использует Vue); NestJS-лаба идёт сразу за Vue и TypeScript — она переносит тот же Helpdesk-домен и собирает с нуля тот самый бэкенд, который в Vue-лабе был дан готовым. Docker и Traefik самодостаточны и не завязаны на остальные.
+Порядок — от простого к сложному, с учётом того, что лабы переиспользуют друг друга: OOP-лаба даёт фундамент, который нужен для RabbitMQ и Laravel; следом «Чистый PHP» встал рядом с OOP, потому что тоже про язык, но без фреймворка; Kubernetes-лаба идёт сразу за Traefik — она переносит её же стек из Compose в кластер, поэтому не имеет смысла без пройденной Traefik-лабы; RabbitMQ стоит пройти до Redis (проще почувствовать разницу между брокером и Redis-примитивами) и до Laravel-лабы (она прямо ссылается на обе); «Чистый JS» — общий фундамент для Vue и TypeScript, поэтому встал перед ними обеими; Vue — до TypeScript (сессия 5 последней использует Vue); NestJS-лаба идёт сразу за Vue и TypeScript — она переносит тот же Helpdesk-домен и собирает с нуля тот самый бэкенд, который в Vue-лабе был дан готовым; GraphQL-лаба идёт сразу за NestJS и не имеет смысла без неё — тот же backend, но REST-контроллеры заменяются на резолверы. Docker и Traefik самодостаточны и не завязаны на остальные.
 
 | № | Папка | Лаба | Сложность | Репозиторий |
 |---|---|---|---|---|
@@ -23,7 +23,8 @@
 | 9 | [`vue`](vue) | Vue 3 — Helpdesk (Router, Pinia, WebSocket, тесты) | Высокая | [vue-lab](https://github.com/meeymirita/vue-lab) |
 | 10 | [`typescript`](typescript) | TypeScript 5 — Warehouse (generics, Zod, API + Vue) | Высокая | [typescript-lab](https://github.com/meeymirita/typescript-lab) |
 | 11 | [`nestjs`](nestjs) | NestJS — Helpdesk API с нуля (DI, Guards, JWT, WebSocket) | Высокая | [nestjs-lab](https://github.com/meeymirita/nestjs-lab) |
-| 12 | [`laravel`](laravel) | Laravel 13 изнутри — TaskFlow (таск-трекер с ролями) | Высокая | [laravel-lab](https://github.com/meeymirita/laravel-lab) |
+| 12 | [`graphql`](graphql) | GraphQL — тот же Helpdesk без REST (резолверы, DataLoader, Subscriptions) | Высокая | [graphql-lab](https://github.com/meeymirita/graphql-lab) |
+| 13 | [`laravel`](laravel) | Laravel 13 изнутри — TaskFlow (таск-трекер с ролями) | Высокая | [laravel-lab](https://github.com/meeymirita/laravel-lab) |
 
 > Личный прогресс (моя пометка, не часть плана репозитория): ✅ пройдено — RabbitMQ. 🔵 сейчас прохожу — OOP (`php-coffee`).
 
@@ -261,7 +262,28 @@
 
 ---
 
-## 12. Laravel Lab (`laravel/`)
+## 12. GraphQL Lab (`graphql/`)
+
+> **Сложность: высокая.** Нужна пройденная NestJS Lab целиком — декораторы и `reflect-metadata`, provider scopes, Guards и JWT переиспользуются здесь без повторного объяснения, только в новом контексте.
+
+**О чём:** тот же Helpdesk-backend, что в NestJS Lab (тот же Prisma, тот же JWT) — но HTTP-слой контроллеров заменяется на GraphQL-резолверы: over/under-fetching и зачем единый `/graphql`-эндпоинт, code-first типы и резолверы, N+1 на новом уровне и `DataLoader`, Guards через `GqlExecutionContext`, Subscriptions вместо WebSocket Gateway. Домен не меняется специально — чтобы видеть именно то, что меняется при переходе на GraphQL, а не тонуть в новом коде.
+
+**Стек:** `@nestjs/graphql` + Apollo Server, code-first (`@ObjectType`/`@Field`/`@Resolver`), `dataloader` для батчинга, тот же Prisma + PostgreSQL и Passport-JWT, что в NestJS Lab. Всё в Docker.
+
+**Формат:** методичка [`GraphQL_Lab_Plan.html`](graphql/GraphQL_Lab_Plan.html) — открывается в браузере, прогресс по чекбоксам сохраняется локально.
+
+**Что внутри (5 сессий):**
+- **Сессия 1** — замер REST (round trips); первый `ObjectType` и `Query`; первая `Mutation`
+- **Сессия 2** — `ResolveField` для комментариев; input types и валидация; порядок вызова резолверов
+- **Сессия 3** — замер N+1 в резолвере; `DataLoader`: батчинг; `DataLoader` per-request (`Scope.REQUEST`)
+- **Сессия 4** — `GqlExecutionContext` и перенос Guards; `CurrentUser`-декоратор; `Subscription ticketUpdated`; auth для subscription
+- **Сессия 5** — unit-тест резолвера; e2e через `/graphql`; "Production Hell" — финальный сценарий без подсказок
+
+Разделы 1–7 методички — теория (over/under-fetching в REST, типы/Query/Mutation, резолверы и порядок вызова, N+1 и DataLoader, Guards и контекст в GraphQL, Subscriptions, тестирование резолверов), раздел 8 — пять сессий заданий, разделы 9–12 — чек-лист, глоссарий, вопросы для собеседования, что дальше.
+
+---
+
+## 13. Laravel Lab (`laravel/`)
 
 > **Сложность: высокая.** Нужно перед стартом: базовый Laravel (роутинг, контроллеры, миграции, Blade — даются ссылками на документацию, без разбора), ООП на PHP (см. `php-coffee/`) и общее представление про очереди (см. `rabbitmq/`) — лаба на них ссылается, а не объясняет заново.
 

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TECH PERFORMANCE — лабораторные работы</title>
-  <meta name="description" content="Сборный репозиторий лабораторных работ: RabbitMQ, Redis, Traefik, Kubernetes, OOP, Vue, TypeScript, NestJS, Laravel, Docker.">
+  <meta name="description" content="Сборный репозиторий лабораторных работ: RabbitMQ, Redis, Traefik, Kubernetes, OOP, Vue, TypeScript, NestJS, GraphQL, Laravel, Docker.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -740,12 +740,12 @@
       </h1>
 
       <p class="lead strong">
-        RabbitMQ · Redis · Traefik · Kubernetes · PHP OOP · Vue · TypeScript · NestJS · Laravel · Docker
+        RabbitMQ · Redis · Traefik · Kubernetes · PHP OOP · Vue · TypeScript · NestJS · GraphQL · Laravel · Docker
       </p>
 
       <div class="system-status mono">
         <span></span>
-        system online / 12 labs loaded
+        system online / 13 labs loaded
       </div>
     </div>
 
@@ -769,7 +769,7 @@
 
       <div class="stats">
         <div class="stat" style="--stat-color:#ff2e88">
-          <div class="stat-num">12</div>
+          <div class="stat-num">13</div>
           <div class="stat-label">лабораторных</div>
         </div>
         <div class="stat" style="--stat-color:#7df9ff">
@@ -783,8 +783,8 @@
 
 <div class="marquee">
   <div class="marquee-track display">
-    <span>group lab · 12 лабораторных · git submodules · методички ·</span>
-    <span>group lab · 12 лабораторных · git submodules · методички ·</span>
+    <span>group lab · 13 лабораторных · git submodules · методички ·</span>
+    <span>group lab · 13 лабораторных · git submodules · методички ·</span>
   </div>
 </div>
 
@@ -797,7 +797,7 @@
           <h2 class="section-h2 display">Работы</h2>
           <p class="mono">Нажми на карточку, чтобы открыть страницу лабы</p>
         </div>
-        <div class="works-count">12</div>
+        <div class="works-count">13</div>
       </div>
     </div>
 
@@ -897,6 +897,19 @@
       open: 'nestjs/NestJS_Lab_Plan.html',
       repo: 'https://github.com/meeymirita/nestjs-lab',
       accent: '#E0234E', accentSoft: '#E0234E22', accentShadow: 'rgba(224,35,78,.28)'
+    },
+    {
+      key: 'graphql',
+      category: 'backend',
+      title: 'GraphQL Lab',
+      subtitle: 'Тот же Helpdesk без REST',
+      image: 'graphql/GraphQL.png',
+      desc: 'Тот же backend, что в NestJS Lab — HTTP-контроллеры заменяются на GraphQL-резолверы: code-first типы, N+1 в резолверах и DataLoader, Guards через GqlExecutionContext, Subscriptions вместо WebSocket Gateway.',
+      stack: ['NestJS', '@nestjs/graphql', 'Apollo Server', 'DataLoader', 'Prisma'],
+      difficulty: 'Высокая',
+      open: 'graphql/GraphQL_Lab_Plan.html',
+      repo: 'https://github.com/meeymirita/graphql-lab',
+      accent: '#E535AB', accentSoft: '#E535AB22', accentShadow: 'rgba(229,53,171,.28)'
     },
     {
       key: 'laravel',
