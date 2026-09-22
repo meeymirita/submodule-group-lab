@@ -34,3 +34,9 @@
 [submodule "kubernetes"]
 	path = kubernetes
 	url = https://github.com/meeymirita/kubernetes-lab.git
+[submodule "nestjs"]
+	path = nestjs
+	url = https://github.com/meeymirita/nestjs-lab.git
+[submodule "graphql"]
+	path = graphql
+	url = https://github.com/meeymirita/graphql-lab.git
