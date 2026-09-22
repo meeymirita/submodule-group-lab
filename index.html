@@ -636,6 +636,84 @@
     .reveal { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
     .reveal.in-view { opacity: 1; transform: translateY(0); }
 
+    .about-trigger { background: none; border: none; padding: 0; color: inherit; font: inherit; cursor: pointer; }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(4,3,5,.78);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease;
+    }
+    .modal-overlay.is-open { opacity: 1; pointer-events: auto; }
+
+    .modal-panel {
+      position: relative;
+      width: 100%;
+      max-width: 720px;
+      max-height: calc(100vh - 48px);
+      overflow-y: auto;
+      background: var(--bg-alt);
+      border: 1px solid rgba(255,46,136,.35);
+      border-radius: 20px;
+      box-shadow: 0 30px 80px rgba(0,0,0,.6), 0 0 40px rgba(255,46,136,.08);
+      padding: clamp(24px,4vw,44px);
+      transform: translateY(16px) scale(.97);
+      transition: transform .25s ease;
+    }
+    .modal-overlay.is-open .modal-panel { transform: translateY(0) scale(1); }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--text);
+      font-size: 16px;
+      cursor: pointer;
+      transition: border-color .2s ease, color .2s ease, transform .2s ease;
+    }
+    .modal-close:hover { border-color: var(--pink); color: var(--pink); transform: rotate(90deg); }
+
+    .modal-kicker { font-size: 11px; color: var(--pink); margin-bottom: 10px; }
+    .modal-title { font-size: clamp(24px,3.4vw,34px); line-height: 1.05; margin: 0 0 16px; padding-right: 40px; }
+    .modal-intro { color: var(--text-dim); font-size: 14px; line-height: 1.65; margin: 0 0 30px; }
+
+    .modal-cats { display: flex; flex-direction: column; gap: 18px; }
+    .modal-cat {
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--cat-color,var(--pink));
+      border-radius: 12px;
+      padding: 16px 18px;
+      background: rgba(247,242,245,.02);
+    }
+    .modal-cat-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+    .modal-cat-dot { width: 7px; height: 7px; border-radius: 999px; background: var(--cat-color); box-shadow: 0 0 10px var(--cat-color); flex: 0 0 auto; }
+    .modal-cat-title { font-size: 15px; font-weight: 700; }
+    .modal-cat-count { margin-left: auto; font-size: 10px; color: var(--text-dimmer); }
+    .modal-cat-desc { font-size: 13px; color: var(--text-dim); line-height: 1.55; margin: 0 0 10px; }
+    .modal-cat-labs { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    @media (max-width: 640px) {
+      .modal-panel { padding: 22px; border-radius: 16px; }
+      .modal-cat-count { margin-left: 0; }
+      .modal-cat-head { flex-wrap: wrap; }
+    }
+
     @media (max-width: 980px) {
       .grid { grid-template-columns: repeat(2,1fr); }
       .hero-content { grid-template-columns: 1fr; gap: 45px; }
@@ -681,12 +759,25 @@
   <div class="wrap">
     <a href="#top" class="logo display">TECH PERFORMANCE</a>
     <nav class="mono">
+      <button type="button" class="about-trigger" id="about-modal-trigger">о проекте</button>
       <a href="#top">об авторе</a>
       <a href="#works">работы</a>
       <a href="https://github.com/meeymirita/submodule-group-lab" target="_blank" rel="noopener" class="nav-cta">репозиторий ↗</a>
     </nav>
   </div>
 </header>
+
+<div class="modal-overlay" id="about-modal-overlay">
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="about-modal-title">
+    <button type="button" class="modal-close" id="about-modal-close" aria-label="Закрыть">✕</button>
+    <div class="modal-kicker mono">О проекте</div>
+    <h2 class="modal-title display" id="about-modal-title">Что здесь вообще происходит</h2>
+    <p class="modal-intro">Это сборный репозиторий с обучающими лабораторными работами: каждая — отдельный
+      проект от первой строчки кода до финального сценария без подсказок, со своей методичкой, стеком и
+      git-историей. Работы сгруппированы по трём направлениям — фронтенд, бэкенд и devops.</p>
+    <div class="modal-cats" id="about-modal-cats"></div>
+  </div>
+</div>
 
 <section id="top" class="about-section">
   <div class="about-glow"></div>
@@ -1040,6 +1131,56 @@
     { key: 'backend', label: 'Backend', title: 'Бэкенд', color: '#ff2e88' },
     { key: 'devops', label: 'DevOps', title: 'DevOps', color: '#42d392' }
   ];
+
+  var categoryDescriptions = {
+    frontend: 'То, что видит пользователь: реактивный UI без фреймворка на чистом JS, потом Vue 3 (компоненты, роутинг, состояние) и TypeScript поверх этого — типы, generics, сквозная типизация от API до браузера.',
+    backend: 'Серверная часть: ООП и чистый PHP без фреймворка, Laravel «изнутри», NestJS с нуля (DI, Guards, WebSocket) и GraphQL над тем же бэкендом — резолверы вместо REST-контроллеров.',
+    devops: 'Инфраструктура вокруг кода: Docker и Bash с нуля, Traefik как reverse proxy, и Kubernetes — миграция того же стека из Compose в настоящий кластер.'
+  };
+
+  function renderAboutModal() {
+    var container = document.getElementById('about-modal-cats');
+    if (!container) return;
+
+    container.innerHTML = categories.map(function (cat) {
+      var items = projects.filter(function (p) { return p.category === cat.key; });
+      if (!items.length) return '';
+
+      var labChips = items.map(function (p) {
+        return '<span class="chip" style="--accent:' + p.accent + '; --accent-soft:' + p.accentSoft + '">' + escapeHtml(p.title.replace(' Lab', '')) + '</span>';
+      }).join('');
+
+      return `
+        <div class="modal-cat" style="--cat-color:${cat.color}">
+          <div class="modal-cat-head">
+            <span class="modal-cat-dot"></span>
+            <span class="modal-cat-title">${escapeHtml(cat.title)}</span>
+            <span class="modal-cat-count mono">${items.length} ${items.length === 1 ? 'лаба' : 'лабы'}</span>
+          </div>
+          <p class="modal-cat-desc">${escapeHtml(categoryDescriptions[cat.key] || '')}</p>
+          <div class="modal-cat-labs">${labChips}</div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  var aboutOverlay = document.getElementById('about-modal-overlay');
+
+  function openAboutModal() {
+    renderAboutModal();
+    aboutOverlay.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeAboutModal() {
+    aboutOverlay.classList.remove('is-open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('about-modal-trigger').addEventListener('click', openAboutModal);
+  document.getElementById('about-modal-close').addEventListener('click', closeAboutModal);
+  aboutOverlay.addEventListener('click', function (e) { if (e.target === aboutOverlay) closeAboutModal(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAboutModal(); });
 
   function render() {
     var n = 0;
