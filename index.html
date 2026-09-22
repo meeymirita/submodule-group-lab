@@ -407,6 +407,35 @@
 
     .grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; perspective: 1400px; }
 
+    .category-block { margin-bottom: clamp(50px,7vw,86px); }
+    .category-block:last-child { margin-bottom: 0; }
+    .category-head {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .category-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      letter-spacing: .22em;
+      color: var(--category-color);
+    }
+    .category-dot {
+      width: 8px;
+      height: 8px;
+      flex: 0 0 auto;
+      border-radius: 999px;
+      background: var(--category-color);
+      box-shadow: 0 0 12px var(--category-color);
+    }
+    .category-title { font-family: 'Anton',sans-serif; font-size: clamp(22px,2.6vw,32px); margin: 0; }
+    .category-count { margin-left: auto; font-size: 12px; color: var(--text-dimmer); letter-spacing: .1em; white-space: nowrap; }
+
     .card {
       position: relative;
       height: 100%;
@@ -618,6 +647,8 @@
 
     @media (max-width: 700px) {
       .works-title-line { display: block; }
+      .category-head { flex-wrap: wrap; row-gap: 8px; }
+      .category-count { margin-left: 0; }
       .works-count { font-size: 60px; margin-top: 20px; }
       .card { min-height: 0; }
       .feature-strip { display: block; }
@@ -770,7 +801,7 @@
       </div>
     </div>
 
-    <div id="grid" class="grid"></div>
+    <div id="grid"></div>
 
     <div class="feature-strip mono reveal">
       <span><strong>TECH PERFORMANCE</strong> · learn · build · experiment</span>
@@ -790,115 +821,8 @@
 <script>
   var projects = [
     {
-      key: 'rabbitmq',
-      title: 'RabbitMQ Lab',
-      subtitle: 'Transactional Outbox, воркеры, DLQ',
-      image: 'works/images/rabbitmq.png',
-      desc: 'Асинхронная обработка заказов через очереди: Transactional Outbox, идемпотентный consumer, prefetch, crash-тесты, retry с TTL→DLX, priority queues, fanout.',
-      stack: ['Laravel 13', 'PostgreSQL 16', 'RabbitMQ', 'Mailpit'],
-      difficulty: 'Высокая',
-      open: 'rabbitmq/docs/RabbitMQ_Lab_Plan_v1_pro_max.html',
-      repo: 'https://github.com/meeymirita/rabbitmq-lab',
-      accent: '#FF6600', accentSoft: '#FF660022', accentShadow: 'rgba(255,102,0,.28)'
-    },
-    {
-      key: 'redis',
-      title: 'Redis Lab',
-      subtitle: 'Кэш, локи, rate limit, Streams',
-      image: 'works/images/redis.png',
-      desc: 'Redis как кэш, хранилище сессий, примитив синхронизации и брокер событий: cache-aside, distributed lock, rate limiter, Streams, XAUTOCLAIM, Pub/Sub-дашборд.',
-      stack: ['Laravel 13', 'PostgreSQL 16', 'Redis 7'],
-      difficulty: 'Средняя',
-      open: 'redis/Redis_Lab_Plan.html',
-      repo: 'https://github.com/meeymirita/redis-lab',
-      accent: '#DC382D', accentSoft: '#DC382D22', accentShadow: 'rgba(220,56,45,.28)'
-    },
-    {
-      key: 'traefik',
-      title: 'Traefik Lab',
-      subtitle: 'Reverse proxy, service discovery, TLS',
-      image: 'traefik/traefik.png',
-      desc: 'Reverse proxy и service discovery для стека из нескольких сервисов без ручной правки конфигов: EntryPoint → Router → Middleware → Service, TLS, canary-деплой.',
-      stack: ['Traefik 3', 'Docker Compose', 'Node.js', 'PostgreSQL'],
-      difficulty: 'Низкая–средняя',
-      open: 'traefik/Docker_and_Traefik_Lab_Plan.html',
-      repo: 'https://github.com/meeymirita/traefik-lab',
-      accent: '#14B8A6', accentSoft: '#14B8A622', accentShadow: 'rgba(20,184,166,.28)'
-    },
-    {
-      key: 'php-coffee',
-      title: 'OOP Lab',
-      subtitle: 'Coffee Shop API на PHP 8.4',
-      image: 'works/images/php.png',
-      desc: 'ООП на PHP 8.4 с нуля на маленьком API кофейни: 4 принципа ООП, Factory, Decorator, Strategy, Repository, SOLID, наследование vs композиция.',
-      stack: ['PHP 8.4', 'Laravel 13', 'PostgreSQL', 'RabbitMQ'],
-      difficulty: 'Базовая',
-      open: 'php-coffee/docs/OOP_Lab_CoffeeShop.html',
-      repo: 'https://github.com/meeymirita/oop-lab',
-      accent: '#777BB4', accentSoft: '#777BB422', accentShadow: 'rgba(119,123,180,.28)'
-    },
-    {
-      key: 'vue',
-      title: 'Vue Lab',
-      subtitle: 'Helpdesk на Vue 3',
-      image: 'works/images/vue.png',
-      desc: 'Система тикетов на Vue 3 с нуля: реактивность, компоненты, слоты, Pinia, Vue Router с guard-ами, WebSocket, канбан-доска, тесты на Vitest.',
-      stack: ['Vue 3.5', 'Vite', 'Pinia', 'Vue Router', 'NestJS'],
-      difficulty: 'Высокая',
-      open: 'vue/Vue_Lab_Helpdesk.html',
-      repo: 'https://github.com/meeymirita/vue-lab',
-      accent: '#42B883', accentSoft: '#42B88322', accentShadow: 'rgba(66,184,131,.28)'
-    },
-    {
-      key: 'typescript',
-      title: 'TypeScript Lab',
-      subtitle: 'Warehouse — складской учёт',
-      image: 'works/images/typescript.png',
-      desc: 'Типизация домена складского учёта с нуля: generics, размеченные объединения, mapped/conditional types, CLI на Zod, сквозная типизация API + Vue.',
-      stack: ['TypeScript 5.6', 'Node 22', 'Zod', 'Vitest'],
-      difficulty: 'Высокая',
-      open: 'typescript/TypeScript_Lab_Warehouse.html',
-      repo: 'https://github.com/meeymirita/typescript-lab',
-      accent: '#3178C6', accentSoft: '#3178C622', accentShadow: 'rgba(49,120,198,.28)'
-    },
-    {
-      key: 'laravel',
-      title: 'Laravel Lab',
-      subtitle: 'TaskFlow — таск-трекер',
-      image: 'works/images/laravel.png',
-      desc: 'Laravel 13 «изнутри»: ~30 компонентов illuminate/*, Eloquent-связи, Service Container, Auth/Policy, Observer, очереди, Mailable, кэш, Broadcasting, тесты.',
-      stack: ['Laravel 13', 'PostgreSQL 17', 'Redis', 'RabbitMQ', 'Reverb'],
-      difficulty: 'Высокая',
-      open: 'laravel/Laravel_Lab_TaskFlow.html',
-      repo: 'https://github.com/meeymirita/laravel-lab',
-      accent: '#FF2D20', accentSoft: '#FF2D2022', accentShadow: 'rgba(255,45,32,.28)'
-    },
-    {
-      key: 'docker',
-      title: 'Docker Lab',
-      subtitle: 'Крепкое владение Docker и Bash с нуля',
-      image: 'works/images/docker.png',
-      desc: 'Docker и Bash с нуля: образы, контейнеры, docker-compose, сети и тома — через практику в терминале.',
-      stack: ['Docker', 'Docker Compose', 'Bash'],
-      difficulty: '—',
-      open: 'docker/Docker_Bash_Lab.html',
-      repo: 'https://github.com/meeymirita/docker-lab',
-      accent: '#2496ED', accentSoft: '#2496ED22', accentShadow: 'rgba(36,150,237,.28)'
-    },
-    {
-      key: 'php',
-      title: 'Чистый PHP Lab',
-      subtitle: 'Фундамент без фреймворка',
-      image: 'php/php.png',
-      desc: 'Чистый PHP 8.4 без фреймворка: strict_types и copy-on-write массивы, суперглобалы, замыкания и генераторы, магические методы — и своими руками роутер, DI-контейнер, PDO-слой, сессии и CSRF.',
-      stack: ['PHP 8.4', 'PDO', 'PostgreSQL', 'Composer (PSR-4)'],
-      difficulty: 'Базовая',
-      open: 'php/PHP_Lab_VanillaCoffee.html',
-      repo: 'https://github.com/meeymirita/php-lab',
-      accent: '#C9A876', accentSoft: '#C9A87622', accentShadow: 'rgba(201,168,118,.28)'
-    },
-    {
       key: 'js',
+      category: 'frontend',
       title: 'Чистый JS Lab',
       subtitle: 'Vanilla Helpdesk — фундамент без фреймворка',
       image: 'js/JavaScript.png',
@@ -910,7 +834,125 @@
       accent: '#F4D35E', accentSoft: '#F4D35E22', accentShadow: 'rgba(244,211,94,.28)'
     },
     {
+      key: 'typescript',
+      category: 'frontend',
+      title: 'TypeScript Lab',
+      subtitle: 'Warehouse — складской учёт',
+      image: 'works/images/typescript.png',
+      desc: 'Типизация домена складского учёта с нуля: generics, размеченные объединения, mapped/conditional types, CLI на Zod, сквозная типизация API + Vue.',
+      stack: ['TypeScript 5.6', 'Node 22', 'Zod', 'Vitest'],
+      difficulty: 'Высокая',
+      open: 'typescript/TypeScript_Lab_Warehouse.html',
+      repo: 'https://github.com/meeymirita/typescript-lab',
+      accent: '#3178C6', accentSoft: '#3178C622', accentShadow: 'rgba(49,120,198,.28)'
+    },
+    {
+      key: 'vue',
+      category: 'frontend',
+      title: 'Vue Lab',
+      subtitle: 'Helpdesk на Vue 3',
+      image: 'works/images/vue.png',
+      desc: 'Система тикетов на Vue 3 с нуля: реактивность, компоненты, слоты, Pinia, Vue Router с guard-ами, WebSocket, канбан-доска, тесты на Vitest.',
+      stack: ['Vue 3.5', 'Vite', 'Pinia', 'Vue Router', 'NestJS'],
+      difficulty: 'Высокая',
+      open: 'vue/Vue_Lab_Helpdesk.html',
+      repo: 'https://github.com/meeymirita/vue-lab',
+      accent: '#42B883', accentSoft: '#42B88322', accentShadow: 'rgba(66,184,131,.28)'
+    },
+    {
+      key: 'php',
+      category: 'backend',
+      title: 'Чистый PHP Lab',
+      subtitle: 'Фундамент без фреймворка',
+      image: 'php/php.png',
+      desc: 'Чистый PHP 8.4 без фреймворка: strict_types и copy-on-write массивы, суперглобалы, замыкания и генераторы, магические методы — и своими руками роутер, DI-контейнер, PDO-слой, сессии и CSRF.',
+      stack: ['PHP 8.4', 'PDO', 'PostgreSQL', 'Composer (PSR-4)'],
+      difficulty: 'Базовая',
+      open: 'php/PHP_Lab_VanillaCoffee.html',
+      repo: 'https://github.com/meeymirita/php-lab',
+      accent: '#C9A876', accentSoft: '#C9A87622', accentShadow: 'rgba(201,168,118,.28)'
+    },
+    {
+      key: 'php-coffee',
+      category: 'backend',
+      title: 'OOP Lab',
+      subtitle: 'Coffee Shop API на PHP 8.4',
+      image: 'works/images/php.png',
+      desc: 'ООП на PHP 8.4 с нуля на маленьком API кофейни: 4 принципа ООП, Factory, Decorator, Strategy, Repository, SOLID, наследование vs композиция.',
+      stack: ['PHP 8.4', 'Laravel 13', 'PostgreSQL', 'RabbitMQ'],
+      difficulty: 'Базовая',
+      open: 'php-coffee/docs/OOP_Lab_CoffeeShop.html',
+      repo: 'https://github.com/meeymirita/oop-lab',
+      accent: '#777BB4', accentSoft: '#777BB422', accentShadow: 'rgba(119,123,180,.28)'
+    },
+    {
+      key: 'laravel',
+      category: 'backend',
+      title: 'Laravel Lab',
+      subtitle: 'TaskFlow — таск-трекер',
+      image: 'works/images/laravel.png',
+      desc: 'Laravel 13 «изнутри»: ~30 компонентов illuminate/*, Eloquent-связи, Service Container, Auth/Policy, Observer, очереди, Mailable, кэш, Broadcasting, тесты.',
+      stack: ['Laravel 13', 'PostgreSQL 17', 'Redis', 'RabbitMQ', 'Reverb'],
+      difficulty: 'Высокая',
+      open: 'laravel/Laravel_Lab_TaskFlow.html',
+      repo: 'https://github.com/meeymirita/laravel-lab',
+      accent: '#FF2D20', accentSoft: '#FF2D2022', accentShadow: 'rgba(255,45,32,.28)'
+    },
+    {
+      key: 'redis',
+      category: 'backend',
+      title: 'Redis Lab',
+      subtitle: 'Кэш, локи, rate limit, Streams',
+      image: 'works/images/redis.png',
+      desc: 'Redis как кэш, хранилище сессий, примитив синхронизации и брокер событий: cache-aside, distributed lock, rate limiter, Streams, XAUTOCLAIM, Pub/Sub-дашборд.',
+      stack: ['Laravel 13', 'PostgreSQL 16', 'Redis 7'],
+      difficulty: 'Средняя',
+      open: 'redis/Redis_Lab_Plan.html',
+      repo: 'https://github.com/meeymirita/redis-lab',
+      accent: '#DC382D', accentSoft: '#DC382D22', accentShadow: 'rgba(220,56,45,.28)'
+    },
+    {
+      key: 'rabbitmq',
+      category: 'backend',
+      title: 'RabbitMQ Lab',
+      subtitle: 'Transactional Outbox, воркеры, DLQ',
+      image: 'works/images/rabbitmq.png',
+      desc: 'Асинхронная обработка заказов через очереди: Transactional Outbox, идемпотентный consumer, prefetch, crash-тесты, retry с TTL→DLX, priority queues, fanout.',
+      stack: ['Laravel 13', 'PostgreSQL 16', 'RabbitMQ', 'Mailpit'],
+      difficulty: 'Высокая',
+      open: 'rabbitmq/docs/RabbitMQ_Lab_Plan_v1_pro_max.html',
+      repo: 'https://github.com/meeymirita/rabbitmq-lab',
+      accent: '#FF6600', accentSoft: '#FF660022', accentShadow: 'rgba(255,102,0,.28)'
+    },
+    {
+      key: 'docker',
+      category: 'devops',
+      title: 'Docker Lab',
+      subtitle: 'Крепкое владение Docker и Bash с нуля',
+      image: 'works/images/docker.png',
+      desc: 'Docker и Bash с нуля: образы, контейнеры, docker-compose, сети и тома — через практику в терминале.',
+      stack: ['Docker', 'Docker Compose', 'Bash'],
+      difficulty: '—',
+      open: 'docker/Docker_Bash_Lab.html',
+      repo: 'https://github.com/meeymirita/docker-lab',
+      accent: '#2496ED', accentSoft: '#2496ED22', accentShadow: 'rgba(36,150,237,.28)'
+    },
+    {
+      key: 'traefik',
+      category: 'devops',
+      title: 'Traefik Lab',
+      subtitle: 'Reverse proxy, service discovery, TLS',
+      image: 'traefik/traefik.png',
+      desc: 'Reverse proxy и service discovery для стека из нескольких сервисов без ручной правки конфигов: EntryPoint → Router → Middleware → Service, TLS, canary-деплой.',
+      stack: ['Traefik 3', 'Docker Compose', 'Node.js', 'PostgreSQL'],
+      difficulty: 'Низкая–средняя',
+      open: 'traefik/Docker_and_Traefik_Lab_Plan.html',
+      repo: 'https://github.com/meeymirita/traefik-lab',
+      accent: '#14B8A6', accentSoft: '#14B8A622', accentShadow: 'rgba(20,184,166,.28)'
+    },
+    {
       key: 'kubernetes',
+      category: 'devops',
       title: 'Kubernetes Lab',
       subtitle: 'От Compose к оркестрации',
       image: 'kubernetes/kubernetes.png',
@@ -967,8 +1009,31 @@
     `;
   }
 
+  var categories = [
+    { key: 'frontend', label: 'Frontend', title: 'Фронтенд', color: '#7df9ff' },
+    { key: 'backend', label: 'Backend', title: 'Бэкенд', color: '#ff2e88' },
+    { key: 'devops', label: 'DevOps', title: 'DevOps', color: '#42d392' }
+  ];
+
   function render() {
-    grid.innerHTML = projects.map(cardHtml).join('');
+    var n = 0;
+    grid.innerHTML = categories.map(function (cat) {
+      var items = projects.filter(function (p) { return p.category === cat.key; });
+      if (!items.length) return '';
+
+      return `
+        <div class="category-block reveal" style="--category-color:${cat.color}">
+          <div class="category-head">
+            <span class="category-label mono"><span class="category-dot"></span>${escapeHtml(cat.label)}</span>
+            <h3 class="category-title">${escapeHtml(cat.title)}</h3>
+            <span class="category-count mono">${items.length} ${items.length === 1 ? 'лаба' : 'лабы'}</span>
+          </div>
+          <div class="grid">
+            ${items.map(function (p) { n += 1; return cardHtml(p, n - 1); }).join('')}
+          </div>
+        </div>
+      `;
+    }).join('');
     observeReveal();
     initTilt();
   }
