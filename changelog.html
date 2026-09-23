@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Changelog — TECH PERFORMANCE</title>
+<meta name="description" content="Полная хронология проекта: что добавлялось, менялось и убиралось в каждой лабе и на сайте, коммит за коммитом, с самого первого дня.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+KR:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #08070a;
+    --bg-alt: #0f0c12;
+    --text: #f7f2f5;
+    --text-dim: rgba(247,242,245,.82);
+    --text-dimmer: rgba(247,242,245,.55);
+    --line: rgba(247,242,245,.14);
+    --pink: #ff2e88;
+    --cyan: #7df9ff;
+    --soft: #f8c8dc;
+    --header-h: 73px;
+    --added: #2f9e4a;
+    --changed: #e0a800;
+    --removed: #d64545;
+    --renamed: #8a8a94;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans KR', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: .035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+  }
+
+  a { color: inherit; text-decoration: none; }
+  button { font: inherit; }
+
+  * { scrollbar-width: thin; scrollbar-color: rgba(255,46,136,.4) var(--bg); }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(255,46,136,.4); border-radius: 999px; border: 2px solid var(--bg); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--pink); }
+  ::selection { background: var(--pink); color: var(--bg); }
+
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 0 5vw; }
+  .display { font-family: 'Anton', sans-serif; text-transform: uppercase; }
+  .mono { font-family: 'Space Mono', monospace; letter-spacing: .12em; text-transform: uppercase; }
+
+  @keyframes pulse { 0%,100% { transform: scale(1); opacity: .5; } 50% { transform: scale(1.12); opacity: 1; } }
+
+  header {
+    position: sticky; top: 0; z-index: 40; height: var(--header-h);
+    background: rgba(8,7,10,.76); backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(255,46,136,.35);
+  }
+  header .wrap { display: flex; align-items: center; justify-content: space-between; padding-top: 14px; padding-bottom: 14px; gap: 16px; max-width: 1400px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-size: 20px; letter-spacing: .04em; }
+  .logo::before {
+    content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--pink);
+    box-shadow: 0 0 16px var(--pink); animation: pulse 2s ease-in-out infinite;
+  }
+  nav { display: flex; align-items: center; gap: clamp(10px,2vw,28px); font-size: 12px; color: var(--text); }
+  nav a { position: relative; transition: color .2s ease; }
+  nav a:hover { color: var(--pink); }
+  nav a.nav-cta { background: var(--pink); color: var(--bg); padding: 9px 16px; border-radius: 999px; font-weight: 700; }
+  nav a.nav-cta:hover { color: var(--bg); opacity: .85; }
+  @media (max-width: 640px) { nav a:not(.nav-cta) { display: none; } }
+
+  .cl-hero { position: relative; padding: clamp(48px,8vw,90px) 0 clamp(30px,5vw,50px); overflow: hidden; }
+  .cl-glow {
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(50% 60% at 15% 10%, rgba(125,249,255,.14), transparent 70%),
+                radial-gradient(40% 50% at 90% 40%, rgba(255,46,136,.1), transparent 70%);
+  }
+  .kicker { font-size: 12px; letter-spacing: .24em; color: var(--cyan); margin-bottom: 14px; position: relative; z-index: 1; }
+  .cl-h1 { font-size: clamp(34px,6vw,68px); line-height: .98; margin: 0 0 16px; position: relative; z-index: 1; }
+  .cl-h1 .accent-word { color: var(--pink); }
+  .cl-lead { max-width: 62ch; font-size: clamp(15px,1.4vw,17px); line-height: 1.7; color: var(--text-dim); position: relative; z-index: 1; margin: 0; }
+
+  .cl-stats { display: flex; flex-wrap: wrap; gap: clamp(20px,4vw,44px); margin-top: 30px; position: relative; z-index: 1; }
+  .cl-stat-num { font-family: 'Anton',sans-serif; font-size: clamp(28px,3.4vw,40px); color: var(--pink); line-height: 1; }
+  .cl-stat-label { font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-dimmer); margin-top: 4px; }
+
+  .cl-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; position: relative; z-index: 1; }
+  .cl-legend-item { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; letter-spacing: .06em; color: var(--text-dimmer); border: 1px solid var(--line); padding: 5px 11px; border-radius: 999px; }
+  .cl-legend-dot { width: 8px; height: 8px; border-radius: 999px; flex: 0 0 auto; }
+
+  .timeline { padding: clamp(30px,5vw,60px) 0 clamp(60px,8vw,100px); }
+
+  .cl-day { position: relative; padding-left: 30px; margin-bottom: clamp(34px,5vw,54px); border-left: 2px solid var(--line); }
+  .cl-day:last-child { border-left-color: transparent; }
+  .cl-day-banner {
+    position: relative; margin-left: -30px; margin-bottom: 18px;
+    background: linear-gradient(90deg, var(--bg-alt), rgba(15,12,18,0));
+    border-left: 2px solid var(--pink);
+    padding: 10px 0 10px 28px;
+  }
+  .cl-day-banner::before {
+    content: ""; position: absolute; left: -9px; top: 50%; transform: translateY(-50%);
+    width: 16px; height: 16px; border-radius: 999px; background: var(--bg);
+    border: 2px solid var(--pink); box-shadow: 0 0 12px rgba(255,46,136,.5);
+  }
+  .cl-day-date { font-size: clamp(19px,2.2vw,26px); margin: 0; }
+  .cl-day-title { font-size: 13px; color: var(--text-dimmer); margin-top: 3px; }
+  .cl-day-count { font-size: 10.5px; color: var(--cyan); letter-spacing: .1em; margin-top: 3px; }
+
+  .cl-items { display: flex; flex-direction: column; gap: 10px; }
+  .cl-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: var(--bg-alt); border: 1px solid var(--line); border-radius: 10px;
+    padding: 12px 16px;
+  }
+  .cl-item.milestone { border-color: var(--lab-color, var(--pink)); background: linear-gradient(90deg, rgba(255,46,136,.05), var(--bg-alt) 40%); }
+  .cl-tags { display: flex; flex-direction: column; gap: 6px; flex: 0 0 auto; min-width: 128px; }
+  .cl-lab-tag {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 10.5px; font-weight: 700;
+    color: var(--lab-color); white-space: nowrap;
+  }
+  .cl-lab-tag .dot { width: 7px; height: 7px; border-radius: 999px; background: var(--lab-color); box-shadow: 0 0 8px var(--lab-color); flex: 0 0 auto; }
+  .cl-type-badge {
+    display: inline-flex; align-items: center; font-family: 'Space Mono',monospace; font-size: 9.5px;
+    letter-spacing: .08em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px;
+    background: var(--type-soft); color: var(--type-color); border: 1px solid var(--type-color);
+    width: fit-content;
+  }
+  .cl-text { font-size: 14px; line-height: 1.6; color: var(--text-dim); flex: 1 1 auto; }
+  .cl-text b { color: var(--text); }
+
+  .cl-footer { padding: 24px 0; border-top: 1px solid var(--line); font-size: 11px; letter-spacing: .1em; color: var(--text-dimmer); text-align: center; }
+
+  @media (max-width: 640px) {
+    .cl-item { flex-direction: column; }
+    .cl-tags { flex-direction: row; min-width: 0; flex-wrap: wrap; }
+    .cl-day { padding-left: 20px; }
+    .cl-day-banner { margin-left: -20px; padding-left: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a href="index.html#top" class="logo display">TECH PERFORMANCE</a>
+    <nav class="mono">
+      <a href="index.html#works">работы</a>
+      <a href="https://github.com/meeymirita/submodule-group-lab" target="_blank" rel="noopener" class="nav-cta">репозиторий ↗</a>
+    </nav>
+  </div>
+</header>
+
+<section class="cl-hero">
+  <div class="cl-glow"></div>
+  <div class="wrap">
+    <div class="kicker mono">История проекта</div>
+    <h1 class="cl-h1 display">Change<span class="accent-word">log</span></h1>
+    <p class="cl-lead">Полная хронология: каждый коммит во всех 15 репозиториях проекта (главный сайт + 14 лаб-сабмодулей), от самого первого дня до сегодняшнего утра — что добавлялось, что переписывалось, что убиралось.</p>
+    <div class="cl-stats" id="cl-stats"></div>
+    <div class="cl-legend" id="cl-legend"></div>
+  </div>
+</section>
+
+<div class="wrap timeline" id="timeline"></div>
+
+<footer class="cl-footer mono">Group Lab · собрано с ❤ · <span id="cl-generated"></span></footer>
+
+<script>
+// ── справочник лаб: цвет + подпись ──────────────────────────────────────
+var LABS = {
+  site:        { label: 'Сайт / инфраструктура', color: '#7df9ff' },
+  rabbitmq:    { label: 'RabbitMQ Lab',           color: '#FF6600' },
+  traefik:     { label: 'Traefik Lab',            color: '#14B8A6' },
+  redis:       { label: 'Redis Lab',              color: '#DC382D' },
+  'php-coffee':{ label: 'OOP Lab',                color: '#777BB4' },
+  vue:         { label: 'Vue Lab',                color: '#42B883' },
+  typescript:  { label: 'TypeScript Lab',         color: '#3178C6' },
+  laravel:     { label: 'Laravel Lab',            color: '#FF2D20' },
+  docker:      { label: 'Docker Lab',             color: '#2496ED' },
+  php:         { label: 'Чистый PHP Lab',         color: '#C9A876' },
+  js:          { label: 'Чистый JS Lab',          color: '#F4D35E' },
+  kubernetes:  { label: 'Kubernetes Lab',         color: '#326CE5' },
+  nestjs:      { label: 'NestJS Lab',             color: '#E0234E' },
+  graphql:     { label: 'GraphQL Lab',            color: '#E535AB' },
+};
+
+var TYPES = {
+  added:   { label: 'Добавлено',      color: 'var(--added)' },
+  changed: { label: 'Изменено',       color: 'var(--changed)' },
+  removed: { label: 'Удалено',        color: 'var(--removed)' },
+  renamed: { label: 'Переименовано',  color: 'var(--renamed)' },
+};
+
+// ── хронология по дням ──────────────────────────────────────────────────
+var DAYS = [
+{date:'2026-09-07', title:'RabbitMQ-лаба стартовала сама по себе — общего репозитория ещё не существует', items:[
+  {lab:'rabbitmq', type:'added', text:'Первый набросок методички RabbitMQ, <code>docker-compose.yml</code> и конфиг брокера (<code>definitions.json</code>, <code>rabbitmq.conf</code>).'},
+  {lab:'rabbitmq', type:'changed', text:'Черновой план заменён на подробную версию <code>v1_pro_max</code>; случайно закоммiченный <code>.env</code> обезврежен переименованием в инертный <code>text.txt</code> (секретов в нём не было, но привычка правильная).'},
+]},
+{date:'2026-09-08', title:'RabbitMQ: от плана к настоящему коду', items:[
+  {lab:'rabbitmq', type:'added', text:'Поднят полноценный скелет Laravel 13 внутри лабы (конфиги, миграции, тесты) и добавлен <code>docs/rabbit.md</code>; старый дублирующий файл плана удалён.'},
+  {lab:'rabbitmq', type:'changed', text:'Донастроены <code>docker-compose.yml</code> и конфиг RabbitMQ.'},
+  {lab:'rabbitmq', type:'added', text:'Добавлены Eloquent-модели домена заказов — <code>Order</code>, <code>OrderItem</code>, <code>OrderEvent</code>, <code>OutboxMessage</code>, <code>ProcessedMessage</code>, <code>Product</code> — и миграция таблиц.'},
+  {lab:'rabbitmq', type:'changed', text:'У моделей заказа донастроены связи и приведения типов.'},
+  {lab:'rabbitmq', type:'added', text:'Добавлен <code>OutboxWriter</code> — сервис, который пишет запись Transactional Outbox в той же транзакции, что и сам заказ.'},
+  {lab:'rabbitmq', type:'added', text:'Добавлены <code>OrderController</code> и маршрут создания заказа.'},
+]},
+{date:'2026-09-10', title:'RabbitMQ: воркеры и AMQP-слой', items:[
+  {lab:'rabbitmq', type:'added', text:'Добавлена фабрика AMQP-соединений, подключена библиотека для работы с AMQP.'},
+  {lab:'rabbitmq', type:'added', text:'Добавлен базовый абстрактный класс воркера — <code>AbstractAmqpWorker</code>.'},
+  {lab:'rabbitmq', type:'added', text:'Добавлен <code>OutboxRelayCommand</code> — процесс, вычитывающий outbox и публикующий сообщения в очередь; подключён в docker-compose.'},
+  {lab:'rabbitmq', type:'added', text:'Добавлены три конкурирующих воркера — <code>order</code>, <code>email</code>, <code>analytics</code> — и подключены в docker-compose.'},
+]},
+{date:'2026-09-11', title:'Родился общий репозиторий-хаб — Traefik и Redis присоединяются к RabbitMQ', items:[
+  {lab:'traefik', type:'added', text:'Первый набросок плана лабы Traefik.'},
+  {lab:'redis', type:'added', text:'Первый набросок плана лабы Redis.'},
+  {lab:'traefik', type:'added', text:'Добавлена альтернативная (v1) версия плана Traefik — позже станет канонической.'},
+  {lab:'site', type:'added', text:'<b>Родился общий репозиторий</b> <code>submodule-group-lab</code>: RabbitMQ, Redis и Traefik подключены как git submodules.', milestone:true},
+  {lab:'site', type:'changed', text:'Опечатка <code>readmy.md</code> исправлена на <code>README.md</code>, сабмодули перенесены из служебной папки <code>modules/</code> в корень репозитория.'},
+  {lab:'site', type:'changed', text:'README дополнено содержательным обзором лаб (пара правок подряд).'},
+  {lab:'rabbitmq', type:'added', text:'Добавлены Makefile и <code>docs/order-path-explained.md</code> — пошаговый разбор пути заказа.'},
+  {lab:'site', type:'added', text:'Добавлен <code>.gitignore</code>, чтобы <code>.idea/</code> не попадала в репозиторий.'},
+]},
+{date:'2026-09-13', title:'Самый плотный ранний день: OOP-лаба, Vue и TypeScript стартуют, RabbitMQ дописан до конца', items:[
+  {lab:'rabbitmq', type:'added', text:'Добавлен <code>ProductSeeder</code> для локального тестирования.'},
+  {lab:'rabbitmq', type:'added', text:'Добавлена команда <code>lab:orders</code> — генератор нагрузки для проверки <code>prefetch</code>.'},
+  {lab:'rabbitmq', type:'changed', text:'Исправлен хук <code>LAB_CRASH_BEFORE_ACK</code>: ядро Linux игнорирует <code>SIGKILL</code> для процесса с PID 1 в контейнере — воркер переведён на обычный <code>exit()</code>.'},
+  {lab:'php-coffee', type:'added', text:'<b>Родилась лаба OOP</b> (Coffee Shop API): инициализация репозитория и первый план методички.', milestone:true},
+  {lab:'site', type:'added', text:'Лаба OOP подключена как сабмодуль <code>php-coffee</code>.'},
+  {lab:'php-coffee', type:'removed', text:'Убрано неиспользуемое превью-изображение.'},
+  {lab:'site', type:'changed', text:'Обновлены URL сабмодулей после переименования репозиториев на GitHub.'},
+  {lab:'rabbitmq', type:'changed', text:'Добавлены читатель DLQ, retry с TTL→DLX для писем и сравнение с нативными Laravel Queue Jobs (шаги 5.3–5.4).'},
+  {lab:'site', type:'changed', text:'В README добавлена лаба OOP, описана каждая лаба отдельно.'},
+  {lab:'rabbitmq', type:'changed', text:'Добавлена fanout-рассылка (broadcast), ответы на вопросы для самопроверки и подборка материалов для чтения (шаг 6.2).'},
+  {lab:'site', type:'changed', text:'<b>Лаба RabbitMQ отмечена как пройденная</b> — README указывает на готовый пример в сабмодуле.', milestone:true},
+  {lab:'vue', type:'added', text:'Инициализация репозитория Vue-лабы.'},
+  {lab:'typescript', type:'added', text:'Инициализация репозитория TypeScript-лабы.'},
+  {lab:'site', type:'added', text:'Подключены сабмодули <code>vue-lab</code> и <code>typescript-lab</code>.'},
+  {lab:'vue', type:'changed', text:'Плейсхолдер-иконка заменена на реальную обложку (<code>vue-anime.png</code>).'},
+  {lab:'php-coffee', type:'changed', text:'Методичка OOP перенесена в <code>docs/</code>, добавлены заготовки <code>order-path-explained.md</code>, <code>php.md</code>, <code>self-check-answers.md</code>.'},
+  {lab:'vue', type:'added', text:'Добавлен план Vue-лабы: Helpdesk.'},
+  {lab:'site', type:'changed', text:'В README описан план Vue Helpdesk-лабы.'},
+  {lab:'typescript', type:'added', text:'Добавлен план TypeScript-лабы: Warehouse (складской учёт).'},
+  {lab:'site', type:'changed', text:'В README описан план TypeScript Warehouse-лабы.'},
+  {lab:'site', type:'changed', text:'В README добавлены рейтинг сложности и пререквизиты для каждой лабы.'},
+  {lab:'php-coffee', type:'added', text:'<b>Сессия 1</b>: docker-compose и полный скелет Laravel 13 (~60 файлов), исправлена авторизация RabbitMQ в <code>definitions.json</code>.'},
+  {lab:'php-coffee', type:'added', text:'Шаг 1.2: касса на массивах без ООП (<code>lab0/01_arrays.php</code>) — чтобы почувствовать боль без объектов.'},
+  {lab:'php-coffee', type:'added', text:'Шаг 1.3: первый объект-значение <code>Money</code>.'},
+  {lab:'php-coffee', type:'added', text:'Шаг 1.4: наследование и полиморфизм напитков (<code>Drinks.php</code>).'},
+  {lab:'php-coffee', type:'added', text:'Шаг 1.5: заказ с инвариантами — сессия 1 лабы OOP завершена.'},
+]},
+{date:'2026-09-15', title:'Стартует Laravel-лаба', items:[
+  {lab:'laravel', type:'added', text:'<b>Родилась лаба Laravel</b>: инициализация репозитория и план TaskFlow.', milestone:true},
+  {lab:'site', type:'added', text:'Сабмодуль <code>laravel-lab</code> подключён (до этого завис как битая запись в <code>.gitmodules</code>).'},
+  {lab:'site', type:'changed', text:'В README описана лаба Laravel.'},
+]},
+{date:'2026-09-16', title:'У всех лаб появились README с обложками', items:[
+  {lab:'site', type:'added', text:'Разом во всех лабах — <b>Redis, Laravel, RabbitMQ, TypeScript, OOP, Vue</b>, а следом и <b>Traefik</b> — появились полноценные README с обзором и превью-картинкой; обложки временно легли в <code>images/</code> корневого репозитория.'},
+]},
+{date:'2026-09-18', title:'Стартует Docker-лаба, и на сайте впервые появляется лендинг', items:[
+  {lab:'traefik', type:'removed', text:'Старый (самый первый) черновик плана Traefik удалён.'},
+  {lab:'traefik', type:'renamed', text:'Альтернативная версия плана переименована в канонический <code>Docker_and_Traefik_Lab_Plan.html</code>.'},
+  {lab:'docker', type:'added', text:'<b>Родилась лаба Docker</b>: репозиторий, обложка и методичка «Docker + Bash Lab».', milestone:true},
+  {lab:'site', type:'added', text:'Сабмодуль <code>docker-lab</code> подключён.'},
+  {lab:'site', type:'added', text:'<b>На сайте появился первый лендинг</b> (<code>index.html</code>).', milestone:true},
+  {lab:'docker', type:'changed', text:'README лабы Docker дополнен описанием.'},
+  {lab:'site', type:'changed', text:'Лендинг переписан без зависимости от Tailwind CDN — чистый CSS.'},
+  {lab:'site', type:'changed', text:'Тема лендинга переключена на светло-розовую, исправлено выравнивание кнопок на карточках.'},
+  {lab:'site', type:'changed', text:'Каждая карточка лабы окрашена в фирменный цвет своей технологии.'},
+  {lab:'site', type:'changed', text:'Обложка Traefik заменена на настоящую (была временная <code>docker.png</code>).'},
+  {lab:'site', type:'removed', text:'Убрано фото автора, переписан блок «об авторе».'},
+]},
+{date:'2026-09-20', title:'Самый насыщенный день: родился works, сайт переехал на тёмную неоновую тему, активированы Чистый JS и Чистый PHP', items:[
+  {lab:'site', type:'added', text:'<b>Родился отдельный сабмодуль <code>works</code></b> — стилизованные страницы-методички для каждой лабы (общий <code>lab.js</code>/<code>lab.css</code> + первые 8 страниц).', milestone:true},
+  {lab:'site', type:'changed', text:'Превью-картинки лаб перенесены из корня в <code>works/images</code>.'},
+  {lab:'site', type:'changed', text:'<b>Лендинг полностью переделан в тёмную неоновую тему</b> — тот самый стиль, что и сейчас; старые превью-картинки в корне удалены, они переехали в <code>works</code>.', milestone:true},
+  {lab:'site', type:'added', text:'Во всех лабах, ещё не начатых по-настоящему — <b>Redis, Laravel, TypeScript, Docker, Vue, Traefik</b> — размечена одинаковая заготовка структуры проекта: <code>docs/</code>, папка приложения, Makefile, docker-compose.'},
+  {lab:'site', type:'changed', text:'Заготовки структуры уточнены под реальный план каждой лабы (нужные подпапки под <code>api/</code>, <code>web/</code>, <code>db/</code> и так далее), у всех выровнено расширение <code>docker-compose.yml</code> (было <code>.yaml</code>) — Docker в том числе.'},
+  {lab:'site', type:'changed', text:'Баннер в README теперь по абсолютной ссылке — <code>works</code> стал отдельным сабмодулем, и относительный путь перестал работать.'},
+  {lab:'site', type:'changed', text:'Таблица лаб в README пересортирована по сложности и зависимостям, убрана колонка статуса.'},
+  {lab:'site', type:'changed', text:'В README анонсированы будущие лабы «Чистый PHP» и «Чистый JS» (в разработке).'},
+  {lab:'site', type:'added', text:'Созданы пустые репозитории <code>php-lab</code> и <code>js-lab</code> — заглушки под будущие лабы.'},
+  {lab:'site', type:'added', text:'Для PHP и JS лаб на сайте появились обложки и карточки-заглушки.'},
+  {lab:'site', type:'removed', text:'На страницах лаб убран бейдж статуса «не начата / выполнена» — решили не размечать прогресс так грубо.'},
+  {lab:'js', type:'changed', text:'<b>«Чистый JS» стал настоящей лабой</b>: полная методичка «Vanilla Helpdesk», карточка на сайте, раздел в README, место в очереди — перед Vue и TypeScript.', milestone:true},
+  {lab:'rabbitmq', type:'added', text:'В Makefile добавлена команда <code>install-laravel</code>.'},
+  {lab:'site', type:'changed', text:'Hero-секция лендинга переделана: блок «об авторе» теперь сверху, двухколоночная раскладка, счётчик лаб исправлен на 10.'},
+  {lab:'site', type:'added', text:'Подключён собственный домен — добавлен файл <code>CNAME</code>.'},
+  {lab:'site', type:'changed', text:'Мелкая уборка вёрстки лендинга, починен переход по клику на карточку (он вёл на страницу лабы, но сломался при переделке разметки).'},
+  {lab:'php', type:'changed', text:'<b>«Чистый PHP» получил полную методичку</b> «Vanilla Coffee», поправлены технические неточности, лаба активирована везде — README, лендинг, страница лабы.', milestone:true},
+  {lab:'php', type:'changed', text:'Уточнена сложность лабы «Чистый PHP» — снижена до «Базовая».'},
+]},
+{date:'2026-09-21', title:'Короткий день — разбирались с доменом', items:[
+  {lab:'site', type:'changed', text:'Домен (<code>CNAME</code>) на минуту отключили и сразу вернули — похоже, разбирались с настройками DNS.'},
+]},
+{date:'2026-09-22', title:'Стартует Kubernetes, рождаются NestJS и GraphQL, на сайте — модалка «О проекте»', items:[
+  {lab:'kubernetes', type:'added', text:'<b>Родилась лаба Kubernetes</b> сразу «живой», без промежуточной заглушки: план, README, обложка, карточка и страница на сайте — всё за один день.', milestone:true},
+  {lab:'site', type:'changed', text:'На страницах всех лаб появилась модалка «Оглавление» с деревом разделов методички.'},
+  {lab:'site', type:'changed', text:'Карточки на лендинге пересортированы.'},
+  {lab:'nestjs', type:'added', text:'<b>Родился репозиторий NestJS Lab</b> (заготовка: Makefile, README, docker-compose).', milestone:true},
+  {lab:'graphql', type:'added', text:'<b>Родился репозиторий GraphQL Lab</b> (заготовка: Makefile, README, docker-compose).', milestone:true},
+  {lab:'nestjs', type:'added', text:'Добавлена первая полная версия методички — Helpdesk API, специально привязанный к бэкенду из Vue Lab.'},
+  {lab:'site', type:'changed', text:'NestJS Lab появился на лендинге: карточка и раздел в README.'},
+  {lab:'graphql', type:'added', text:'Добавлена первая полная версия методички — тот же Helpdesk-backend, но без REST, через резолверы.'},
+  {lab:'site', type:'changed', text:'GraphQL Lab появился на лендинге: карточка и раздел в README.'},
+  {lab:'nestjs', type:'changed', text:'Методичка дополнена блоками «под капотом», списками чтения перед каждым шагом и глоссарием со сносками.'},
+  {lab:'graphql', type:'changed', text:'Методичка дополнена блоками «под капотом», списками чтения перед каждым шагом и глоссарием со сносками.'},
+  {lab:'site', type:'added', text:'На лендинге появилась модалка «О проекте» с описанием трёх направлений — фронтенд, бэкенд, devops.'},
+  {lab:'site', type:'changed', text:'Модалка «О проекте» теперь сама открывается при первом визите и запоминает закрытие через <code>localStorage</code>.'},
+  {lab:'site', type:'added', text:'В блок «об авторе» под ссылку на GitHub добавлена ссылка на Telegram.'},
+  {lab:'site', type:'added', text:'В список навыков автора добавлены недостающие чипсы технологий.'},
+]},
+{date:'2026-09-23', title:'Сегодня: NestJS и GraphQL переписаны с нуля как самостоятельные проекты', items:[
+  {lab:'site', type:'removed', text:'Из README убрана фотография автора в разделе «Автор».'},
+  {lab:'nestjs', type:'changed', text:'<b>Методичка NestJS переписана с нуля</b> как куда более глубокий и полностью самостоятельный проект: свой мини-DI контейнер, JWT-ротация refresh-токенов с обнаружением повторного использования, RBAC через <code>TicketPolicy</code>, доменные события, WebSocket-шлюз с комнатами, свой динамический модуль.', milestone:true},
+  {lab:'graphql', type:'changed', text:'<b>Методичка GraphQL переписана с нуля</b> как самостоятельный проект <b>CineGraph</b> — свой домен (каталог фильмов), больше не завязанный на Helpdesk из NestJS Lab.', milestone:true},
+  {lab:'site', type:'changed', text:'Карточки NestJS/GraphQL на сайте обновлены под новый контент, стилизован скролл в модалке оглавления.'},
+  {lab:'site', type:'changed', text:'Обновлены ссылки на сабмодули и README/лендинг под переписанные методички.'},
+]},
+];
+
+// ── рендер ───────────────────────────────────────────────────────────────
+var MONTHS = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+
+function formatDay(iso) {
+  var p = iso.split('-');
+  return parseInt(p[2], 10) + ' ' + MONTHS[parseInt(p[1], 10) - 1];
+}
+
+function renderStats() {
+  var totalCommits = DAYS.reduce(function (s, d) { return s + d.items.length; }, 0);
+  var labKeys = {};
+  DAYS.forEach(function (d) { d.items.forEach(function (it) { labKeys[it.lab] = true; }); });
+  var repoCount = Object.keys(labKeys).length - 1; // минус 'site'
+  var stats = [
+    { num: totalCommits, label: 'событий в хронологии' },
+    { num: repoCount, label: 'лаб в работе' },
+    { num: DAYS.length, label: 'дней с изменениями' },
+  ];
+  document.getElementById('cl-stats').innerHTML = stats.map(function (s) {
+    return '<div><div class="cl-stat-num display">' + s.num + '</div><div class="cl-stat-label mono">' + s.label + '</div></div>';
+  }).join('');
+
+  document.getElementById('cl-legend').innerHTML = Object.keys(TYPES).map(function (k) {
+    return '<span class="cl-legend-item"><span class="cl-legend-dot" style="background:' + TYPES[k].color + '"></span>' + TYPES[k].label + '</span>';
+  }).join('');
+}
+
+function renderTimeline() {
+  document.getElementById('timeline').innerHTML = DAYS.map(function (day) {
+    var itemsHtml = day.items.map(function (it) {
+      var lab = LABS[it.lab] || { label: it.lab, color: '#999' };
+      var type = TYPES[it.type] || TYPES.changed;
+      return (
+        '<div class="cl-item' + (it.milestone ? ' milestone' : '') + '" style="--lab-color:' + lab.color + '">' +
+          '<div class="cl-tags">' +
+            '<span class="cl-lab-tag" style="--lab-color:' + lab.color + '"><span class="dot"></span>' + lab.label + '</span>' +
+            '<span class="cl-type-badge" style="--type-color:' + type.color + '; --type-soft:rgba(255,255,255,.05)">' + type.label + '</span>' +
+          '</div>' +
+          '<div class="cl-text">' + it.text + '</div>' +
+        '</div>'
+      );
+    }).join('');
+
+    return (
+      '<div class="cl-day">' +
+        '<div class="cl-day-banner">' +
+          '<h2 class="cl-day-date display">' + formatDay(day.date) + '</h2>' +
+          '<div class="cl-day-title">' + day.title + '</div>' +
+          '<div class="cl-day-count mono">' + day.items.length + (day.items.length === 1 ? ' событие' : (day.items.length < 5 ? ' события' : ' событий')) + '</div>' +
+        '</div>' +
+        '<div class="cl-items">' + itemsHtml + '</div>' +
+      '</div>'
+    );
+  }).join('');
+}
+
+renderStats();
+renderTimeline();
+document.getElementById('cl-generated').textContent = 'по состоянию на ' + formatDay('2026-09-23') + ' 2026';
+</script>
+</body>
+</html>
