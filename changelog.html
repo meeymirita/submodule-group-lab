@@ -172,7 +172,7 @@
   <div class="wrap">
     <div class="kicker mono">История проекта</div>
     <h1 class="cl-h1 display">Change<span class="accent-word">log</span></h1>
-    <p class="cl-lead">Полная хронология: каждый коммит во всех 15 репозиториях проекта (главный сайт + 14 лаб-сабмодулей), от самого первого дня до сегодняшнего утра — что добавлялось, что переписывалось, что убиралось.</p>
+    <p class="cl-lead">Полная хронология: каждый коммит во всех 15 репозиториях проекта (главный сайт + 14 лаб-сабмодулей), от самого первого дня до сегодняшнего — что добавлялось, что переписывалось, что убиралось. Сверху — самые свежие изменения.</p>
     <div class="cl-stats" id="cl-stats"></div>
     <div class="cl-legend" id="cl-legend"></div>
   </div>
@@ -212,7 +212,7 @@ var TYPES = {
 var DAYS = [
 {date:'2026-09-07', title:'RabbitMQ-лаба стартовала сама по себе — общего репозитория ещё не существует', items:[
   {lab:'rabbitmq', type:'added', text:'Первый набросок методички RabbitMQ, <code>docker-compose.yml</code> и конфиг брокера (<code>definitions.json</code>, <code>rabbitmq.conf</code>).'},
-  {lab:'rabbitmq', type:'changed', text:'Черновой план заменён на подробную версию <code>v1_pro_max</code>; случайно закоммiченный <code>.env</code> обезврежен переименованием в инертный <code>text.txt</code> (секретов в нём не было, но привычка правильная).'},
+  {lab:'rabbitmq', type:'changed', text:'Черновой план заменён на подробную версию <code>v1_pro_max</code>; случайно закоммиченный <code>.env</code> обезврежен переименованием в инертный <code>text.txt</code> (секретов в нём не было, но привычка правильная).'},
 ]},
 {date:'2026-09-08', title:'RabbitMQ: от плана к настоящему коду', items:[
   {lab:'rabbitmq', type:'added', text:'Поднят полноценный скелет Laravel 13 внутри лабы (конфиги, миграции, тесты) и добавлен <code>docs/rabbit.md</code>; старый дублирующий файл плана удалён.'},
@@ -234,9 +234,9 @@ var DAYS = [
   {lab:'traefik', type:'added', text:'Добавлена альтернативная (v1) версия плана Traefik — позже станет канонической.'},
   {lab:'site', type:'added', text:'<b>Родился общий репозиторий</b> <code>submodule-group-lab</code>: RabbitMQ, Redis и Traefik подключены как git submodules.', milestone:true},
   {lab:'site', type:'changed', text:'Опечатка <code>readmy.md</code> исправлена на <code>README.md</code>, сабмодули перенесены из служебной папки <code>modules/</code> в корень репозитория.'},
-  {lab:'site', type:'changed', text:'README дополнено содержательным обзором лаб (пара правок подряд).'},
+  {lab:'site', type:'changed', text:'README дополнен содержательным обзором лаб (пара правок подряд).'},
   {lab:'rabbitmq', type:'added', text:'Добавлены Makefile и <code>docs/order-path-explained.md</code> — пошаговый разбор пути заказа.'},
-  {lab:'site', type:'added', text:'Добавлен <code>.gitignore</code>, чтобы <code>.idea/</code> не попадала в репозиторий.'},
+  {lab:'site', type:'added', text:'Добавлен <code>.gitignore</code>, чтобы папка <code>.idea/</code> не попадала в репозиторий.'},
 ]},
 {date:'2026-09-13', title:'Самый плотный ранний день: OOP-лаба, Vue и TypeScript стартуют, RabbitMQ дописан до конца', items:[
   {lab:'rabbitmq', type:'added', text:'Добавлен <code>ProductSeeder</code> для локального тестирования.'},
@@ -268,7 +268,7 @@ var DAYS = [
 ]},
 {date:'2026-09-15', title:'Стартует Laravel-лаба', items:[
   {lab:'laravel', type:'added', text:'<b>Родилась лаба Laravel</b>: инициализация репозитория и план TaskFlow.', milestone:true},
-  {lab:'site', type:'added', text:'Сабмодуль <code>laravel-lab</code> подключён (до этого завис как битая запись в <code>.gitmodules</code>).'},
+  {lab:'site', type:'added', text:'Сабмодуль <code>laravel-lab</code> подключён (до этого висел битой записью в <code>.gitmodules</code>).'},
   {lab:'site', type:'changed', text:'В README описана лаба Laravel.'},
 ]},
 {date:'2026-09-16', title:'У всех лаб появились README с обложками', items:[
@@ -297,7 +297,7 @@ var DAYS = [
   {lab:'site', type:'changed', text:'Таблица лаб в README пересортирована по сложности и зависимостям, убрана колонка статуса.'},
   {lab:'site', type:'changed', text:'В README анонсированы будущие лабы «Чистый PHP» и «Чистый JS» (в разработке).'},
   {lab:'site', type:'added', text:'Созданы пустые репозитории <code>php-lab</code> и <code>js-lab</code> — заглушки под будущие лабы.'},
-  {lab:'site', type:'added', text:'Для PHP и JS лаб на сайте появились обложки и карточки-заглушки.'},
+  {lab:'site', type:'added', text:'Для лаб PHP и JS на сайте появились обложки и карточки-заглушки.'},
   {lab:'site', type:'removed', text:'На страницах лаб убран бейдж статуса «не начата / выполнена» — решили не размечать прогресс так грубо.'},
   {lab:'js', type:'changed', text:'<b>«Чистый JS» стал настоящей лабой</b>: полная методичка «Vanilla Helpdesk», карточка на сайте, раздел в README, место в очереди — перед Vue и TypeScript.', milestone:true},
   {lab:'rabbitmq', type:'added', text:'В Makefile добавлена команда <code>install-laravel</code>.'},
@@ -317,22 +317,29 @@ var DAYS = [
   {lab:'nestjs', type:'added', text:'<b>Родился репозиторий NestJS Lab</b> (заготовка: Makefile, README, docker-compose).', milestone:true},
   {lab:'graphql', type:'added', text:'<b>Родился репозиторий GraphQL Lab</b> (заготовка: Makefile, README, docker-compose).', milestone:true},
   {lab:'nestjs', type:'added', text:'Добавлена первая полная версия методички — Helpdesk API, специально привязанный к бэкенду из Vue Lab.'},
-  {lab:'site', type:'changed', text:'NestJS Lab появился на лендинге: карточка и раздел в README.'},
+  {lab:'site', type:'changed', text:'Лаба NestJS появилась на лендинге: карточка и раздел в README.'},
   {lab:'graphql', type:'added', text:'Добавлена первая полная версия методички — тот же Helpdesk-backend, но без REST, через резолверы.'},
-  {lab:'site', type:'changed', text:'GraphQL Lab появился на лендинге: карточка и раздел в README.'},
+  {lab:'site', type:'changed', text:'Лаба GraphQL появилась на лендинге: карточка и раздел в README.'},
   {lab:'nestjs', type:'changed', text:'Методичка дополнена блоками «под капотом», списками чтения перед каждым шагом и глоссарием со сносками.'},
   {lab:'graphql', type:'changed', text:'Методичка дополнена блоками «под капотом», списками чтения перед каждым шагом и глоссарием со сносками.'},
   {lab:'site', type:'added', text:'На лендинге появилась модалка «О проекте» с описанием трёх направлений — фронтенд, бэкенд, devops.'},
   {lab:'site', type:'changed', text:'Модалка «О проекте» теперь сама открывается при первом визите и запоминает закрытие через <code>localStorage</code>.'},
   {lab:'site', type:'added', text:'В блок «об авторе» под ссылку на GitHub добавлена ссылка на Telegram.'},
-  {lab:'site', type:'added', text:'В список навыков автора добавлены недостающие чипсы технологий.'},
+  {lab:'site', type:'added', text:'В список навыков автора добавлены недостающие чипы технологий.'},
 ]},
-{date:'2026-09-23', title:'Сегодня: NestJS и GraphQL переписаны с нуля как самостоятельные проекты', items:[
+{date:'2026-09-23', title:'Сегодня: NestJS и GraphQL переписаны с нуля, а сайт ожил на GSAP', items:[
   {lab:'site', type:'removed', text:'Из README убрана фотография автора в разделе «Автор».'},
   {lab:'nestjs', type:'changed', text:'<b>Методичка NestJS переписана с нуля</b> как куда более глубокий и полностью самостоятельный проект: свой мини-DI контейнер, JWT-ротация refresh-токенов с обнаружением повторного использования, RBAC через <code>TicketPolicy</code>, доменные события, WebSocket-шлюз с комнатами, свой динамический модуль.', milestone:true},
   {lab:'graphql', type:'changed', text:'<b>Методичка GraphQL переписана с нуля</b> как самостоятельный проект <b>CineGraph</b> — свой домен (каталог фильмов), больше не завязанный на Helpdesk из NestJS Lab.', milestone:true},
   {lab:'site', type:'changed', text:'Карточки NestJS/GraphQL на сайте обновлены под новый контент, стилизован скролл в модалке оглавления.'},
   {lab:'site', type:'changed', text:'Обновлены ссылки на сабмодули и README/лендинг под переписанные методички.'},
+  {lab:'site', type:'added', text:'<b>Сайт переведён на анимации GSAP</b>: шапка прячется при прокрутке вниз и возвращается при прокрутке вверх, полоса прогресса привязана к скроллу, пункт меню подсвечивается у своего раздела, модалка «О проекте» вырастает из кнопки (Flip).', milestone:true},
+  {lab:'site', type:'added', text:'Загрузочный экран при каждом переходе между страницами: название лабы в её фирменном цвете и SVG-фигуры, которые через <code>MorphSVGPlugin.convertToPath()</code> перетекают одна в другую. GSAP обновлён до 3.13.'},
+  {lab:'site', type:'added', text:'Любая картинка на сайте — обложка в карточке, фото автора, обложка на странице лабы — по клику раскрывается на весь экран и возвращается на место (Flip).'},
+  {lab:'site', type:'changed', text:'Модалка «Оглавление» теперь работает на одной прерываемой анимации «появление → пауза → исчезание», а разделы оглавления раскрываются плавно, а не рывком.'},
+  {lab:'site', type:'changed', text:'Исправлен наклон карточек при наведении: раньше двигалась только первая, остальным мешала CSS-задержка анимации появления.'},
+  {lab:'site', type:'added', text:'Секции лендинга стали слоями: при прокрутке каждая следующая наезжает на предыдущую, а та закрепляется, уменьшается и затемняется.'},
+  {lab:'site', type:'changed', text:'Changelog: новые записи теперь сверху, исправлены опечатки и склонение счётчика событий.'},
 ]},
 ];
 
@@ -342,6 +349,13 @@ var MONTHS = ['января','февраля','марта','апреля','ма�
 function formatDay(iso) {
   var p = iso.split('-');
   return parseInt(p[2], 10) + ' ' + MONTHS[parseInt(p[1], 10) - 1];
+}
+
+function plural(n, one, few, many) {
+  var m10 = n % 10, m100 = n % 100;
+  if (m10 === 1 && m100 !== 11) return one;
+  if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return few;
+  return many;
 }
 
 function renderStats() {
@@ -364,8 +378,9 @@ function renderStats() {
 }
 
 function renderTimeline() {
-  document.getElementById('timeline').innerHTML = DAYS.map(function (day) {
-    var itemsHtml = day.items.map(function (it) {
+  // newest first: days in reverse, and inside each day the latest commit on top
+  document.getElementById('timeline').innerHTML = DAYS.slice().reverse().map(function (day) {
+    var itemsHtml = day.items.slice().reverse().map(function (it) {
       var lab = LABS[it.lab] || { label: it.lab, color: '#999' };
       var type = TYPES[it.type] || TYPES.changed;
       return (
@@ -384,7 +399,7 @@ function renderTimeline() {
         '<div class="cl-day-banner">' +
           '<h2 class="cl-day-date display">' + formatDay(day.date) + '</h2>' +
           '<div class="cl-day-title">' + day.title + '</div>' +
-          '<div class="cl-day-count mono">' + day.items.length + (day.items.length === 1 ? ' событие' : (day.items.length < 5 ? ' события' : ' событий')) + '</div>' +
+          '<div class="cl-day-count mono">' + day.items.length + ' ' + plural(day.items.length, 'событие', 'события', 'событий') + '</div>' +
         '</div>' +
         '<div class="cl-items">' + itemsHtml + '</div>' +
       '</div>'

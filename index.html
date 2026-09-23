@@ -424,6 +424,21 @@
     .grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; perspective: 1400px; }
 
     .category-block { margin-bottom: clamp(50px,7vw,86px); }
+
+    /* Layered scroll panels: each panel is opaque and full-bleed so the next one
+       fully covers it while it's pinned (box-shadow + clip-path paint the bg edge to edge). */
+    .layer-panel {
+      position: relative;
+      z-index: 1;
+      background: var(--bg);
+      box-shadow: 0 0 0 100vmax var(--bg);
+      clip-path: inset(0 -100vmax);
+    }
+    .layer-panel.category-block { padding-top: 24px; }
+    /* the last layer must fill the screen on its own, or the pinned panel beneath it
+       shows through the gap below it while it slides up */
+    .layer-panel.is-last { min-height: 100vh; }
+    .marquee, .works-section { position: relative; z-index: 1; background: var(--bg); }
     .category-block:last-child { margin-bottom: 0; }
     .category-head {
       display: flex;
@@ -1361,6 +1376,62 @@
     });
   }
 
+  // Layered pinning: every panel pins once it's fully in view (top, or its bottom for panels
+  // taller than the screen) and stays put while the next panel slides up over it, shrinking
+  // and dimming a little as it gets covered.
+  function initLayeredPanels() {
+    if (!gsapReady) return;
+
+    var panels = [document.getElementById('top'), document.getElementById('intro')]
+      .concat(Array.prototype.slice.call(document.querySelectorAll('.category-block')))
+      .filter(Boolean);
+
+    panels.forEach(function (panel) { panel.classList.add('layer-panel'); });
+    panels[panels.length - 1].classList.add('is-last');
+
+    try {
+      panels.slice(0, -1).forEach(function (panel) {
+        var fitsScreen = function () { return panel.offsetHeight <= window.innerHeight; };
+
+        ScrollTrigger.create({
+          trigger: panel,
+          start: function () { return fitsScreen() ? 'top top' : 'bottom bottom'; },
+          end: '+=100%',
+          pin: true,
+          pinSpacing: false,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          // once fully covered, a pinSpacing:false panel is left parked behind the next
+          // one (shifted down by the pin distance) and would peek out lower on the page
+          onLeave: function () { panel.style.visibility = 'hidden'; },
+          onEnterBack: function () { panel.style.visibility = ''; },
+        });
+
+        // the sticky category head stays opaque so the cards under it never show through
+        var dimTargets = Array.prototype.filter.call(panel.children, function (el) {
+          return !el.classList.contains('category-head');
+        });
+
+        // fromTo + immediateRender:false: don't sample the start values at load time, when
+        // .reveal content is still at opacity 0 (that froze the hero invisible)
+        gsap.fromTo(dimTargets, { scale: 1, opacity: 1 }, {
+          scale: .92,
+          opacity: .35,
+          transformOrigin: '50% 100%',
+          ease: 'none',
+          immediateRender: false,
+          scrollTrigger: {
+            trigger: panel,
+            start: function () { return fitsScreen() ? 'top top' : 'bottom bottom'; },
+            end: '+=100%',
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        });
+      });
+    } catch (e) {}
+  }
+
   function initHeaderAutoHide() {
     if (!gsapReady) return;
     var header = document.querySelector('header');
@@ -1490,6 +1561,7 @@
   });
 
   render();
+  initLayeredPanels();
   observeReveal();
 </script>
 
