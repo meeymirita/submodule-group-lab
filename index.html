@@ -1,451 +1,1095 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Group Lab — лабораторные работы</title>
-<meta name="description" content="Сборный репозиторий лабораторных работ: RabbitMQ, Redis, Traefik, OOP, Vue, TypeScript, Laravel, Docker.">
-<style>
-  :root {
-    --bg: #fffafc;
-    --card-bg: #ffffff;
-    --border: #f5dfe9;
-    --text: #2b2230;
-    --text-dim: #8a7a87;
-    --text-dimmer: #b3a1ad;
-    --pink: #ec4899;
-    --pink-dark: #db2777;
-    --pink-soft: #fbcfe8;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TECH PERFORMANCE — лабораторные работы</title>
+  <meta name="description" content="Сборный репозиторий лабораторных работ: RabbitMQ, Redis, Traefik, Kubernetes, OOP, Vue, TypeScript, NestJS, GraphQL, Laravel, Docker.">
 
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    line-height: 1.5;
-  }
-  a { color: inherit; text-decoration: none; }
-  img { max-width: 100%; display: block; }
-  ::-webkit-scrollbar { width: 10px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--pink-soft); border-radius: 999px; }
-  ::selection { background: rgba(236,72,153,.2); color: var(--pink-dark); }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+KR:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
-  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+  <style>
+    :root {
+      --bg: #08070a;
+      --bg-alt: #0f0c12;
+      --text: #f7f2f5;
+      --text-dim: rgba(247,242,245,.82);
+      --text-dimmer: rgba(247,242,245,.55);
+      --line: rgba(247,242,245,.14);
+      --pink: #ff2e88;
+      --cyan: #7df9ff;
+      --soft: #f8c8dc;
+      --header-h: 73px;
+    }
 
-  /* decorative blobs */
-  .blobs { position: fixed; inset: 0; overflow: hidden; z-index: -1; }
-  .blob { position: absolute; border-radius: 50%; filter: blur(90px); animation: blob 18s infinite ease-in-out; }
-  .blob-1 { top: -10%; left: -10%; width: 36rem; height: 36rem; background: rgba(236,72,153,.14); }
-  .blob-2 { top: 20%; right: -15%; width: 40rem; height: 40rem; background: rgba(244,114,182,.16); animation-delay: -6s; }
-  .blob-3 { bottom: -15%; left: 20%; width: 32rem; height: 32rem; background: rgba(251,207,232,.35); animation-delay: -12s; }
-  @keyframes blob {
-    0%, 100% { transform: translate(0,0) scale(1); }
-    33% { transform: translate(30px,-40px) scale(1.1); }
-    66% { transform: translate(-20px,20px) scale(.95); }
-  }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
-  /* header */
-  header {
-    position: sticky; top: 0; z-index: 40;
-    background: rgba(255,250,252,.8);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
-  }
-  header .wrap { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; padding-bottom: 16px; }
-  .logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 18px; letter-spacing: -.01em; color: var(--text); }
-  .logo-badge {
-    display: inline-flex; width: 32px; height: 32px; border-radius: 10px; align-items: center; justify-content: center;
-    font-size: 15px; background: linear-gradient(135deg,#f9a8d4,#ec4899);
-  }
-  nav { display: flex; align-items: center; gap: 24px; font-size: 14px; color: var(--text-dim); }
-  nav a { transition: color .2s ease; }
-  nav a:hover { color: var(--pink-dark); }
-  @media (max-width: 640px) { nav { display: none; } }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans KR', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
 
-  /* hero */
-  .hero { padding: 64px 0 40px; }
-  .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; }
-  @media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; } }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9998;
+      opacity: .035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+    }
 
-  .eyebrow {
-    display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600;
-    letter-spacing: .04em; text-transform: uppercase; color: var(--pink-dark);
-    background: #fdf1f7; border: 1px solid var(--pink-soft);
-    padding: 6px 12px; border-radius: 999px;
-  }
-  h1 {
-    margin: 20px 0 0; font-size: 44px; font-weight: 800; line-height: 1.1; letter-spacing: -.02em; color: var(--text);
-  }
-  @media (max-width: 640px) { h1 { font-size: 32px; } }
-  .gradient-text {
-    background: linear-gradient(90deg,#ec4899,#f472b6,#fb7185);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-  }
-  .lead { margin: 20px 0 0; color: var(--text-dim); font-size: 17px; max-width: 560px; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    button { font: inherit; }
 
-  .btn-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
-  .btn {
-    display: inline-flex; align-items: center; gap: 8px; padding: 13px 22px; border-radius: 12px;
-    font-size: 14px; font-weight: 600; border: 1px solid transparent; cursor: pointer;
-    transition: transform .25s ease, background-color .25s ease, box-shadow .25s ease;
-  }
-  .btn:hover { transform: translateY(-2px); }
-  .btn-primary { background: var(--pink); color: #fff; box-shadow: 0 10px 25px -10px rgba(236,72,153,.6); }
-  .btn-primary:hover { background: var(--pink-dark); }
-  .btn-outline { border-color: var(--pink-soft); color: var(--text); background: #fff; }
-  .btn-outline:hover { background: #fdf1f7; }
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: rgba(255,46,136,.4); border-radius: 999px; }
+    ::selection { background: var(--pink); color: var(--bg); }
 
-  .stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; max-width: 380px; margin-top: 40px; }
-  .stat-num { font-size: 24px; font-weight: 800; color: var(--text); }
-  .stat-num.accent { color: var(--pink); }
-  .stat-label { font-size: 12px; color: var(--text-dimmer); margin-top: 4px; }
+    .wrap { max-width: 1400px; margin: 0 auto; padding: 0 5vw; }
+    .display { font-family: 'Anton', sans-serif; text-transform: uppercase; }
+    .mono { font-family: 'Space Mono', monospace; letter-spacing: .12em; text-transform: uppercase; }
 
-  .hero-image-wrap { position: relative; }
-  .hero-glow {
-    position: absolute; inset: -24px; border-radius: 999px;
-    background: linear-gradient(135deg, rgba(236,72,153,.18), rgba(244,114,182,.1));
-    filter: blur(60px); z-index: -1;
-  }
-  .hero-image {
-    width: 100%; border-radius: 20px; border: 1px solid var(--border);
-    box-shadow: 0 25px 60px -15px rgba(236,72,153,.25);
-    animation: float 6s ease-in-out infinite;
-  }
-  @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+    .progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      width: 0;
+      background: linear-gradient(90deg, var(--pink), var(--cyan));
+      z-index: 10001;
+      box-shadow: 0 0 12px rgba(255,46,136,.7);
+    }
 
-  /* works section */
-  .works { padding-top: 48px; padding-bottom: 96px; }
-  .works-head {
-    display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 32px;
-  }
-  .works-head h2 { font-size: 28px; font-weight: 800; letter-spacing: -.01em; margin: 0; color: var(--text); }
-  .works-head p { color: var(--text-dimmer); font-size: 14px; margin: 6px 0 0; }
+    @keyframes blink { 0%,49% { opacity: 1; } 50%,100% { opacity: .15; } }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes pulse { 0%,100% { transform: scale(1); opacity: .5; } 50% { transform: scale(1.12); opacity: 1; } }
+    @keyframes scan { 0% { transform: translateY(-120%); } 100% { transform: translateY(120%); } }
+    @keyframes float { 0%,100% { transform: translate3d(0,0,0); } 50% { transform: translate3d(0,-12px,0); } }
 
-  .filters { display: flex; flex-wrap: wrap; gap: 8px; }
-  .filter-btn {
-    font-size: 14px; font-weight: 500; padding: 9px 18px; border-radius: 999px;
-    border: 1px solid var(--border); background: #fff; color: var(--text-dim);
-    cursor: pointer; transition: all .25s ease;
-  }
-  .filter-btn:hover { color: var(--pink-dark); border-color: var(--pink-soft); }
-  .filter-btn.active { background: var(--pink); color: #fff; border-color: var(--pink); }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      height: var(--header-h);
+      background: rgba(8,7,10,.76);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,46,136,.35);
+    }
 
-  .grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
-  }
-  @media (max-width: 980px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+    header .wrap { display: flex; align-items: center; justify-content: space-between; padding-top: 14px; padding-bottom: 14px; gap: 16px; }
 
-  .card {
-    position: relative; height: 100%; display: flex; flex-direction: column;
-    border-radius: 18px; border: 1px solid var(--accent-soft, var(--border));
-    border-top: 3px solid var(--accent);
-    background: var(--card-bg); overflow: hidden; box-shadow: 0 1px 3px rgba(43,34,48,.04);
-    transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease, border-color .35s ease;
-  }
-  .card:hover { transform: translateY(-6px); box-shadow: 0 24px 55px -22px var(--accent-shadow); }
+    .logo { display: flex; align-items: center; gap: 10px; font-size: 20px; letter-spacing: .04em; }
 
-  .card-media { position: relative; aspect-ratio: 4/3; overflow: hidden; background: var(--accent-soft, #f5dfe9); }
-  .card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s ease; }
-  .card:hover .card-media img { transform: scale(1.1); }
-  .card-media::after {
-    content: ""; position: absolute; inset: 0;
-    background: linear-gradient(to top, rgba(255,255,255,.9) 0%, rgba(255,255,255,.05) 45%, transparent 100%);
-  }
-  .badge {
-    position: absolute; z-index: 2; font-size: 11px; font-weight: 600; padding: 5px 11px;
-    border-radius: 999px; border: 1px solid var(--border);
-    background: rgba(255,255,255,.85); backdrop-filter: blur(6px); color: var(--text);
-  }
-  .badge-status { top: 12px; right: 12px; }
-  .badge-status.done { background: rgba(16,185,129,.12); color: #059669; border-color: rgba(16,185,129,.3); }
-  .badge-status.progress { background: rgba(148,116,135,.12); color: #8a7a87; border-color: var(--border); }
-  .badge-diff { bottom: 12px; left: 12px; }
+    .logo::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--pink);
+      box-shadow: 0 0 16px var(--pink);
+      animation: pulse 2s ease-in-out infinite;
+    }
 
-  .card-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
-  .card-title { font-size: 18px; font-weight: 800; margin: 0; line-height: 1.3; color: var(--text); }
-  .card-subtitle { font-size: 13px; font-weight: 600; margin: 3px 0 0; color: var(--accent); }
-  .card-desc { font-size: 14px; color: var(--text-dim); margin: 12px 0 0; line-height: 1.55; }
+    nav { display: flex; align-items: center; gap: clamp(10px,2vw,28px); font-size: 12px; color: var(--text); }
+    nav a { position: relative; transition: color .2s ease; }
 
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
-  .chip {
-    font-size: 11px; font-family: "SFMono-Regular", Consolas, monospace; padding: 4px 9px;
-    border-radius: 6px; background: var(--accent-soft, #fdf1f7); border: 1px solid var(--accent-soft, var(--border)); color: var(--accent);
-  }
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 100%;
+      bottom: -5px;
+      height: 1px;
+      background: var(--pink);
+      transition: right .25s ease;
+    }
 
-  .card-actions { display: flex; gap: 8px; margin-top: auto; padding-top: 20px; }
-  .card-open {
-    flex: 1; text-align: center; padding: 11px 16px; border-radius: 12px; font-size: 14px; font-weight: 700;
-    color: #fff; background: var(--accent); transition: transform .2s ease, filter .2s ease;
-  }
-  .card-open:hover { transform: scale(1.03); filter: brightness(1.08); }
-  .card-open.disabled {
-    background: #fbf2f6; color: var(--text-dimmer); border: 1px solid var(--border); cursor: not-allowed;
-  }
-  .card-repo {
-    display: inline-flex; align-items: center; justify-content: center; padding: 11px 14px; border-radius: 12px;
-    border: 1px solid var(--border); color: var(--text); transition: background-color .2s ease;
-  }
-  .card-repo:hover { background: #fdf1f7; }
+    nav a:hover { color: var(--pink); }
+    nav a:hover::after { right: 0; }
 
-  /* about */
-  .about { padding-bottom: 96px; }
-  .about-box {
-    border-radius: 22px; border: 1px solid var(--border); background: var(--card-bg);
-    padding: 36px; display: flex; align-items: center; gap: 30px; flex-wrap: wrap;
-    box-shadow: 0 1px 3px rgba(43,34,48,.04);
-  }
-  .about-photo { width: 128px; height: 128px; border-radius: 18px; object-fit: cover; border: 1px solid var(--border); }
-  .about-box h3 { margin: 0; font-size: 19px; font-weight: 800; color: var(--text); }
-  .about-box p { color: var(--text-dim); margin: 8px 0 0; max-width: 640px; line-height: 1.6; font-size: 14px; }
-  .about-link { display: inline-flex; margin-top: 14px; font-weight: 700; font-size: 14px; color: var(--pink-dark); }
-  .about-link:hover { color: var(--pink); }
+    nav a.nav-cta {
+      background: var(--pink);
+      color: var(--bg);
+      padding: 9px 16px;
+      border-radius: 999px;
+      font-weight: 700;
+    }
 
-  footer {
-    border-top: 1px solid var(--border); padding: 28px 0; text-align: center;
-    color: var(--text-dimmer); font-size: 13px;
-  }
+    nav a.nav-cta::after { display: none; }
+    nav a.nav-cta:hover { color: var(--bg); opacity: .85; }
 
-  /* scroll-reveal */
-  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
-  .reveal.in-view { opacity: 1; transform: translateY(0); }
-</style>
+    @media (max-width: 640px) {
+      nav a:not(.nav-cta) { display: none; }
+    }
+
+    .about-section {
+      position: relative;
+      min-height: calc(100vh - var(--header-h));
+      display: grid;
+      align-content: center;
+      padding: clamp(60px,9vw,120px) 0;
+      overflow: hidden;
+    }
+
+    .about-glow {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(50% 60% at 12% 20%, rgba(125,249,255,.14), transparent 70%),
+        radial-gradient(40% 50% at 90% 80%, rgba(255,46,136,.08), transparent 70%);
+    }
+
+    .about-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
+      gap: clamp(28px,5vw,64px);
+      align-items: center;
+    }
+
+    .kicker { font-size: 12px; letter-spacing: .24em; color: var(--cyan); margin-bottom: 14px; }
+    .section-h2 { font-size: clamp(32px,5vw,64px); line-height: .95; margin: 0 0 12px; }
+    .accent-word { color: var(--pink); }
+
+    .about-text p {
+      margin: 14px 0 0;
+      font-size: clamp(15px,1.5vw,18px);
+      line-height: 1.7;
+      color: var(--text-dim);
+    }
+
+    .about-text .chips { margin-top: 22px; }
+
+    .about-photo-wrap { display: flex; justify-content: center; perspective: 1000px; }
+    .about-photo-box { position: relative; width: 100%; max-width: 440px; }
+
+    .about-photo-box::before {
+      content: "DEVELOPER / 01";
+      position: absolute;
+      top: -13px;
+      left: 20px;
+      z-index: 4;
+      padding: 5px 9px;
+      background: var(--pink);
+      color: var(--bg);
+      font: 700 9px 'Space Mono',monospace;
+      letter-spacing: .1em;
+    }
+
+    .about-photo-box::after {
+      content: "";
+      position: absolute;
+      inset: -12px;
+      border: 1px solid rgba(125,249,255,.15);
+      pointer-events: none;
+      transform: rotate(2deg);
+    }
+
+    .about-photo-big {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 28px;
+      border: 1px solid rgba(255,46,136,.45);
+      box-shadow: 0 0 70px rgba(255,46,136,.2), 20px 20px 0 rgba(255,46,136,.06);
+      transition: transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s ease;
+    }
+
+    .about-photo-box:hover .about-photo-big {
+      transform: rotate(-1deg) scale(1.025);
+      box-shadow: 0 0 90px rgba(255,46,136,.3), 20px 20px 0 rgba(125,249,255,.06);
+    }
+
+    @media (min-width: 700px) {
+      .about-photo-wrap { justify-content: flex-end; }
+    }
+
+    .about-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 24px;
+      border: 1px solid rgba(247,242,245,.2);
+      padding: 18px 22px;
+      color: var(--text);
+      font-size: 13px;
+      transition: border-color .2s ease, color .2s ease, background-color .2s ease, transform .2s ease;
+    }
+
+    .about-link:hover {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      background: rgba(125,249,255,.08);
+      transform: translateX(5px);
+    }
+
+    .hero { position: relative; padding: clamp(55px,8vw,110px) 0 clamp(55px,7vw,90px); overflow: hidden; }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      opacity: .4;
+      background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 70px 70px;
+      mask-image: linear-gradient(to bottom, black, transparent 90%);
+      pointer-events: none;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 700px;
+      height: 700px;
+      left: -220px;
+      top: -300px;
+      border-radius: 50%;
+      pointer-events: none;
+      background: radial-gradient(circle, rgba(255,46,136,.20), transparent 65%);
+      filter: blur(10px);
+      animation: float 7s ease-in-out infinite;
+    }
+
+    .hero-glow-two {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      right: -220px;
+      top: -80px;
+      border-radius: 50%;
+      pointer-events: none;
+      background: radial-gradient(circle, rgba(125,249,255,.11), transparent 65%);
+      filter: blur(15px);
+      animation: float 9s ease-in-out infinite reverse;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr);
+      gap: clamp(45px, 7vw, 100px);
+      align-items: center;
+    }
+
+    .hero-left, .hero-right { min-width: 0; }
+    .hero-right { display: flex; flex-direction: column; justify-content: center; padding-top: 12px; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 10px;
+      letter-spacing: .18em;
+      line-height: 1.4;
+      color: var(--cyan);
+      margin-bottom: 20px;
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      flex: 0 0 auto;
+      background: var(--pink);
+      border-radius: 999px;
+      animation: blink 1.4s steps(1) infinite;
+      box-shadow: 0 0 15px var(--pink);
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(30px,4.6vw,62px);
+      line-height: 1.05;
+      letter-spacing: -.02em;
+      max-width: 640px;
+      overflow-wrap: break-word;
+    }
+
+    .outline-word { display: block; -webkit-text-stroke: 2px var(--text); color: transparent; }
+
+    .lead { max-width: 62ch; font-size: clamp(15px,1.45vw,18px); line-height: 1.7; color: var(--text-dim); margin: 0; }
+
+    .lead.strong {
+      max-width: 680px;
+      color: var(--soft);
+      font-weight: 700;
+      font-size: clamp(13px,1.15vw,15px);
+      line-height: 1.65;
+      margin-top: 24px;
+    }
+
+    .hero-right .lead { max-width: 560px; }
+
+    .system-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 13px;
+      margin-top: 26px;
+      border: 1px solid rgba(125,249,255,.25);
+      background: rgba(125,249,255,.04);
+      color: var(--cyan);
+      font-size: 9px;
+      white-space: nowrap;
+    }
+
+    .system-status span {
+      width: 6px;
+      height: 6px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 10px var(--cyan);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    .btn-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 26px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .14em;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform .25s ease, opacity .25s ease, border-color .25s ease, color .25s ease, box-shadow .25s ease;
+    }
+
+    .btn:hover { transform: translateY(-3px); }
+
+    .btn-primary { background: var(--pink); color: var(--bg); box-shadow: 0 10px 30px rgba(255,46,136,.18); }
+    .btn-primary:hover { opacity: .9; box-shadow: 0 15px 40px rgba(255,46,136,.35); }
+
+    .btn-outline { border-color: rgba(247,242,245,.4); color: var(--text); font-weight: 400; }
+    .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); box-shadow: 0 10px 30px rgba(125,249,255,.1); }
+
+    .stats { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 22px; width: 100%; max-width: 400px; margin-top: 46px; }
+    .stat { min-width: 0; border-left: 2px solid var(--stat-color,var(--pink)); padding-left: 16px; }
+    .stat-num { font-family: 'Anton',sans-serif; font-size: clamp(38px,4.5vw,56px); line-height: 1; }
+    .stat-label { font-size: 11px; line-height: 1.4; letter-spacing: .12em; text-transform: uppercase; color: var(--text-dimmer); margin-top: 7px; }
+
+    .marquee {
+      overflow: hidden;
+      border-top: 1px solid rgba(255,46,136,.4);
+      border-bottom: 1px solid rgba(255,46,136,.4);
+      background: var(--pink);
+      padding: 12px 0;
+    }
+
+    .marquee-track { display: flex; width: max-content; animation: marquee 24s linear infinite; }
+    .marquee-track span { font-size: clamp(20px,3vw,34px); letter-spacing: .04em; white-space: nowrap; padding-right: 40px; color: var(--bg); }
+
+    .works-section { padding: clamp(60px,9vw,120px) 0; }
+    .works-head { margin-bottom: clamp(26px,4vw,44px); }
+    .works-head p { margin: 8px 0 0; font-size: 13px; color: var(--text-dimmer); letter-spacing: .06em; }
+    .works-title-line { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; }
+    .works-count { color: rgba(255,255,255,.18); font: 100px/0.8 'Anton',sans-serif; }
+
+    .grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; perspective: 1400px; }
+
+    .category-block { margin-bottom: clamp(50px,7vw,86px); }
+    .category-block:last-child { margin-bottom: 0; }
+    .category-head {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .category-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      letter-spacing: .22em;
+      color: var(--category-color);
+    }
+    .category-dot {
+      width: 8px;
+      height: 8px;
+      flex: 0 0 auto;
+      border-radius: 999px;
+      background: var(--category-color);
+      box-shadow: 0 0 12px var(--category-color);
+    }
+    .category-title { font-family: 'Anton',sans-serif; font-size: clamp(22px,2.6vw,32px); margin: 0; }
+    .category-count { margin-left: auto; font-size: 12px; color: var(--text-dimmer); letter-spacing: .1em; white-space: nowrap; }
+
+    .card {
+      position: relative;
+      height: 100%;
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      border: 1px solid var(--accent-soft,var(--line));
+      background: var(--bg-alt);
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform .18s ease-out, border-color .35s ease, box-shadow .35s ease;
+      will-change: transform;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      transform: translateX(-100%);
+      transition: transform .7s ease;
+      z-index: 8;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      background: linear-gradient(180deg, transparent 0%, transparent 45%, rgba(255,255,255,.08) 50%, transparent 55%, transparent 100%);
+      transition: opacity .2s ease;
+    }
+
+    .card:hover { border-color: var(--accent); box-shadow: 0 30px 70px -25px var(--accent-shadow), 0 0 30px var(--accent-soft); }
+    .card:hover::before { transform: translateX(100%); }
+    .card:hover::after { opacity: 1; animation: scan 1.5s linear infinite; }
+
+    .card-number {
+      position: absolute;
+      z-index: 5;
+      right: 14px;
+      top: 12px;
+      font: 70px/.8 'Anton',sans-serif;
+      color: rgba(255,255,255,.12);
+      pointer-events: none;
+      transition: color .3s ease, transform .3s ease;
+    }
+
+    .card:hover .card-number { color: var(--accent); transform: translateY(-4px); }
+
+    .card-media { position: relative; aspect-ratio: 16/11; overflow: hidden; background: var(--accent-soft,var(--bg-alt)); transform: translateZ(20px); }
+
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      filter: saturate(.88);
+      transition: transform .7s cubic-bezier(.2,.8,.2,1), filter .5s ease;
+    }
+
+    .card:hover .card-media img { transform: scale(1.1); filter: saturate(1.15); }
+
+    .card-media::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(135deg, transparent 50%, var(--accent-soft) 100%);
+      opacity: .8;
+      pointer-events: none;
+    }
+
+    .card-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: linear-gradient(to top, rgba(15,12,18,.98) 0%, rgba(15,12,18,.15) 55%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .badge {
+      position: absolute;
+      z-index: 6;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 999px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      background: rgba(8,7,10,.78);
+      backdrop-filter: blur(8px);
+      color: var(--soft);
+      border: 1px solid rgba(248,200,220,.35);
+    }
+
+    .badge-diff { top: 12px; left: 12px; }
+
+    .card-body { position: relative; z-index: 3; padding: 22px; display: flex; flex-direction: column; flex: 1; transform: translateZ(25px); }
+    .card-title { font-family: 'Anton',sans-serif; text-transform: uppercase; font-size: 25px; margin: 0; line-height: 1.15; color: var(--text); }
+    .card-subtitle { font-family: 'Space Mono',monospace; font-size: 10px; letter-spacing: .08em; margin: 6px 0 0; color: var(--accent); }
+    .card-desc { font-size: 13px; color: var(--text-dim); margin: 14px 0 0; line-height: 1.65; }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+
+    .chip {
+      font-size: 10px;
+      font-family: 'Space Mono',monospace;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft,rgba(247,242,245,.06));
+      border: 1px solid var(--accent-soft,var(--line));
+      color: var(--accent);
+      transition: transform .2s ease, background .2s ease;
+    }
+
+    .card:hover .chip { transform: translateY(-2px); }
+
+    .card-actions { display: flex; gap: 8px; margin-top: auto; padding-top: 20px; border-top: 1px solid var(--line); }
+
+    .card-open {
+      flex: 1;
+      text-align: center;
+      padding: 11px 16px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      transition: transform .2s ease, filter .2s ease, box-shadow .2s ease;
+    }
+
+    .card-open:hover { transform: scale(1.03); filter: brightness(1.1); box-shadow: 0 8px 25px var(--accent-shadow); }
+
+    .card-open.disabled { background: rgba(247,242,245,.06); color: var(--text-dimmer); border: 1px solid var(--line); cursor: not-allowed; }
+
+    .card-repo {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 11px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      color: var(--text);
+      transition: border-color .2s ease, color .2s ease, background-color .2s ease;
+    }
+
+    .card-repo:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+
+    .feature-strip {
+      margin-top: 80px;
+      padding: 25px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      color: var(--text-dimmer);
+    }
+
+    .feature-strip strong { color: var(--pink); }
+    .feature-strip span { font-size: 10px; }
+
+    .site-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding: 24px 0;
+      border-top: 1px solid var(--line);
+      font-size: 11px;
+      letter-spacing: .14em;
+      color: var(--text-dimmer);
+    }
+
+    .footer-git { display: inline-flex; align-items: center; gap: 10px; }
+
+    .spinner {
+      width: 10px;
+      height: 10px;
+      border: 2px solid var(--pink);
+      border-top-color: transparent;
+      border-radius: 999px;
+      animation: spin 2.6s linear infinite;
+      display: inline-block;
+    }
+
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity .8s ease, transform .8s cubic-bezier(.2,.8,.2,1); }
+    .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+    .about-trigger { background: none; border: none; padding: 0; color: inherit; font: inherit; cursor: pointer; }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(4,3,5,.78);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease;
+    }
+    .modal-overlay.is-open { opacity: 1; pointer-events: auto; }
+
+    .modal-panel {
+      position: relative;
+      width: 100%;
+      max-width: 720px;
+      max-height: calc(100vh - 48px);
+      overflow-y: auto;
+      background: var(--bg-alt);
+      border: 1px solid rgba(255,46,136,.35);
+      border-radius: 20px;
+      box-shadow: 0 30px 80px rgba(0,0,0,.6), 0 0 40px rgba(255,46,136,.08);
+      padding: clamp(24px,4vw,44px);
+      transform: translateY(16px) scale(.97);
+      transition: transform .25s ease;
+    }
+    .modal-overlay.is-open .modal-panel { transform: translateY(0) scale(1); }
+
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: transparent;
+      color: var(--text);
+      font-size: 16px;
+      cursor: pointer;
+      transition: border-color .2s ease, color .2s ease, transform .2s ease;
+    }
+    .modal-close:hover { border-color: var(--pink); color: var(--pink); transform: rotate(90deg); }
+
+    .modal-kicker { font-size: 11px; color: var(--pink); margin-bottom: 10px; }
+    .modal-title { font-size: clamp(24px,3.4vw,34px); line-height: 1.05; margin: 0 0 16px; padding-right: 40px; }
+    .modal-intro { color: var(--text-dim); font-size: 14px; line-height: 1.65; margin: 0 0 30px; }
+
+    .modal-cats { display: flex; flex-direction: column; gap: 18px; }
+    .modal-cat {
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--cat-color,var(--pink));
+      border-radius: 12px;
+      padding: 16px 18px;
+      background: rgba(247,242,245,.02);
+    }
+    .modal-cat-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+    .modal-cat-dot { width: 7px; height: 7px; border-radius: 999px; background: var(--cat-color); box-shadow: 0 0 10px var(--cat-color); flex: 0 0 auto; }
+    .modal-cat-title { font-size: 15px; font-weight: 700; }
+    .modal-cat-count { margin-left: auto; font-size: 10px; color: var(--text-dimmer); }
+    .modal-cat-desc { font-size: 13px; color: var(--text-dim); line-height: 1.55; margin: 0 0 10px; }
+    .modal-cat-labs { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    @media (max-width: 640px) {
+      .modal-panel { padding: 22px; border-radius: 16px; }
+      .modal-cat-count { margin-left: 0; }
+      .modal-cat-head { flex-wrap: wrap; }
+    }
+
+    @media (max-width: 980px) {
+      .grid { grid-template-columns: repeat(2,1fr); }
+      .hero-content { grid-template-columns: 1fr; gap: 45px; }
+      .hero-left { max-width: 850px; }
+      .hero-right { max-width: 720px; padding-top: 0; }
+      .hero-right .lead { max-width: 680px; }
+      .stats { margin-top: 38px; }
+    }
+
+    @media (max-width: 700px) {
+      .works-title-line { display: block; }
+      .category-head { flex-wrap: wrap; row-gap: 8px; }
+      .category-count { margin-left: 0; }
+      .works-count { font-size: 60px; margin-top: 20px; }
+      .card { min-height: 0; }
+      .feature-strip { display: block; }
+      .feature-strip span { display: block; margin-top: 8px; }
+      .hero { padding-top: 55px; padding-bottom: 55px; }
+      .hero-content { gap: 42px; }
+      .hero h1 { font-size: clamp(28px,9vw,44px); line-height: 1.05; }
+      .outline-word { -webkit-text-stroke: 1px var(--text); }
+      .lead.strong { font-size: 13px; }
+      .system-status { max-width: 100%; white-space: normal; }
+      .stats { max-width: 100%; gap: 16px; }
+      .stat-label { font-size: 9px; }
+    }
+
+    @media (max-width: 640px) {
+      nav a:not(.nav-cta) { display: none; }
+      .grid { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-photo-wrap { justify-content: center; }
+      .btn { padding: 13px 20px; font-size: 11px; }
+    }
+  </style>
 </head>
+
 <body>
 
-  <div class="blobs">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
+<div class="progress"></div>
+
+<header>
+  <div class="wrap">
+    <a href="#top" class="logo display">TECH PERFORMANCE</a>
+    <nav class="mono">
+      <button type="button" class="about-trigger" id="about-modal-trigger">о проекте</button>
+      <a href="#top">об авторе</a>
+      <a href="#works">работы</a>
+      <a href="https://github.com/meeymirita/submodule-group-lab" target="_blank" rel="noopener" class="nav-cta">репозиторий ↗</a>
+    </nav>
   </div>
+</header>
 
-  <header>
-    <div class="wrap">
-      <a href="#top" class="logo">
-        <span class="logo-badge">🧪</span>
-        Group Lab
+<div class="modal-overlay" id="about-modal-overlay">
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="about-modal-title">
+    <button type="button" class="modal-close" id="about-modal-close" aria-label="Закрыть">✕</button>
+    <div class="modal-kicker mono">О проекте</div>
+    <h2 class="modal-title display" id="about-modal-title">Что здесь вообще происходит</h2>
+    <p class="modal-intro">Это сборный репозиторий с обучающими лабораторными работами: каждая — отдельный
+      проект от первой строчки кода до финального сценария без подсказок, со своей методичкой, стеком и
+      git-историей. Работы сгруппированы по трём направлениям — фронтенд, бэкенд и devops.</p>
+    <div class="modal-cats" id="about-modal-cats"></div>
+  </div>
+</div>
+
+<section id="top" class="about-section">
+  <div class="about-glow"></div>
+  <div class="wrap about-grid reveal">
+    <div class="about-text">
+      <div class="kicker mono">01 / автор</div>
+      <h2 class="section-h2 display">Об <span class="accent-word">авторе</span></h2>
+      <p>
+        Backend-разработчик, 2 года опыта, фокус — PHP/Laravel: проектирую API, строю
+        бизнес-логику, работаю с очередями и кэшем через RabbitMQ и Redis для быстрых
+        и надёжных систем. При необходимости подключаюсь и к фронту — Vue.js и
+        TypeScript, чтобы доводить фичу от бэка до интерфейса самостоятельно.
+      </p>
+      <div class="chips">
+        <span class="chip" style="--accent:#FF2D20">Laravel</span>
+        <span class="chip" style="--accent:#777BB4">PHP</span>
+        <span class="chip" style="--accent:#FF6600">RabbitMQ</span>
+        <span class="chip" style="--accent:#DC382D">Redis</span>
+        <span class="chip" style="--accent:#42B883">Vue.js</span>
+        <span class="chip" style="--accent:#3178C6">TypeScript</span>
+        <span class="chip" style="--accent:#F4D35E">JavaScript</span>
+        <span class="chip" style="--accent:#E0234E">NestJS</span>
+        <span class="chip" style="--accent:#E535AB">GraphQL</span>
+        <span class="chip" style="--accent:#2496ED">Docker</span>
+        <span class="chip" style="--accent:#14B8A6">Traefik</span>
+        <span class="chip" style="--accent:#326CE5">Kubernetes</span>
+      </div>
+      <a href="https://github.com/meeymirita" target="_blank" rel="noopener" class="about-link mono">
+        <span>github.com/meeymirita</span>
+        <span>→</span>
       </a>
-      <nav>
-        <a href="#works">Работы</a>
-        <a href="#about">Об авторе</a>
-        <a href="https://github.com/meeymirita/submodule-group-lab" target="_blank" rel="noopener">Репозиторий</a>
-      </nav>
+      <a href="https://t.me/meeymirita" target="_blank" rel="noopener" class="about-link mono">
+        <span>@meeymirita</span>
+        <span>→</span>
+      </a>
     </div>
-  </header>
-
-  <section id="top" class="hero">
-    <div class="wrap hero-grid">
-      <div class="reveal">
-        <span class="eyebrow">Личный лабораторный репозиторий</span>
-        <h1>
-          RabbitMQ, Redis, Traefik, PHP OOP, Vue, TypeScript, Laravel, Docker —
-          <span class="gradient-text">всё в одном месте</span>
-        </h1>
-        <p class="lead">
-          Каждая работа — отдельный git submodule со своей историей коммитов, методичкой и картинкой.
-          Ниже — витрина всех лаб: что внутри, какой стек и куда открыть, чтобы посмотреть.
-        </p>
-        <div class="btn-row">
-          <a href="#works" class="btn btn-primary">Смотреть работы ↓</a>
-          <a href="https://github.com/meeymirita/submodule-group-lab" target="_blank" rel="noopener" class="btn btn-outline">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.9 5.33.9 11.6c0 4.96 3.22 9.17 7.68 10.66.56.1.77-.24.77-.54 0-.27-.01-1.15-.02-2.09-3.12.68-3.78-1.34-3.78-1.34-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.94.1-.73.39-1.22.71-1.5-2.49-.28-5.11-1.25-5.11-5.55 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.42.11-2.96 0 0 .95-.3 3.12 1.15.9-.25 1.87-.38 2.83-.38.96 0 1.93.13 2.83.38 2.17-1.45 3.12-1.15 3.12-1.15.61 1.54.23 2.68.11 2.96.72.79 1.16 1.79 1.16 3.02 0 4.31-2.63 5.26-5.13 5.54.4.35.76 1.03.76 2.08 0 1.5-.01 2.71-.01 3.08 0 .3.2.65.78.54A11.1 11.1 0 0 0 23.1 11.6C23.1 5.33 18.27.5 12 .5Z"/></svg>
-            GitHub
-          </a>
-        </div>
-        <div class="stats">
-          <div>
-            <div class="stat-num">8</div>
-            <div class="stat-label">лабораторных</div>
-          </div>
-          <div>
-            <div class="stat-num accent">1</div>
-            <div class="stat-label">пройдено полностью</div>
-          </div>
-          <div>
-            <div class="stat-num">7</div>
-            <div class="stat-label">стеков технологий</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="reveal hero-image-wrap" style="transition-delay:.1s">
-        <div class="hero-glow"></div>
-        <img src="images/banner.png" alt="Group Lab" class="hero-image">
+    <div class="about-photo-wrap">
+      <div class="about-photo-box">
+        <img src="works/images/me.jpg" alt="Автор" class="about-photo-big">
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="works" class="works">
-    <div class="wrap">
-      <div class="works-head reveal">
+<section id="intro" class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow-two"></div>
+
+  <div class="wrap hero-content reveal">
+    <div class="hero-left">
+      <div class="eyebrow mono">
+        <span class="eyebrow-dot"></span>
+        персональная учебная витрина
+      </div>
+
+      <h1 class="display">
+        Личный
+        <span class="accent-word">лабораторный</span>
+        <span class="outline-word">репозиторий</span>
+      </h1>
+
+      <p class="lead strong">
+        RabbitMQ · Redis · Traefik · Kubernetes · PHP OOP · Vue · TypeScript · NestJS · GraphQL · Laravel · Docker
+      </p>
+
+      <div class="system-status mono">
+        <span></span>
+        system online / 13 labs loaded
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <p class="lead">
+        Каждую лабу веду и прохожу сам, а методички к ним разработал совместно
+        с Claude — отдельный git submodule на работу, со своей историей
+        коммитов, документом и обложкой. Ниже — витрина всех лаб: что внутри,
+        какой стек и куда открыть, чтобы посмотреть.
+      </p>
+
+      <div class="btn-row">
+        <a href="#works" class="btn btn-primary">смотреть работы ↓</a>
+        <a href="https://github.com/meeymirita/submodule-group-lab" target="_blank" rel="noopener" class="btn btn-outline">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 .5C5.73.5.9 5.33.9 11.6c0 4.96 3.22 9.17 7.68 10.66.56.1.77-.24.77-.54 0-.27-.01-1.15-.02-2.09-3.12.68-3.78-1.34-3.78-1.34-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.94.1-.73.39-1.22.71-1.5-2.49-.28-5.11-1.25-5.11-5.55 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.42.11-2.96 0 0 .95-.3 3.12 1.15 2.17-1.45 3.12-1.15 3.12-1.15.61 1.54.23 2.68.11 2.96.72.79 1.16 1.79 1.16 3.02 0 4.31-2.63 5.26-5.13 5.54.4.35.76 1.03.76 2.08 0 1.5-.01 2.71-.01 3.08 0 .3.2.65.78.54A11.1 11.1 0 0 0 23.1 11.6C23.1 5.33 18.27.5 12 .5Z"/>
+          </svg>
+          github
+        </a>
+      </div>
+
+      <div class="stats">
+        <div class="stat" style="--stat-color:#ff2e88">
+          <div class="stat-num">13</div>
+          <div class="stat-label">лабораторных</div>
+        </div>
+        <div class="stat" style="--stat-color:#7df9ff">
+          <div class="stat-num">8</div>
+          <div class="stat-label">стеков технологий</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee">
+  <div class="marquee-track display">
+    <span>group lab · 13 лабораторных · git submodules · методички ·</span>
+    <span>group lab · 13 лабораторных · git submodules · методички ·</span>
+  </div>
+</div>
+
+<section id="works" class="works-section">
+  <div class="wrap">
+    <div class="works-head reveal">
+      <div class="works-title-line">
         <div>
-          <h2>Работы</h2>
-          <p>Нажми на карточку, чтобы открыть методичку или репозиторий</p>
+          <div class="kicker mono">02 / витрина</div>
+          <h2 class="section-h2 display">Работы</h2>
+          <p class="mono">Нажми на карточку, чтобы открыть страницу лабы</p>
         </div>
-        <div class="filters" id="filters">
-          <button data-filter="all" class="filter-btn active">Все</button>
-          <button data-filter="done" class="filter-btn">✅ Пройдено</button>
-          <button data-filter="progress" class="filter-btn">⚪ Не начато</button>
-        </div>
-      </div>
-
-      <div id="grid" class="grid"></div>
-    </div>
-  </section>
-
-  <section id="about" class="about">
-    <div class="wrap">
-      <div class="about-box reveal">
-        <img src="images/me.png" alt="Автор" class="about-photo">
-        <div>
-          <h3>Об авторе</h3>
-          <p>
-            Все лабы веду и прохожу самостоятельно, попутно ведя заметки и методички по каждой теме.
-            Каждая работа — отдельный репозиторий, подключённый сюда как git submodule.
-          </p>
-          <a href="https://github.com/meeymirita" target="_blank" rel="noopener" class="about-link">github.com/meeymirita →</a>
-        </div>
+        <div class="works-count">13</div>
       </div>
     </div>
-  </section>
 
-  <footer>Group Lab · собрано с ❤</footer>
+    <div id="grid"></div>
+
+    <div class="feature-strip mono reveal">
+      <span><strong>TECH PERFORMANCE</strong> · learn · build · experiment</span>
+      <span><strong>2026</strong> · PHP · Laravel · Redis · RabbitMQ · Vue</span>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap site-footer mono">
+  <span>Group Lab · собрано с ❤</span>
+  <span class="footer-git">
+    <span class="spinner"></span>
+    git submodules
+  </span>
+</footer>
 
 <script>
   var projects = [
     {
-      key: 'rabbitmq',
-      title: 'RabbitMQ Lab',
-      subtitle: 'Transactional Outbox, воркеры, DLQ',
-      image: 'images/rabbitmq.png',
-      desc: 'Асинхронная обработка заказов через очереди: Transactional Outbox, идемпотентный consumer, prefetch, crash-тесты, retry с TTL→DLX, priority queues, fanout.',
-      stack: ['Laravel 13', 'PostgreSQL 16', 'RabbitMQ', 'Mailpit'],
-      status: 'done',
-      statusLabel: '✅ выполнена',
+      key: 'js',
+      category: 'frontend',
+      title: 'Чистый JS Lab',
+      subtitle: 'Vanilla Helpdesk — фундамент без фреймворка',
+      image: 'js/JavaScript.png',
+      desc: 'Чистый JavaScript с нуля — общий фундамент для Vue и TypeScript: var/let/const и hoisting, this и замыкания, прототипы и class, event loop и async/await, DOM без фреймворка, ESM-модули, своя реактивность на Proxy, финальное мини-SPA с явным сравнением с Vue.',
+      stack: ['JavaScript ES2022', 'Node.js 22', 'json-server', 'node:test'],
+      difficulty: 'Средняя',
+      open: 'js/JS_Lab_VanillaHelpdesk.html',
+      repo: 'https://github.com/meeymirita/js-lab',
+      accent: '#F4D35E', accentSoft: '#F4D35E22', accentShadow: 'rgba(244,211,94,.28)'
+    },
+    {
+      key: 'typescript',
+      category: 'frontend',
+      title: 'TypeScript Lab',
+      subtitle: 'Warehouse — складской учёт',
+      image: 'works/images/typescript.png',
+      desc: 'Типизация домена складского учёта с нуля: generics, размеченные объединения, mapped/conditional types, CLI на Zod, сквозная типизация API + Vue.',
+      stack: ['TypeScript 5.6', 'Node 22', 'Zod', 'Vitest'],
       difficulty: 'Высокая',
-      open: 'rabbitmq/docs/RabbitMQ_Lab_Plan_v1_pro_max.html',
-      repo: 'https://github.com/meeymirita/rabbitmq-lab',
-      accent: '#FF6600',
-      accentSoft: '#FF660022',
-      accentShadow: 'rgba(255,102,0,.28)',
+      open: 'typescript/TypeScript_Lab_Warehouse.html',
+      repo: 'https://github.com/meeymirita/typescript-lab',
+      accent: '#3178C6', accentSoft: '#3178C622', accentShadow: 'rgba(49,120,198,.28)'
+    },
+    {
+      key: 'vue',
+      category: 'frontend',
+      title: 'Vue Lab',
+      subtitle: 'Helpdesk на Vue 3',
+      image: 'works/images/vue.png',
+      desc: 'Система тикетов на Vue 3 с нуля: реактивность, компоненты, слоты, Pinia, Vue Router с guard-ами, WebSocket, канбан-доска, тесты на Vitest.',
+      stack: ['Vue 3.5', 'Vite', 'Pinia', 'Vue Router', 'NestJS'],
+      difficulty: 'Высокая',
+      open: 'vue/Vue_Lab_Helpdesk.html',
+      repo: 'https://github.com/meeymirita/vue-lab',
+      accent: '#42B883', accentSoft: '#42B88322', accentShadow: 'rgba(66,184,131,.28)'
+    },
+    {
+      key: 'php',
+      category: 'backend',
+      title: 'Чистый PHP Lab',
+      subtitle: 'Фундамент без фреймворка',
+      image: 'php/php.png',
+      desc: 'Чистый PHP 8.4 без фреймворка: strict_types и copy-on-write массивы, суперглобалы, замыкания и генераторы, магические методы — и своими руками роутер, DI-контейнер, PDO-слой, сессии и CSRF.',
+      stack: ['PHP 8.4', 'PDO', 'PostgreSQL', 'Composer (PSR-4)'],
+      difficulty: 'Базовая',
+      open: 'php/PHP_Lab_VanillaCoffee.html',
+      repo: 'https://github.com/meeymirita/php-lab',
+      accent: '#C9A876', accentSoft: '#C9A87622', accentShadow: 'rgba(201,168,118,.28)'
+    },
+    {
+      key: 'php-coffee',
+      category: 'backend',
+      title: 'OOP Lab',
+      subtitle: 'Coffee Shop API на PHP 8.4',
+      image: 'works/images/php.png',
+      desc: 'ООП на PHP 8.4 с нуля на маленьком API кофейни: 4 принципа ООП, Factory, Decorator, Strategy, Repository, SOLID, наследование vs композиция.',
+      stack: ['PHP 8.4', 'Laravel 13', 'PostgreSQL', 'RabbitMQ'],
+      difficulty: 'Базовая',
+      open: 'php-coffee/docs/OOP_Lab_CoffeeShop.html',
+      repo: 'https://github.com/meeymirita/oop-lab',
+      accent: '#777BB4', accentSoft: '#777BB422', accentShadow: 'rgba(119,123,180,.28)'
+    },
+    {
+      key: 'nestjs',
+      category: 'backend',
+      title: 'NestJS Lab',
+      subtitle: 'Helpdesk API с нуля',
+      image: 'nestjs/nest.png',
+      desc: 'Тот же Helpdesk-бэкенд, что был дан готовым в Vue Lab, — собран с нуля слой за слоем: decorators/reflect-metadata под капотом, DI и provider scopes, DTO/Pipes, Prisma и N+1, Guards/JWT/refresh-токены, WebSocket Gateway, тесты.',
+      stack: ['NestJS 10', 'Prisma', 'PostgreSQL', 'Passport JWT', 'Socket.IO'],
+      difficulty: 'Высокая',
+      open: 'nestjs/NestJS_Lab_Plan.html',
+      repo: 'https://github.com/meeymirita/nestjs-lab',
+      accent: '#E0234E', accentSoft: '#E0234E22', accentShadow: 'rgba(224,35,78,.28)'
+    },
+    {
+      key: 'graphql',
+      category: 'backend',
+      title: 'GraphQL Lab',
+      subtitle: 'Тот же Helpdesk без REST',
+      image: 'graphql/GraphQL.png',
+      desc: 'Тот же backend, что в NestJS Lab — HTTP-контроллеры заменяются на GraphQL-резолверы: code-first типы, N+1 в резолверах и DataLoader, Guards через GqlExecutionContext, Subscriptions вместо WebSocket Gateway.',
+      stack: ['NestJS', '@nestjs/graphql', 'Apollo Server', 'DataLoader', 'Prisma'],
+      difficulty: 'Высокая',
+      open: 'graphql/GraphQL_Lab_Plan.html',
+      repo: 'https://github.com/meeymirita/graphql-lab',
+      accent: '#E535AB', accentSoft: '#E535AB22', accentShadow: 'rgba(229,53,171,.28)'
+    },
+    {
+      key: 'laravel',
+      category: 'backend',
+      title: 'Laravel Lab',
+      subtitle: 'TaskFlow — таск-трекер',
+      image: 'works/images/laravel.png',
+      desc: 'Laravel 13 «изнутри»: ~30 компонентов illuminate/*, Eloquent-связи, Service Container, Auth/Policy, Observer, очереди, Mailable, кэш, Broadcasting, тесты.',
+      stack: ['Laravel 13', 'PostgreSQL 17', 'Redis', 'RabbitMQ', 'Reverb'],
+      difficulty: 'Высокая',
+      open: 'laravel/Laravel_Lab_TaskFlow.html',
+      repo: 'https://github.com/meeymirita/laravel-lab',
+      accent: '#FF2D20', accentSoft: '#FF2D2022', accentShadow: 'rgba(255,45,32,.28)'
     },
     {
       key: 'redis',
+      category: 'backend',
       title: 'Redis Lab',
       subtitle: 'Кэш, локи, rate limit, Streams',
-      image: 'images/redis.png',
+      image: 'works/images/redis.png',
       desc: 'Redis как кэш, хранилище сессий, примитив синхронизации и брокер событий: cache-aside, distributed lock, rate limiter, Streams, XAUTOCLAIM, Pub/Sub-дашборд.',
       stack: ['Laravel 13', 'PostgreSQL 16', 'Redis 7'],
-      status: 'progress',
-      statusLabel: '⚪ не начата',
       difficulty: 'Средняя',
       open: 'redis/Redis_Lab_Plan.html',
       repo: 'https://github.com/meeymirita/redis-lab',
-      accent: '#DC382D',
-      accentSoft: '#DC382D22',
-      accentShadow: 'rgba(220,56,45,.28)',
+      accent: '#DC382D', accentSoft: '#DC382D22', accentShadow: 'rgba(220,56,45,.28)'
+    },
+    {
+      key: 'rabbitmq',
+      category: 'backend',
+      title: 'RabbitMQ Lab',
+      subtitle: 'Transactional Outbox, воркеры, DLQ',
+      image: 'works/images/rabbitmq.png',
+      desc: 'Асинхронная обработка заказов через очереди: Transactional Outbox, идемпотентный consumer, prefetch, crash-тесты, retry с TTL→DLX, priority queues, fanout.',
+      stack: ['Laravel 13', 'PostgreSQL 16', 'RabbitMQ', 'Mailpit'],
+      difficulty: 'Высокая',
+      open: 'rabbitmq/docs/RabbitMQ_Lab_Plan_v1_pro_max.html',
+      repo: 'https://github.com/meeymirita/rabbitmq-lab',
+      accent: '#FF6600', accentSoft: '#FF660022', accentShadow: 'rgba(255,102,0,.28)'
+    },
+    {
+      key: 'docker',
+      category: 'devops',
+      title: 'Docker Lab',
+      subtitle: 'Крепкое владение Docker и Bash с нуля',
+      image: 'works/images/docker.png',
+      desc: 'Docker и Bash с нуля: образы, контейнеры, docker-compose, сети и тома — через практику в терминале.',
+      stack: ['Docker', 'Docker Compose', 'Bash'],
+      difficulty: '—',
+      open: 'docker/Docker_Bash_Lab.html',
+      repo: 'https://github.com/meeymirita/docker-lab',
+      accent: '#2496ED', accentSoft: '#2496ED22', accentShadow: 'rgba(36,150,237,.28)'
     },
     {
       key: 'traefik',
+      category: 'devops',
       title: 'Traefik Lab',
       subtitle: 'Reverse proxy, service discovery, TLS',
       image: 'traefik/traefik.png',
       desc: 'Reverse proxy и service discovery для стека из нескольких сервисов без ручной правки конфигов: EntryPoint → Router → Middleware → Service, TLS, canary-деплой.',
       stack: ['Traefik 3', 'Docker Compose', 'Node.js', 'PostgreSQL'],
-      status: 'progress',
-      statusLabel: '⚪ не начата',
       difficulty: 'Низкая–средняя',
       open: 'traefik/Docker_and_Traefik_Lab_Plan.html',
       repo: 'https://github.com/meeymirita/traefik-lab',
-      accent: '#14B8A6',
-      accentSoft: '#14B8A622',
-      accentShadow: 'rgba(20,184,166,.28)',
+      accent: '#14B8A6', accentSoft: '#14B8A622', accentShadow: 'rgba(20,184,166,.28)'
     },
     {
-      key: 'php-coffee',
-      title: 'OOP Lab',
-      subtitle: 'Coffee Shop API на PHP 8.4',
-      image: 'images/php.png',
-      desc: 'ООП на PHP 8.4 с нуля на маленьком API кофейни: 4 принципа ООП, Factory, Decorator, Strategy, Repository, SOLID, наследование vs композиция.',
-      stack: ['PHP 8.4', 'Laravel 13', 'PostgreSQL', 'RabbitMQ'],
-      status: 'progress',
-      statusLabel: '⚪ не начата',
-      difficulty: 'Базовая',
-      open: 'php-coffee/docs/OOP_Lab_CoffeeShop.html',
-      repo: 'https://github.com/meeymirita/oop-lab',
-      accent: '#777BB4',
-      accentSoft: '#777BB422',
-      accentShadow: 'rgba(119,123,180,.28)',
-    },
-    {
-      key: 'vue',
-      title: 'Vue Lab',
-      subtitle: 'Helpdesk на Vue 3',
-      image: 'images/vue.png',
-      desc: 'Система тикетов на Vue 3 с нуля: реактивность, компоненты, слоты, Pinia, Vue Router с guard-ами, WebSocket, канбан-доска, тесты на Vitest.',
-      stack: ['Vue 3.5', 'Vite', 'Pinia', 'Vue Router', 'NestJS'],
-      status: 'progress',
-      statusLabel: '⚪ не начата',
-      difficulty: 'Высокая',
-      open: 'vue/Vue_Lab_Helpdesk.html',
-      repo: 'https://github.com/meeymirita/vue-lab',
-      accent: '#42B883',
-      accentSoft: '#42B88322',
-      accentShadow: 'rgba(66,184,131,.28)',
-    },
-    {
-      key: 'typescript',
-      title: 'TypeScript Lab',
-      subtitle: 'Warehouse — складской учёт',
-      image: 'images/typescript.png',
-      desc: 'Типизация домена складского учёта с нуля: generics, размеченные объединения, mapped/conditional types, CLI на Zod, сквозная типизация API + Vue.',
-      stack: ['TypeScript 5.6', 'Node 22', 'Zod', 'Vitest'],
-      status: 'progress',
-      statusLabel: '⚪ не начата',
-      difficulty: 'Высокая',
-      open: 'typescript/TypeScript_Lab_Warehouse.html',
-      repo: 'https://github.com/meeymirita/typescript-lab',
-      accent: '#3178C6',
-      accentSoft: '#3178C622',
-      accentShadow: 'rgba(49,120,198,.28)',
-    },
-    {
-      key: 'laravel',
-      title: 'Laravel Lab',
-      subtitle: 'TaskFlow — таск-трекер',
-      image: 'images/laravel.png',
-      desc: 'Laravel 13 «изнутри»: ~30 компонентов illuminate/*, Eloquent-связи, Service Container, Auth/Policy, Observer, очереди, Mailable, кэш, Broadcasting, тесты.',
-      stack: ['Laravel 13', 'PostgreSQL 17', 'Redis', 'RabbitMQ', 'Reverb'],
-      status: 'progress',
-      statusLabel: '⚪ не начата',
-      difficulty: 'Высокая',
-      open: 'laravel/Laravel_Lab_TaskFlow.html',
-      repo: 'https://github.com/meeymirita/laravel-lab',
-      accent: '#FF2D20',
-      accentSoft: '#FF2D2022',
-      accentShadow: 'rgba(255,45,32,.28)',
-    },
-    {
-      key: 'docker',
-      title: 'Docker Lab',
-      subtitle: 'Крепкое владение Docker и Bash с нуля',
-      image: 'images/docker.png',
-      desc: 'Docker и Bash с нуля: образы, контейнеры, docker-compose, сети и тома — через практику в терминале.',
-      stack: ['Docker', 'Docker Compose', 'Bash'],
-      status: 'progress',
-      statusLabel: '⚪ не начата',
-      difficulty: '—',
-      open: 'docker/Docker_Bash_Lab.html',
-      repo: 'https://github.com/meeymirita/docker-lab',
-      accent: '#2496ED',
-      accentSoft: '#2496ED22',
-      accentShadow: 'rgba(36,150,237,.28)',
-    },
+      key: 'kubernetes',
+      category: 'devops',
+      title: 'Kubernetes Lab',
+      subtitle: 'От Compose к оркестрации',
+      image: 'kubernetes/kubernetes.png',
+      desc: 'Миграция стека из Traefik-лабы в Kubernetes (kind): Pod и Deployment, Service и DNS, ConfigMap/Secret, Volumes и PVC, readiness/liveness-пробы, Traefik как Ingress-контроллер, HorizontalPodAutoscaler.',
+      stack: ['Kubernetes', 'kind', 'kubectl', 'Traefik'],
+      difficulty: 'Средняя–высокая',
+      open: 'kubernetes/Kubernetes_Lab_Plan.html',
+      repo: 'https://github.com/meeymirita/kubernetes-lab',
+      accent: '#326CE5', accentSoft: '#326CE522', accentShadow: 'rgba(50,108,229,.28)'
+    }
   ];
 
   var grid = document.getElementById('grid');
@@ -457,7 +1101,6 @@
   }
 
   function cardHtml(p, i) {
-    var statusClass = p.status === 'done' ? 'done' : 'progress';
     var openHtml = p.open
       ? '<a href="' + p.open + '" target="_blank" rel="noopener" class="card-open">Открыть методичку</a>'
       : '<span class="card-open disabled">Методичка скоро</span>';
@@ -466,64 +1109,214 @@
       return '<span class="chip">' + escapeHtml(s) + '</span>';
     }).join('');
 
-    return (
-      '<article class="card reveal" style="--accent:' + p.accent + ';--accent-soft:' + p.accentSoft + ';--accent-shadow:' + p.accentShadow + ';transition-delay:' + (0.05 * i) + 's">' +
-        '<div class="card-media">' +
-          '<img src="' + p.image + '" alt="' + escapeHtml(p.title) + '" loading="lazy">' +
-          '<span class="badge badge-status ' + statusClass + '">' + p.statusLabel + '</span>' +
-          '<span class="badge badge-diff">Сложность: ' + p.difficulty + '</span>' +
-        '</div>' +
-        '<div class="card-body">' +
-          '<h3 class="card-title">' + escapeHtml(p.title) + '</h3>' +
-          '<p class="card-subtitle">' + escapeHtml(p.subtitle) + '</p>' +
-          '<p class="card-desc">' + escapeHtml(p.desc) + '</p>' +
-          '<div class="chips">' + chips + '</div>' +
-          '<div class="card-actions">' +
-            openHtml +
-            '<a href="' + p.repo + '" target="_blank" rel="noopener" class="card-repo" aria-label="GitHub">' +
-              '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.9 5.33.9 11.6c0 4.96 3.22 9.17 7.68 10.66.56.1.77-.24.77-.54 0-.27-.01-1.15-.02-2.09-3.12.68-3.78-1.34-3.78-1.34-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.94.1-.73.39-1.22.71-1.5-2.49-.28-5.11-1.25-5.11-5.55 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.42.11-2.96 0 0 .95-.3 3.12 1.15.9-.25 1.87-.38 2.83-.38.96 0 1.93.13 2.83.38 2.17-1.45 3.12-1.15 3.12-1.15.61 1.54.23 2.68.11 2.96.72.79 1.16 1.79 1.16 3.02 0 4.31-2.63 5.26-5.13 5.54.4.35.76 1.03.76 2.08 0 1.5-.01 2.71-.01 3.08 0 .3.2.65.78.54A11.1 11.1 0 0 0 23.1 11.6C23.1 5.33 18.27.5 12 .5Z"/></svg>' +
-            '</a>' +
-          '</div>' +
-        '</div>' +
-      '</article>'
-    );
+    return `
+      <article class="card reveal" data-key="${p.key}" tabindex="0" role="link"
+        aria-label="Подробнее о ${escapeHtml(p.title)}"
+        style="--accent:${p.accent}; --accent-soft:${p.accentSoft}; --accent-shadow:${p.accentShadow}; transition-delay:${0.05 * i}s">
+        <div class="card-number">${String(i + 1).padStart(2, '0')}</div>
+        <div class="card-media">
+          <img src="${p.image}" alt="${escapeHtml(p.title)}" loading="lazy">
+          <span class="badge badge-diff">Сложность: ${p.difficulty}</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">${escapeHtml(p.title)}</h3>
+          <p class="card-subtitle">${escapeHtml(p.subtitle)}</p>
+          <p class="card-desc">${escapeHtml(p.desc)}</p>
+          <div class="chips">${chips}</div>
+          <div class="card-actions">
+            ${openHtml}
+            <a href="${p.repo}" target="_blank" rel="noopener" class="card-repo" aria-label="GitHub">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 .5C5.73.5.9 5.33.9 11.6c0 4.96 3.22 9.17 7.68 10.66.56.1.77-.24.77-.54 0-.27-.01-1.15-.02-2.09-3.12.68-3.78-1.34-3.78-1.34-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.94.1-.73.39-1.22.71-1.5-2.49-.28-5.11-1.25-5.11-5.55 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.42.11-2.96 0 0 .95-.3 3.12 1.15.9-.25 1.87-.38 2.83-.38.96 0 1.93.13 2.83.38 2.17-1.45 3.12-1.15 3.12-1.15.61 1.54.23 2.68.11 2.96.72.79 1.16 1.79 1.16 3.02 0 4.31-2.63 5.26-5.13 5.54.4.35.76 1.03.76 2.08 0 1.5-.01 2.71-.01 3.08 0 .3.2.65.78.54A11.1 11.1 0 0 0 23.1 11.6C23.1 5.33 18.27.5 12 .5Z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </article>
+    `;
   }
 
-  function render(filter) {
-    var items = projects.filter(function (p) {
-      return filter === 'all' ? true : p.status === filter;
-    });
-    grid.innerHTML = items.map(cardHtml).join('');
+  var categories = [
+    { key: 'frontend', label: 'Frontend', title: 'Фронтенд', color: '#7df9ff' },
+    { key: 'backend', label: 'Backend', title: 'Бэкенд', color: '#ff2e88' },
+    { key: 'devops', label: 'DevOps', title: 'DevOps', color: '#42d392' }
+  ];
+
+  var categoryDescriptions = {
+    frontend: 'То, что видит пользователь: реактивный UI без фреймворка на чистом JS, потом Vue 3 (компоненты, роутинг, состояние) и TypeScript поверх этого — типы, generics, сквозная типизация от API до браузера.',
+    backend: 'Серверная часть: ООП и чистый PHP без фреймворка, Laravel «изнутри», NestJS с нуля (DI, Guards, WebSocket) и GraphQL над тем же бэкендом — резолверы вместо REST-контроллеров.',
+    devops: 'Инфраструктура вокруг кода: Docker и Bash с нуля, Traefik как reverse proxy, и Kubernetes — миграция того же стека из Compose в настоящий кластер.'
+  };
+
+  function renderAboutModal() {
+    var container = document.getElementById('about-modal-cats');
+    if (!container) return;
+
+    container.innerHTML = categories.map(function (cat) {
+      var items = projects.filter(function (p) { return p.category === cat.key; });
+      if (!items.length) return '';
+
+      var labChips = items.map(function (p) {
+        return '<span class="chip" style="--accent:' + p.accent + '; --accent-soft:' + p.accentSoft + '">' + escapeHtml(p.title.replace(' Lab', '')) + '</span>';
+      }).join('');
+
+      return `
+        <div class="modal-cat" style="--cat-color:${cat.color}">
+          <div class="modal-cat-head">
+            <span class="modal-cat-dot"></span>
+            <span class="modal-cat-title">${escapeHtml(cat.title)}</span>
+            <span class="modal-cat-count mono">${items.length} ${items.length === 1 ? 'лаба' : 'лабы'}</span>
+          </div>
+          <p class="modal-cat-desc">${escapeHtml(categoryDescriptions[cat.key] || '')}</p>
+          <div class="modal-cat-labs">${labChips}</div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  var aboutOverlay = document.getElementById('about-modal-overlay');
+
+  function openAboutModal() {
+    renderAboutModal();
+    aboutOverlay.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeAboutModal() {
+    aboutOverlay.classList.remove('is-open');
+    document.body.style.overflow = '';
+    try { localStorage.setItem('about-modal-seen', '1'); } catch (e) {}
+  }
+
+  document.getElementById('about-modal-trigger').addEventListener('click', openAboutModal);
+  document.getElementById('about-modal-close').addEventListener('click', closeAboutModal);
+  aboutOverlay.addEventListener('click', function (e) { if (e.target === aboutOverlay) closeAboutModal(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAboutModal(); });
+
+  var aboutModalSeen = false;
+  try { aboutModalSeen = !!localStorage.getItem('about-modal-seen'); } catch (e) {}
+  if (!aboutModalSeen) openAboutModal();
+
+  function render() {
+    var n = 0;
+    grid.innerHTML = categories.map(function (cat) {
+      var items = projects.filter(function (p) { return p.category === cat.key; });
+      if (!items.length) return '';
+
+      return `
+        <div class="category-block reveal" style="--category-color:${cat.color}">
+          <div class="category-head">
+            <span class="category-label mono"><span class="category-dot"></span>${escapeHtml(cat.label)}</span>
+            <h3 class="category-title">${escapeHtml(cat.title)}</h3>
+            <span class="category-count mono">${items.length} ${items.length === 1 ? 'лаба' : 'лабы'}</span>
+          </div>
+          <div class="grid">
+            ${items.map(function (p) { n += 1; return cardHtml(p, n - 1); }).join('')}
+          </div>
+        </div>
+      `;
+    }).join('');
     observeReveal();
+    initTilt();
   }
 
   function observeReveal() {
-    var els = document.querySelectorAll('.reveal:not(.in-view)');
+    var elements = document.querySelectorAll('.reveal:not(.in-view)');
+
     if (!('IntersectionObserver' in window)) {
-      els.forEach(function (el) { el.classList.add('in-view'); });
+      elements.forEach(function (el) { el.classList.add('in-view'); });
       return;
     }
-    var io = new IntersectionObserver(function (entries) {
+
+    var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
           entry.target.classList.add('in-view');
-          io.unobserve(entry.target);
+          observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1 });
-    els.forEach(function (el) { io.observe(el); });
+    }, { threshold: .08 });
+
+    elements.forEach(function (el) { observer.observe(el); });
   }
 
-  document.getElementById('filters').addEventListener('click', function (e) {
-    var btn = e.target.closest('.filter-btn');
-    if (!btn) return;
-    document.querySelectorAll('.filter-btn').forEach(function (b) { b.classList.remove('active'); });
-    btn.classList.add('active');
-    render(btn.getAttribute('data-filter'));
+  function initTilt() {
+    if (window.innerWidth < 700) return;
+
+    document.querySelectorAll('.card').forEach(function (card) {
+      card.addEventListener('mousemove', function (e) {
+        var rect = card.getBoundingClientRect();
+        var x = e.clientX - rect.left;
+        var y = e.clientY - rect.top;
+        var rotateY = ((x / rect.width) - .5) * 8;
+        var rotateX = ((y / rect.height) - .5) * -8;
+
+        card.style.transform =
+          'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateY(-6px)';
+      });
+
+      card.addEventListener('mouseleave', function () {
+        card.style.transform = '';
+      });
+    });
+  }
+
+  function goToWork(key) {
+    window.location.href = 'works/' + key + '.html';
+  }
+
+  grid.addEventListener('click', function (e) {
+    if (e.target.closest('.card-actions')) return;
+
+    var card = e.target.closest('.card');
+    if (!card) return;
+
+    goToWork(card.getAttribute('data-key'));
   });
 
-  render('all');
+  grid.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    if (e.target.closest('.card-actions')) return;
+
+    var card = e.target.closest('.card');
+    if (!card) return;
+
+    e.preventDefault();
+    goToWork(card.getAttribute('data-key'));
+  });
+
+  var progress = document.querySelector('.progress');
+
+  window.addEventListener('scroll', function () {
+    var scrollTop = window.scrollY;
+    var height = document.documentElement.scrollHeight - window.innerHeight;
+
+    if (height <= 0) {
+      progress.style.width = '0%';
+      return;
+    }
+
+    progress.style.width = (scrollTop / height) * 100 + '%';
+  }, { passive: true });
+
+  var hero = document.querySelector('.hero');
+
+  window.addEventListener('mousemove', function (e) {
+    if (!hero) return;
+
+    var x = (e.clientX / window.innerWidth - .5) * 20;
+    var y = (e.clientY / window.innerHeight - .5) * 20;
+
+    var glowOne = document.querySelector('.hero-glow');
+    var glowTwo = document.querySelector('.hero-glow-two');
+
+    if (glowOne) glowOne.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+    if (glowTwo) glowTwo.style.transform = 'translate(' + (-x) + 'px,' + (-y) + 'px)';
+  });
+
+  render();
   observeReveal();
 </script>
+
 </body>
 </html>

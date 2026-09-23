@@ -1,24 +1,133 @@
-# Group Lab: RabbitMQ, Redis, Traefik, OOP, Vue, TypeScript, Laravel
+# Group Lab: RabbitMQ, Redis, Traefik, OOP, Vue, TypeScript, Laravel, Docker
 
-![Group Lab](images/banner.png)
+![Group Lab](https://raw.githubusercontent.com/meeymirita/works-lab/main/images/banner.png)
 
 Сборный репозиторий с лабораторными работами. Каждая работа подключена как git submodule в отдельной папке и живёт в собственном репозитории — со своей историей коммитов, независимо от остальных. Репозиторий будет пополняться новыми работами.
 
+Витрина всех работ и их описания — на [`index.html`](index.html) (открывается прямо в браузере или через GitHub Pages).
+
 ## Работы
 
-| Папка | Лаба | Статус | Сложность | Репозиторий |
+Порядок — от простого к сложному, с учётом того, что лабы переиспользуют друг друга: OOP-лаба даёт фундамент, который нужен для RabbitMQ и Laravel; следом «Чистый PHP» встал рядом с OOP, потому что тоже про язык, но без фреймворка; Kubernetes-лаба идёт сразу за Traefik — она переносит её же стек из Compose в кластер, поэтому не имеет смысла без пройденной Traefik-лабы; RabbitMQ стоит пройти до Redis (проще почувствовать разницу между брокером и Redis-примитивами) и до Laravel-лабы (она прямо ссылается на обе); «Чистый JS» — общий фундамент для Vue и TypeScript, поэтому встал перед ними обеими; Vue — до TypeScript (сессия 5 последней использует Vue); NestJS-лаба идёт сразу за Vue и TypeScript — она переносит тот же Helpdesk-домен и собирает с нуля тот самый бэкенд, который в Vue-лабе был дан готовым; GraphQL-лаба идёт сразу за NestJS и не имеет смысла без неё — тот же backend, но REST-контроллеры заменяются на резолверы. Docker и Traefik самодостаточны и не завязаны на остальные.
+
+| № | Папка | Лаба | Сложность | Репозиторий |
 |---|---|---|---|---|
-| [`rabbitmq`](rabbitmq) | RabbitMQ — Transactional Outbox, воркеры, DLQ | ✅ выполнена | Высокая | [rabbitmq-lab](https://github.com/meeymirita/rabbitmq-lab) |
-| [`redis`](redis) | Redis — кэш, локи, rate limit, Streams | ⚪ не начата | Средняя | [redis-lab](https://github.com/meeymirita/redis-lab) |
-| [`traefik`](traefik) | Traefik — reverse proxy, service discovery, TLS | ⚪ не начата | Низкая–средняя | [traefik-lab](https://github.com/meeymirita/traefik-lab) |
-| [`php-coffee`](php-coffee) | OOP на PHP/Laravel — Coffee Shop API | ⚪ не начата | Базовая по материалу | [oop-lab](https://github.com/meeymirita/oop-lab) |
-| [`vue`](vue) | Vue 3 — Helpdesk (Router, Pinia, WebSocket, тесты) | ⚪ не начата | Высокая (новый стек) | [vue-lab](https://github.com/meeymirita/vue-lab) |
-| [`typescript`](typescript) | TypeScript 5 — Warehouse (generics, Zod, API + Vue) | ⚪ не начата | Высокая | [typescript-lab](https://github.com/meeymirita/typescript-lab) |
-| [`laravel`](laravel) | Laravel 13 изнутри — TaskFlow (таск-трекер с ролями) | ⚪ не начата | Высокая | [laravel-lab](https://github.com/meeymirita/laravel-lab) |
+| 1 | [`docker`](docker) | Docker + Bash — крепкое владение с нуля | Базовая по входу, объёмная | [docker-lab](https://github.com/meeymirita/docker-lab) |
+| 2 | [`php-coffee`](php-coffee) | OOP на PHP/Laravel — Coffee Shop API | Базовая по материалу | [oop-lab](https://github.com/meeymirita/oop-lab) |
+| 3 | [`php`](php) | Чистый PHP — свой роутер, DI-контейнер, PDO, CSRF | Базовая по материалу | [php-lab](https://github.com/meeymirita/php-lab) |
+| 4 | [`traefik`](traefik) | Traefik — reverse proxy, service discovery, TLS | Низкая–средняя | [traefik-lab](https://github.com/meeymirita/traefik-lab) |
+| 5 | [`kubernetes`](kubernetes) | Kubernetes — от Compose к оркестрации | Средняя–высокая | [kubernetes-lab](https://github.com/meeymirita/kubernetes-lab) |
+| 6 | [`rabbitmq`](rabbitmq) | RabbitMQ — Transactional Outbox, воркеры, DLQ | Высокая | [rabbitmq-lab](https://github.com/meeymirita/rabbitmq-lab) |
+| 7 | [`redis`](redis) | Redis — кэш, локи, rate limit, Streams | Средняя | [redis-lab](https://github.com/meeymirita/redis-lab) |
+| 8 | [`js`](js) | Чистый JS — Vanilla Helpdesk, фундамент без фреймворка | Средняя | [js-lab](https://github.com/meeymirita/js-lab) |
+| 9 | [`vue`](vue) | Vue 3 — Helpdesk (Router, Pinia, WebSocket, тесты) | Высокая | [vue-lab](https://github.com/meeymirita/vue-lab) |
+| 10 | [`typescript`](typescript) | TypeScript 5 — Warehouse (generics, Zod, API + Vue) | Высокая | [typescript-lab](https://github.com/meeymirita/typescript-lab) |
+| 11 | [`nestjs`](nestjs) | NestJS — Helpdesk API с нуля (DI, Guards, JWT, WebSocket) | Высокая | [nestjs-lab](https://github.com/meeymirita/nestjs-lab) |
+| 12 | [`graphql`](graphql) | GraphQL — тот же Helpdesk без REST (резолверы, DataLoader, Subscriptions) | Высокая | [graphql-lab](https://github.com/meeymirita/graphql-lab) |
+| 13 | [`laravel`](laravel) | Laravel 13 изнутри — TaskFlow (таск-трекер с ролями) | Высокая | [laravel-lab](https://github.com/meeymirita/laravel-lab) |
+
+> Личный прогресс (моя пометка, не часть плана репозитория): ✅ пройдено — RabbitMQ. 🔵 сейчас прохожу — OOP (`php-coffee`).
 
 ---
 
-## 1. RabbitMQ Lab (`rabbitmq/`)
+## 1. Docker Lab (`docker/`)
+
+> **Сложность: базовая по входу, но объёмная.** Не требует предыдущих лаб — рассчитана на полных новичков в контейнерах; Bash даётся параллельно, ровно в том объёме, который нужен для entrypoint-скриптов.
+
+**О чём:** Docker и Bash разобраны подробно и с нуля — то, на что в Traefik-лабе был выделен всего один вводный раздел. Только сам Docker (образы, контейнеры, Dockerfile, тома, сети, Compose) и Bash как параллельный трек.
+
+**Стек:** Node.js (Express) + PostgreSQL, всё в Docker / Docker Compose.
+
+**Формат:** методичка `Docker_Bash_Lab.html` — методичка готова, прохождение впереди.
+
+**Что внутри (3 сессии):** разбор Docker с нуля (образ vs контейнер vs Dockerfile), Bash параллельным треком (shebang, переменные, циклы, `set -e -u -o pipefail`), ENTRYPOINT vs CMD, тома и сети, Docker Compose (`depends_on` + healthcheck) — пошаговая сборка маленького Node.js + PostgreSQL проекта, заканчивается явной точкой возврата к Traefik Lab.
+
+---
+
+## 2. OOP Lab (`php-coffee/`)
+
+> **Сложность: базовая по материалу** (нужен только синтаксис PHP, фреймворк — с сессии 5), но именно здесь стоит не спешить, если ООП пока даётся тяжело: это фундамент, который потом всплывает во всех остальных лабах.
+
+**О чём:** объектно-ориентированное программирование на PHP 8.4 с нуля — не абстрактно, а на маленьком API кофейни. Отдельный, ни от чего не зависящий проект (в отличие от Redis/RabbitMQ-лаб не растёт из общей системы заказов).
+
+**Стек:** Laravel 13 (PHP 8.4) + PostgreSQL + RabbitMQ + Mailpit — брокер появляется только в последней сессии.
+
+**Формат:** методичка `OOP_Lab_CoffeeShop.html` — не пройдена, ниже план по оглавлению. Первая сессия начинается с чистого PHP без фреймворка, чтобы увидеть ООП "без магии Laravel".
+
+**Что внутри (5 сессий):**
+- **Сессия 1** — касса на массивах (и почему это плохо) → первый объект `Money` → `abstract class Drink` + `enum` + полиморфизм → заказ с инвариантами
+- **Сессия 2** — тесты для `Money`; иерархия напитков-наследников; фабрика `DrinkType` + `GET /api/menu`
+- **Сессия 3** — интерфейс `Beverage`; паттерн **Decorator** для добавок (сироп, шот и т.д.); сущность `Order` + `OrderStatus`; Repository + `POST /api/orders`
+- **Сессия 4** — `DiscountPolicy` + `Clock`; чекаут со стратегиями оплаты (`PaymentMethod`) + `/pay`; тесты на стратегиях; эксперимент "а если бы делали через наследование" (чтобы почувствовать разницу с композицией)
+- **Сессия 5** — `EventPublisher` + событие `order.paid`; воркеры (бариста + уведомления) на RabbitMQ — та же схема, что в RabbitMQ-лабе (один topic-exchange, две очереди); сквозной тест без БД и без брокера; финал "до/после"
+
+Проходит через: 4 принципа ООП, `abstract class` vs `interface`, наследование vs композиция, паттерны (Factory, Decorator, Strategy, Repository), SOLID — всё на одном сквозном примере.
+
+---
+
+## 3. Чистый PHP Lab (`php/`)
+
+> **Сложность: базовая по материалу** (нужен только синтаксис PHP и пройденная OOP-лаба — её принципы используются без повторного объяснения), но ближе к концу ощутимо прибавляет: сессии 1–4 — язык, сессии 5–8 — своя инфраструктура (роутер, DI-контейнер, PDO, CSRF).
+
+**О чём:** чистый PHP 8.4 без единого фреймворка — то, что обычно прячет Laravel: `strict_types` и copy-on-write массивы, суперглобалы, исключения, замыкания и генераторы, магические методы, современный синтаксис (`match`, nullsafe), Composer и PSR-4 — и дальше своими руками: роутер, DI-контейнер, PDO-слой, сессии/CSRF. Домен — та же кофейня, что в OOP-лабе, но здесь пишется инфраструктура, которую там давал фреймворк.
+
+**Стек:** PHP 8.4 CLI, встроенный dev-сервер, PostgreSQL через голый PDO, Composer только для автозагрузки (PSR-4) — без единого стороннего пакета до сессии 7.
+
+**Формат:** методичка `PHP_Lab_VanillaCoffee.html` — готова, прохождение впереди.
+
+**Что внутри (8 сессий):**
+- **Сессия 1** — стенд; `declare(strict_types=1)` + таблица `==` (чем PHP 7 отличается от PHP 8)
+- **Сессия 2** — copy-on-write массивов на измерении момента копирования; `array_filter` vs `usort` (ключи, мутация); `mb_*` на кириллице + `sprintf` + regex
+- **Сессия 3** — предсказать → проверить: `$_GET` и приведение типов; `php://input` — JSON-тело запроса; `finally` vs exception handler — порядок выполнения
+- **Сессия 4** — `use ($var)` vs `use (&$var)` в замыканиях; генератор vs жадное чтение — измеряем память; свой фасад через `__callStatic`; `match` + nullsafe на неполных данных
+- **Сессия 5** — PSR-4: автозагрузка до и после; свой роутер v1 (наивный) → v2 (regex-параметры)
+- **Сессия 6** — боль без DI-контейнера (ручное связывание) → контейнер v1 (явные фабрики + singleton) → v2 (autowiring через Reflection)
+- **Сессия 7** — SQL-инъекция: найти → исправить; транзакция с `rollBack` после частичного сбоя; CSRF своими руками (сессия + `hash_equals`); свой `.env`-парсер
+- **Сессия 8** — финал: сборка `index.php`, middleware-цепочка, тесты + таблица «что даёт Laravel»
+
+Разделы 1–12 методички — теория языка и рантайма, раздел 13 — восемь сессий заданий, разделы 14–17 — чек-лист, глоссарий, вопросы для собеседования, что дальше.
+
+---
+
+## 4. Traefik Lab (`traefik/`)
+
+> **Сложность: низкая–средняя** (инфраструктурная, не про код — backend/frontend уже даны готовыми). Нужно перед стартом: Docker Compose на уровне «поднять сервис и почитать логи»; для новичков в контейнерах есть отдельный вводный раздел 0.
+
+**О чём:** reverse proxy и service discovery для стека из нескольких сервисов — без ручной правки конфигов при каждом деплое, через Docker-labels.
+
+**Стек:** Traefik 3 + Docker Compose (с заметками про Podman) + Node.js API + статический frontend + PostgreSQL + Adminer.
+
+**Формат:** методичка `Traefik_Lab_Plan.html` — не пройдена, ниже план по оглавлению. Есть отдельный раздел 0 "Введение в Docker с нуля" для тех, кто раньше не работал с контейнерами.
+
+**Что внутри (3 сессии):**
+- **Сессия 1** — каталоги и `traefik/traefik.yml`; базовый `docker-compose.yml`; первый роутер через labels на тестовом сервисе `whoami`; dashboard Traefik и его защита; заметка про rootless Podman
+- **Сессия 2** — backend API; frontend с path-routing (`StripPrefix`); PostgreSQL + Adminer за прокси; масштабирование API + healthcheck; цепочка middlewares
+- **Сессия 3** — TLS через `mkcert` (локально) и Let's Encrypt (staging); canary-деплой (weighted round robin); "Production Hell" — финальный сценарий без подсказок
+
+Модель для понимания: `EntryPoint → Router → Middleware → Service` — весь курс выстроен вокруг этой цепочки.
+
+---
+
+## 5. Kubernetes Lab (`kubernetes/`)
+
+> **Сложность: средняя–высокая.** Нужны пройденные Docker Lab и Traefik Lab — сюда переносится ровно их стек (API + frontend + PostgreSQL + Adminer), поэтому новый домен не изучается, а сразу нужны настоящие понятия Kubernetes.
+
+**О чём:** миграция уже знакомого стека из `docker-compose.yml` в Kubernetes, шаг за шагом — видно именно то, что меняется при переходе от одной машины к оркестрации, а не тонет в шуме нового кода. Кластер — [kind](https://kind.sigs.k8s.io/) (Kubernetes IN Docker): настоящий control plane и worker-узлы в контейнерах, тот же `kubectl` и те же объекты, что и в проде.
+
+**Стек:** Kubernetes (kind) + kubectl + Traefik как Ingress-контроллер (IngressRoute CRD) — тот же стек приложения, что в Traefik Lab: Node.js API + статический frontend + PostgreSQL + Adminer.
+
+**Формат:** методичка [`Kubernetes_Lab_Plan.html`](kubernetes/Kubernetes_Lab_Plan.html) — открывается в браузере, прогресс по чекбоксам сохраняется локально.
+
+**Что внутри (3 сессии):**
+- **Сессия 1** — kind-кластер; первый Pod руками и его смертность; Deployment и самолечение через ReplicaSet; сборка образа API и `kind load`; Service и стабильный адрес поверх набора Pod'ов
+- **Сессия 2** — полный стек: ConfigMap/Secret вместо `.env`; Volumes и PersistentVolumeClaim для PostgreSQL; readiness/liveness-пробы; requests/limits
+- **Сессия 3** — Traefik снаружи кластера через IngressRoute CRD; HorizontalPodAutoscaler вместо ручных "x3 реплики"; "Production Hell" — финальный сценарий без подсказок
+
+Разделы 1–8 методички — теория (Control Plane/Node, Pod, Deployment, Service, ConfigMap/Secret, Volumes, Probes, Traefik как Ingress-контроллер), раздел 9 — три сессии заданий, разделы 10–13 — чек-лист, глоссарий, вопросы для собеседования, что дальше.
+
+---
+
+## 6. RabbitMQ Lab (`rabbitmq/`)
 
 > **Сложность: высокая.** Нужно перед стартом: уверенный Laravel/PHP (транзакции, Artisan-команды, очереди хотя бы на уровне концепции), базовые транзакции SQL, Docker Compose «запустить и посмотреть логи».
 
@@ -48,7 +157,7 @@
 
 ---
 
-## 2. Redis Lab (`redis/`)
+## 7. Redis Lab (`redis/`)
 
 > **Сложность: средняя.** Нужно перед стартом: то же, что для RabbitMQ-лабы (Laravel, Docker), домен заказов переиспользуется. Ниже порог входа, чем в RabbitMQ — но полезно уже пройти RabbitMQ, чтобы прочувствовать разницу между брокером и Redis-примитивами (Streams — не полноценная очередь).
 
@@ -67,49 +176,33 @@
 
 ---
 
-## 3. Traefik Lab (`traefik/`)
+## 8. Чистый JS Lab — Vanilla Helpdesk (`js/`)
 
-> **Сложность: низкая–средняя** (инфраструктурная, не про код — backend/frontend уже даны готовыми). Нужно перед стартом: Docker Compose на уровне «поднять сервис и почитать логи»; для новичков в контейнерах есть отдельный вводный раздел 0.
+> **Сложность: средняя.** Не требует предыдущих лаб — нужен только базовый синтаксис JS. Это общий фундамент для Vue Lab и TypeScript Lab, поэтому логично проходить её первой из трёх.
 
-**О чём:** reverse proxy и service discovery для стека из нескольких сервисов — без ручной правки конфигов при каждом деплое, через Docker-labels.
+**О чём:** JavaScript с нуля, без единого фреймворка и без бандлера — то, что Vue и другие фреймворки обычно прячут: как на самом деле работают `var`/`let`/`const` и hoisting, `this` и замыкания, прототипы под капотом `class`, event loop, DOM и модули. Домен практики (тикеты) намеренно совпадает с Vue Lab — Helpdesk, чтобы в финале явно сравнить «vanilla vs Vue»; код при этом полностью свой, без единой связи с тем репозиторием.
 
-**Стек:** Traefik 3 + Docker Compose (с заметками про Podman) + Node.js API + статический frontend + PostgreSQL + Adminer.
+**Стек:** JavaScript (ES2022+, без TypeScript и без сборки) + Node.js 22 для сессий-песочниц; в браузере — нативные ES-модули без бандлера; `json-server` как мок-API (только `db.json`, ноль кода); собственный ~15-строчный сервер на `node:http`; тесты — встроенный `node --test`.
 
-**Формат:** методичка `Traefik_Lab_Plan.html` — не пройдена, ниже план по оглавлению. Есть отдельный раздел 0 "Введение в Docker с нуля" для тех, кто раньше не работал с контейнерами.
+**Формат:** методичка `JS_Lab_VanillaHelpdesk.html` — готова, прохождение впереди.
 
-**Что внутри (3 сессии):**
-- **Сессия 1** — каталоги и `traefik/traefik.yml`; базовый `docker-compose.yml`; первый роутер через labels на тестовом сервисе `whoami`; dashboard Traefik и его защита; заметка про rootless Podman
-- **Сессия 2** — backend API; frontend с path-routing (`StripPrefix`); PostgreSQL + Adminer за прокси; масштабирование API + healthcheck; цепочка middlewares
-- **Сессия 3** — TLS через `mkcert` (локально) и Let's Encrypt (staging); canary-деплой (weighted round robin); "Production Hell" — финальный сценарий без подсказок
+**Что внутри (8 сессий):**
+- **Сессия 1** — переменные, область видимости, hoisting: воспроизведён и починен баг с `var` в цикле тремя способами
+- **Сессия 2** — типы, приведение, объекты, массивы: рефакторинг императивного кода в функциональный на методах массивов
+- **Сессия 3** — `this`, замыкания, паттерны: каррирование, мемоизация, приватность до и после `#private`
+- **Сессия 4** — прототипы, `class`, `Symbol`, коллекции: цепочка прототипов руками → `class` → сравнение с `Map`/`Set`
+- **Сессия 5** — event loop, Promises, fetch, debounce/throttle: своя очередь задач, реальный fetch к `json-server`, тесты на `node --test`
+- **Сессия 6** — DOM без фреймворка: список тикетов рендерится и обновляется без единой строки фреймворка
+- **Сессия 7** — модули (ESM), Storage, своя реактивность на `Proxy`
+- **Сессия 8** — финал: мини-SPA (свой роутер на `history.pushState`, стор на `Proxy`, рендер шаблонными строками) с явной таблицей сравнения «что Vue даёт бесплатно»
 
-Модель для понимания: `EntryPoint → Router → Middleware → Service` — весь курс выстроен вокруг этой цепочки.
-
----
-
-## 4. OOP Lab (`php-coffee/`)
-
-> **Сложность: базовая по материалу** (нужен только синтаксис PHP, фреймворк — с сессии 5), но именно здесь стоит не спешить, если ООП пока даётся тяжело: это фундамент, который потом всплывает во всех остальных лабах.
-
-**О чём:** объектно-ориентированное программирование на PHP 8.4 с нуля — не абстрактно, а на маленьком API кофейни. Отдельный, ни от чего не зависящий проект (в отличие от Redis/RabbitMQ-лаб не растёт из общей системы заказов).
-
-**Стек:** Laravel 13 (PHP 8.4) + PostgreSQL + RabbitMQ + Mailpit — брокер появляется только в последней сессии.
-
-**Формат:** методичка `OOP_Lab_CoffeeShop.html` — не пройдена, ниже план по оглавлению. Первая сессия начинается с чистого PHP без фреймворка, чтобы увидеть ООП "без магии Laravel".
-
-**Что внутри (5 сессий):**
-- **Сессия 1** — касса на массивах (и почему это плохо) → первый объект `Money` → `abstract class Drink` + `enum` + полиморфизм → заказ с инвариантами
-- **Сессия 2** — тесты для `Money`; иерархия напитков-наследников; фабрика `DrinkType` + `GET /api/menu`
-- **Сессия 3** — интерфейс `Beverage`; паттерн **Decorator** для добавок (сироп, шот и т.д.); сущность `Order` + `OrderStatus`; Repository + `POST /api/orders`
-- **Сессия 4** — `DiscountPolicy` + `Clock`; чекаут со стратегиями оплаты (`PaymentMethod`) + `/pay`; тесты на стратегиях; эксперимент "а если бы делали через наследование" (чтобы почувствовать разницу с композицией)
-- **Сессия 5** — `EventPublisher` + событие `order.paid`; воркеры (бариста + уведомления) на RabbitMQ — та же схема, что в RabbitMQ-лабе (один topic-exchange, две очереди); сквозной тест без БД и без брокера; финал "до/после"
-
-Проходит через: 4 принципа ООП, `abstract class` vs `interface`, наследование vs композиция, паттерны (Factory, Decorator, Strategy, Repository), SOLID — всё на одном сквозном примере.
+Разделы 1–14 методички — теория языка и рантайма (от типичных багов без понимания фундамента до event loop, DOM и модулей), раздел 16 — восемь сессий заданий, разделы 17–20 — чек-лист, глоссарий, вопросы для собеседования, что дальше.
 
 ---
 
-## 5. Vue Lab (`vue/`)
+## 9. Vue Lab (`vue/`)
 
-> **Сложность: высокая, если фронтенд — новая территория.** Нужно перед стартом: уверенный JavaScript (ES6+, async/await, деструктуризация); опыт с Vue или другими фреймворками не требуется, бэкенд на NestJS дан готовым.
+> **Сложность: высокая, если фронтенд — новая территория.** Нужно перед стартом: уверенный JavaScript (ES6+, async/await, деструктуризация); если сомневаетесь в фундаменте — сначала «Чистый JS» (`js/`). Опыт с Vue или другими фреймворками не требуется, бэкенд на NestJS дан готовым.
 
 **О чём:** Helpdesk (система тикетов) на Vue 3 с нуля — реактивность, компоненты, роутинг и общее состояние, каждое понятие на одном сквозном примере. Бэкенд (маленький NestJS-сервис) дан готовым в первой же сессии — писать его не нужно, только запустить.
 
@@ -128,7 +221,7 @@
 
 ---
 
-## 6. TypeScript Lab (`typescript/`)
+## 10. TypeScript Lab (`typescript/`)
 
 > **Сложность: высокая** — абстрактное мышление на уровне типов (generics, conditional/mapped types) непривычно после динамического PHP. Нужно перед стартом: тот же JavaScript, что для Vue-лабы; логично проходить после или параллельно с ней (сессия 5 использует Vue).
 
@@ -147,7 +240,50 @@
 
 ---
 
-## 7. Laravel Lab (`laravel/`)
+## 11. NestJS Lab (`nestjs/`)
+
+> **Сложность: высокая.** Нужны пройденные Vue Lab (тот же Helpdesk-домен — бэкенд, который там был дан готовым, здесь собирается с нуля) и сессия 1 TypeScript-лабы (классы, интерфейсы, типы); из Чистого JS нужна сессия 5 (event loop, async/await).
+
+**О чём:** тот же Helpdesk (тикеты, роли `agent`/`customer`, live-обновления), что в Vue Lab — только теперь backend строится слой за слоем, и на каждом шаге видно, что именно скрывает декоратор `@Injectable()`, когда его пишут не глядя: `reflect-metadata` под капотом, DI и provider scopes, DTO/Pipes/валидация, Prisma и N+1, Guards/JWT/refresh-токены, WebSocket Gateway, тестирование.
+
+**Стек:** NestJS 10 + TypeScript, Prisma + PostgreSQL 16, class-validator, Passport + JWT, `@nestjs/websockets` (Socket.IO), Jest + `@nestjs/testing`. Всё в Docker.
+
+**Формат:** методичка [`NestJS_Lab_Plan.html`](nestjs/NestJS_Lab_Plan.html) — открывается в браузере, прогресс по чекбоксам сохраняется локально.
+
+**Что внутри (6 сессий):**
+- **Сессия 1** — стенд и наивная версия; декораторы руками без Nest (`reflect-metadata`, `emitDecoratorMetadata`); первый настоящий модуль (Controller/Service/DI)
+- **Сессия 2** — provider scopes и singleton-ловушка; `useFactory` и токены; `PrismaService` с lifecycle hooks; N+1 — измерить, не декларировать
+- **Сессия 3** — DTO и `ValidationPipe`; свой Pipe; exception filter; полный CRUD тикетов и комментариев
+- **Сессия 4** — JWT-стратегия и логин; `AuthGuard` под капотом; `RolesGuard` и свой декоратор; refresh-токены и ротация
+- **Сессия 5** — WebSocket Gateway и комнаты; эмит из сервиса через `forwardRef`; auth на handshake
+- **Сессия 6** — unit-тест с мок Prisma; e2e-тест контроллера; "Production Hell" — финальный сценарий без подсказок
+
+Разделы 1–7 методички — теория (декораторы и reflect-metadata, Modules и DI, DTO/Pipes, Prisma/N+1, Guards/JWT, WebSocket Gateway, тестирование), раздел 8 — шесть сессий заданий, разделы 9–12 — чек-лист, глоссарий, вопросы для собеседования, что дальше. Следующий шаг после этой лабы — отдельная GraphQL-лаба на том же backend'е.
+
+---
+
+## 12. GraphQL Lab (`graphql/`)
+
+> **Сложность: высокая.** Нужна пройденная NestJS Lab целиком — декораторы и `reflect-metadata`, provider scopes, Guards и JWT переиспользуются здесь без повторного объяснения, только в новом контексте.
+
+**О чём:** тот же Helpdesk-backend, что в NestJS Lab (тот же Prisma, тот же JWT) — но HTTP-слой контроллеров заменяется на GraphQL-резолверы: over/under-fetching и зачем единый `/graphql`-эндпоинт, code-first типы и резолверы, N+1 на новом уровне и `DataLoader`, Guards через `GqlExecutionContext`, Subscriptions вместо WebSocket Gateway. Домен не меняется специально — чтобы видеть именно то, что меняется при переходе на GraphQL, а не тонуть в новом коде.
+
+**Стек:** `@nestjs/graphql` + Apollo Server, code-first (`@ObjectType`/`@Field`/`@Resolver`), `dataloader` для батчинга, тот же Prisma + PostgreSQL и Passport-JWT, что в NestJS Lab. Всё в Docker.
+
+**Формат:** методичка [`GraphQL_Lab_Plan.html`](graphql/GraphQL_Lab_Plan.html) — открывается в браузере, прогресс по чекбоксам сохраняется локально.
+
+**Что внутри (5 сессий):**
+- **Сессия 1** — замер REST (round trips); первый `ObjectType` и `Query`; первая `Mutation`
+- **Сессия 2** — `ResolveField` для комментариев; input types и валидация; порядок вызова резолверов
+- **Сессия 3** — замер N+1 в резолвере; `DataLoader`: батчинг; `DataLoader` per-request (`Scope.REQUEST`)
+- **Сессия 4** — `GqlExecutionContext` и перенос Guards; `CurrentUser`-декоратор; `Subscription ticketUpdated`; auth для subscription
+- **Сессия 5** — unit-тест резолвера; e2e через `/graphql`; "Production Hell" — финальный сценарий без подсказок
+
+Разделы 1–7 методички — теория (over/under-fetching в REST, типы/Query/Mutation, резолверы и порядок вызова, N+1 и DataLoader, Guards и контекст в GraphQL, Subscriptions, тестирование резолверов), раздел 8 — пять сессий заданий, разделы 9–12 — чек-лист, глоссарий, вопросы для собеседования, что дальше.
+
+---
+
+## 13. Laravel Lab (`laravel/`)
 
 > **Сложность: высокая.** Нужно перед стартом: базовый Laravel (роутинг, контроллеры, миграции, Blade — даются ссылками на документацию, без разбора), ООП на PHP (см. `php-coffee/`) и общее представление про очереди (см. `rabbitmq/`) — лаба на них ссылается, а не объясняет заново.
 
@@ -170,6 +306,14 @@
 - **Сессия 10** — фабрики для всех моделей, feature-тесты (`RefreshDatabase`), fakes/моки (Event/Notification/Mail), финальный прогон
 
 Лаба построена вокруг карты Laravel (`Kernel → Middleware → Router → Controller`, плюс сквозные Container/Events/Auth и менеджеры Database/Cache/Queue/Mail/Broadcasting) и проходит по каждому слою последовательно — от жизненного цикла запроса до тестов.
+
+---
+
+## Витрина работ (`works/`)
+
+Отдельный сабмодуль [`works-lab`](https://github.com/meeymirita/works-lab) со стилизованными обзорными страницами каждой лабы (тёмный неоновый дизайн, тот же, что и у [`index.html`](index.html)): что внутри, стек, куда открыть методичку и репозиторий. Там же лежат превью-картинки лаб (`works/images/`), которые использует и главная страница.
+
+Открыть можно прямо по ссылке `works/<ключ-лабы>.html`, например [`works/rabbitmq.html`](works/rabbitmq.html).
 
 ---
 
