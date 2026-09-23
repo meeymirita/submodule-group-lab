@@ -433,9 +433,12 @@
       padding-bottom: 16px;
       border-bottom: 1px solid rgba(255,255,255,.08);
       background: var(--bg);
-      position: relative;
+      position: sticky;
+      top: var(--header-h);
       z-index: 5;
+      transition: top .3s ease;
     }
+    body.header-hidden .category-head { top: 0; }
     .category-label {
       display: inline-flex;
       align-items: center;
@@ -774,6 +777,7 @@
 </head>
 
 <body>
+<script src="works/page-loader.js"></script>
 
 <div class="progress"></div>
 
@@ -941,9 +945,11 @@
   </span>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Flip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/MorphSVGPlugin.min.js"></script>
+<script src="works/flip-gallery.js"></script>
 
 <script>
   var projects = [
@@ -1227,13 +1233,15 @@
       try {
         panel.classList.add('js-flip');
         aboutOverlay.classList.add('is-open');
-        var state = Flip.getState(panel);
-        Flip.fit(panel, trigger, { scale: true });
-        Flip.from(state, {
+        // Flip.fit(..., getVars) measures the offset/scale that would put the panel
+        // exactly over the button; gsap.from() then plays from there back to its real spot.
+        var fromVars = Flip.fit(panel, trigger, { scale: true, getVars: true });
+        gsap.from(panel, Object.assign(fromVars, {
           duration: .45,
-          ease: 'power3.inOut',
+          ease: 'power3.out',
+          clearProps: 'transform',
           onComplete: function () { panel.classList.remove('js-flip'); },
-        });
+        }));
       } catch (e) {
         panel.classList.remove('js-flip');
         aboutOverlay.classList.add('is-open');
@@ -1281,7 +1289,7 @@
     }).join('');
     observeReveal();
     initTilt();
-    initCategoryPins();
+    if (window.FlipGallery) FlipGallery.init('.card-media img, .about-photo-big');
   }
 
   function observeReveal() {
@@ -1308,6 +1316,19 @@
     if (window.innerWidth < 700) return;
 
     document.querySelectorAll('.card').forEach(function (card) {
+      if (card.dataset.tiltBound) return;
+      card.dataset.tiltBound = '1';
+
+      if (gsapReady) {
+        // GSAP writes transform every frame, so the card's own CSS transform transition
+        // (with its per-card reveal transition-delay) must step aside, or it restarts on
+        // every frame and every card except the first (delay 0) never visibly moves.
+        card.addEventListener('mouseenter', function () {
+          card.style.transition = 'border-color .35s ease, box-shadow .35s ease';
+          card.style.transitionDelay = '0s';
+        });
+      }
+
       card.addEventListener('mousemove', function (e) {
         var rect = card.getBoundingClientRect();
         var x = e.clientX - rect.left;
@@ -1339,47 +1360,25 @@
     });
   }
 
-  function initCategoryPins() {
-    if (!gsapReady || window.innerWidth < 700) return;
-
-    try {
-      var headerH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 73;
-
-      document.querySelectorAll('.category-block').forEach(function (block) {
-        var head = block.querySelector('.category-head');
-        var track = block.querySelector('.grid');
-        if (!head || !track) return;
-
-        ScrollTrigger.create({
-          trigger: block,
-          start: 'top top+=' + headerH,
-          endTrigger: track,
-          end: 'bottom top+=' + (headerH + head.offsetHeight),
-          pin: head,
-          pinSpacing: false,
-        });
-      });
-    } catch (e) {}
-  }
-
   function initHeaderAutoHide() {
     if (!gsapReady) return;
     var header = document.querySelector('header');
     if (!header) return;
 
+    var hidden = false;
+    function setHidden(next) {
+      if (next === hidden) return;
+      hidden = next;
+      document.body.classList.toggle('header-hidden', hidden);
+      gsap.to(header, { yPercent: hidden ? -100 : 0, duration: .3, ease: 'power2.out', overwrite: true });
+    }
+
     try {
       ScrollTrigger.create({
-        start: 'top top',
-        end: 99999,
+        start: 0,
+        end: 'max',
         onUpdate: function (self) {
-          if (self.scroll() < header.offsetHeight + 20) {
-            gsap.to(header, { yPercent: 0, duration: .3, ease: 'power2.out', overwrite: 'auto' });
-            return;
-          }
-          gsap.to(header, {
-            yPercent: self.direction === 1 ? -100 : 0,
-            duration: .3, ease: 'power2.out', overwrite: 'auto',
-          });
+          setHidden(self.scroll() > header.offsetHeight + 20 && self.direction === 1);
         },
       });
     } catch (e) {}
@@ -1423,7 +1422,10 @@
   }
 
   function goToWork(key) {
-    window.location.href = 'works/' + key + '.html';
+    var url = 'works/' + key + '.html';
+    var p = projects.find(function (x) { return x.key === key; });
+    if (window.PageLoader && p) PageLoader.go(url, p.title, p.accent);
+    else window.location.href = url;
   }
 
   grid.addEventListener('click', function (e) {
@@ -1468,6 +1470,8 @@
   window.addEventListener('load', function () {
     if (window.ScrollTrigger) ScrollTrigger.refresh();
   });
+
+  if (window.PageLoader) PageLoader.enter('Tech Performance', '#ff2e88');
 
   var hero = document.querySelector('.hero');
 
