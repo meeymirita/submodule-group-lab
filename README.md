@@ -8,7 +8,7 @@
 
 ## Работы
 
-Порядок — от простого к сложному, с учётом того, что лабы переиспользуют друг друга: OOP-лаба даёт фундамент, который нужен для RabbitMQ и Laravel; следом «Чистый PHP» встал рядом с OOP, потому что тоже про язык, но без фреймворка; Kubernetes-лаба идёт сразу за Traefik — она переносит её же стек из Compose в кластер, поэтому не имеет смысла без пройденной Traefik-лабы; RabbitMQ стоит пройти до Redis (проще почувствовать разницу между брокером и Redis-примитивами) и до Laravel-лабы (она прямо ссылается на обе); «Чистый JS» — общий фундамент для Vue и TypeScript, поэтому встал перед ними обеими; Vue — до TypeScript (сессия 5 последней использует Vue); NestJS-лаба идёт сразу за Vue и TypeScript — она переносит тот же Helpdesk-домен и собирает с нуля тот самый бэкенд, который в Vue-лабе был дан готовым; GraphQL-лаба идёт сразу за NestJS и не имеет смысла без неё — тот же backend, но REST-контроллеры заменяются на резолверы. Docker и Traefik самодостаточны и не завязаны на остальные.
+Порядок — от простого к сложному, с учётом того, что лабы переиспользуют друг друга: OOP-лаба даёт фундамент, который нужен для RabbitMQ и Laravel; следом «Чистый PHP» встал рядом с OOP, потому что тоже про язык, но без фреймворка; Kubernetes-лаба идёт сразу за Traefik — она переносит её же стек из Compose в кластер, поэтому не имеет смысла без пройденной Traefik-лабы; RabbitMQ стоит пройти до Redis (проще почувствовать разницу между брокером и Redis-примитивами) и до Laravel-лабы (она прямо ссылается на обе); «Чистый JS» — общий фундамент для Vue и TypeScript, поэтому встал перед ними обеими; Vue — до TypeScript (сессия 5 последней использует Vue); NestJS-лаба идёт сразу за Vue и TypeScript — она переносит тот же Helpdesk-домен и собирает с нуля тот самый бэкенд, который в Vue-лабе был дан готовым, но сама по себе от Vue-лабы не зависит. GraphQL-лаба — отдельный самостоятельный проект (свой домен, каталог фильмов CineGraph) и не требует прохождения NestJS-лабы, хотя многие темы (DI, Guards, Prisma) там уже знакомы. Docker и Traefik самодостаточны и не завязаны на остальные.
 
 | № | Папка | Лаба | Сложность | Репозиторий |
 |---|---|---|---|---|
@@ -22,8 +22,8 @@
 | 8 | [`js`](js) | Чистый JS — Vanilla Helpdesk, фундамент без фреймворка | Средняя | [js-lab](https://github.com/meeymirita/js-lab) |
 | 9 | [`vue`](vue) | Vue 3 — Helpdesk (Router, Pinia, WebSocket, тесты) | Высокая | [vue-lab](https://github.com/meeymirita/vue-lab) |
 | 10 | [`typescript`](typescript) | TypeScript 5 — Warehouse (generics, Zod, API + Vue) | Высокая | [typescript-lab](https://github.com/meeymirita/typescript-lab) |
-| 11 | [`nestjs`](nestjs) | NestJS — Helpdesk API с нуля (DI, Guards, JWT, WebSocket) | Высокая | [nestjs-lab](https://github.com/meeymirita/nestjs-lab) |
-| 12 | [`graphql`](graphql) | GraphQL — тот же Helpdesk без REST (резолверы, DataLoader, Subscriptions) | Высокая | [graphql-lab](https://github.com/meeymirita/graphql-lab) |
+| 11 | [`nestjs`](nestjs) | NestJS — Helpdesk API с нуля (свой DI, JWT-ротация, WebSocket) | Высокая | [nestjs-lab](https://github.com/meeymirita/nestjs-lab) |
+| 12 | [`graphql`](graphql) | GraphQL — CineGraph, самостоятельный проект (резолверы, DataLoader, Subscriptions) | Высокая | [graphql-lab](https://github.com/meeymirita/graphql-lab) |
 | 13 | [`laravel`](laravel) | Laravel 13 изнутри — TaskFlow (таск-трекер с ролями) | Высокая | [laravel-lab](https://github.com/meeymirita/laravel-lab) |
 
 > Личный прогресс (моя пометка, не часть плана репозитория): ✅ пройдено — RabbitMQ. 🔵 сейчас прохожу — OOP (`php-coffee`).
@@ -242,44 +242,41 @@
 
 ## 11. NestJS Lab (`nestjs/`)
 
-> **Сложность: высокая.** Нужны пройденные Vue Lab (тот же Helpdesk-домен — бэкенд, который там был дан готовым, здесь собирается с нуля) и сессия 1 TypeScript-лабы (классы, интерфейсы, типы); из Чистого JS нужна сессия 5 (event loop, async/await).
+> **Сложность: высокая.** Проект полностью самостоятельный — не требует прохождения других лаб. TypeScript-минимум, нужный для Nest, объясняется по ходу в сессии 1. Домен — тот же Helpdesk, что и в Vue Lab (тот фронтенд можно направить на этот бэкенд), но зависимости от неё нет.
 
-**О чём:** тот же Helpdesk (тикеты, роли `agent`/`customer`, live-обновления), что в Vue Lab — только теперь backend строится слой за слоем, и на каждом шаге видно, что именно скрывает декоратор `@Injectable()`, когда его пишут не глядя: `reflect-metadata` под капотом, DI и provider scopes, DTO/Pipes/валидация, Prisma и N+1, Guards/JWT/refresh-токены, WebSocket Gateway, тестирование.
+**О чём:** Helpdesk API собирается с нуля слой за слоем, и на каждом шаге видно, что скрывает декоратор `@Injectable()`, когда его пишут не глядя: свой мини-DI контейнер и метаданные декораторов, границы модулей и provider scopes, DTO и `ValidationPipe`, Prisma и транзакции, JWT-ротация refresh-токенов с reuse-detection, RBAC и владение через `TicketPolicy`, доменные события, WebSocket-шлюз с комнатами и своей авторизацией на handshake, свой динамический модуль, unit- и e2e-тесты.
 
-**Стек:** NestJS 10 + TypeScript, Prisma + PostgreSQL 16, class-validator, Passport + JWT, `@nestjs/websockets` (Socket.IO), Jest + `@nestjs/testing`. Всё в Docker.
+**Стек:** NestJS 11 + TypeScript (strict), Prisma 6 + PostgreSQL 16, class-validator/class-transformer, `@nestjs/passport` + `passport-jwt` + `@nestjs/jwt` + argon2, `@nestjs/event-emitter`, `@nestjs/websockets` (Socket.IO), `@nestjs/swagger`, helmet + `@nestjs/throttler`, `@nestjs/terminus`, Jest + supertest. Всё в Docker.
 
 **Формат:** методичка [`NestJS_Lab_Plan.html`](nestjs/NestJS_Lab_Plan.html) — открывается в браузере, прогресс по чекбоксам сохраняется локально.
 
-**Что внутри (6 сессий):**
-- **Сессия 1** — стенд и наивная версия; декораторы руками без Nest (`reflect-metadata`, `emitDecoratorMetadata`); первый настоящий модуль (Controller/Service/DI)
-- **Сессия 2** — provider scopes и singleton-ловушка; `useFactory` и токены; `PrismaService` с lifecycle hooks; N+1 — измерить, не декларировать
-- **Сессия 3** — DTO и `ValidationPipe`; свой Pipe; exception filter; полный CRUD тикетов и комментариев
-- **Сессия 4** — JWT-стратегия и логин; `AuthGuard` под капотом; `RolesGuard` и свой декоратор; refresh-токены и ротация
-- **Сессия 5** — WebSocket Gateway и комнаты; эмит из сервиса через `forwardRef`; auth на handshake
-- **Сессия 6** — unit-тест с мок Prisma; e2e-тест контроллера; "Production Hell" — финальный сценарий без подсказок
+**Что внутри (5 сессий):**
+- **Сессия 1** — фундамент: TypeScript-минимум для Nest, DI руками (свой мини-контейнер), модули, конфиг с валидацией
+- **Сессия 2** — база данных: Docker, Prisma и первая миграция, DTO и `ValidationPipe`, CRUD тикетов, ошибки Prisma в HTTP, транзакции и история изменений
+- **Сессия 3** — пользователи и безопасность: регистрация и хэши (argon2), логин и `JwtStrategy`, глобальный guard и `@Public()`/`@CurrentUser()`, refresh-токены с ротацией и reuse-detection, роли и владение (`TicketPolicy`)
+- **Сессия 4** — комментарии и внутренние заметки, доменные события, WebSocket-шлюз с комнатами, middleware/interceptors, Swagger, безопасность (CORS, helmet, rate limit)
+- **Сессия 5** — unit- и e2e-тесты, свой динамический модуль, health-чеки и graceful shutdown, Docker, "Production Hell" — финальный сценарий без подсказок
 
-Разделы 1–7 методички — теория (декораторы и reflect-metadata, Modules и DI, DTO/Pipes, Prisma/N+1, Guards/JWT, WebSocket Gateway, тестирование), раздел 8 — шесть сессий заданий, разделы 9–12 — чек-лист, глоссарий, вопросы для собеседования, что дальше. Следующий шаг после этой лабы — отдельная GraphQL-лаба на том же backend'е.
+Разделы 1–8 методички — теория (разбор задачи, как NestJS устроен внутри, итоговая архитектура, стек и структура, access/refresh-аутентификация, сценарий жизненного цикла тикета, Pipes/Guards/Interceptors/Filters, real-time и доменные события), раздел 9 — пять сессий заданий, разделы 10–13 — чек-лист, глоссарий, вопросы для собеседования, что дальше.
 
 ---
 
 ## 12. GraphQL Lab (`graphql/`)
 
-> **Сложность: высокая.** Нужна пройденная NestJS Lab целиком — декораторы и `reflect-metadata`, provider scopes, Guards и JWT переиспользуются здесь без повторного объяснения, только в новом контексте.
+> **Сложность: высокая.** Проект полностью самостоятельный (свой репозиторий `graphql-lab`), ни от одной другой лабы не зависит — домен другой (каталог фильмов, а не Helpdesk). Из знаний пригодятся основы NestJS (модули, DI, декораторы) и TypeScript на уровне «классы, интерфейсы, async/await» — всё остальное объясняется по ходу.
 
-**О чём:** тот же Helpdesk-backend, что в NestJS Lab (тот же Prisma, тот же JWT) — но HTTP-слой контроллеров заменяется на GraphQL-резолверы: over/under-fetching и зачем единый `/graphql`-эндпоинт, code-first типы и резолверы, N+1 на новом уровне и `DataLoader`, Guards через `GqlExecutionContext`, Subscriptions вместо WebSocket Gateway. Домен не меняется специально — чтобы видеть именно то, что меняется при переходе на GraphQL, а не тонуть в новом коде.
+**О чём:** CineGraph — каталог фильмов, режиссёров и рецензий, спроектированный так, чтобы естественно упереться во все ключевые темы GraphQL: язык запросов и жизненный цикл запроса, N+1 в резолверах и `DataLoader`, JWT и права на уровне полей, интерфейсы и юнионы (фильмография, поиск), курсорная пагинация рецензий (Relay Connection), подписки на живую ленту через Redis, защита от тяжёлых запросов (depth limit + query complexity).
 
-**Стек:** `@nestjs/graphql` + Apollo Server, code-first (`@ObjectType`/`@Field`/`@Resolver`), `dataloader` для батчинга, тот же Prisma + PostgreSQL и Passport-JWT, что в NestJS Lab. Всё в Docker.
+**Стек:** NestJS + `@nestjs/graphql` + Apollo Server (code-first: `@ObjectType`/`@Field`/`@Resolver`), Prisma 7 + PostgreSQL 17, `dataloader` для батчинга, `@nestjs/jwt` + bcryptjs, `graphql-subscriptions`/`graphql-redis-subscriptions` + Redis, `graphql-query-complexity`. Всё в Docker.
 
 **Формат:** методичка [`GraphQL_Lab_Plan.html`](graphql/GraphQL_Lab_Plan.html) — открывается в браузере, прогресс по чекбоксам сохраняется локально.
 
-**Что внутри (5 сессий):**
-- **Сессия 1** — замер REST (round trips); первый `ObjectType` и `Query`; первая `Mutation`
-- **Сессия 2** — `ResolveField` для комментариев; input types и валидация; порядок вызова резолверов
-- **Сессия 3** — замер N+1 в резолвере; `DataLoader`: батчинг; `DataLoader` per-request (`Scope.REQUEST`)
-- **Сессия 4** — `GqlExecutionContext` и перенос Guards; `CurrentUser`-декоратор; `Subscription ticketUpdated`; auth для subscription
-- **Сессия 5** — unit-тест резолвера; e2e через `/graphql`; "Production Hell" — финальный сценарий без подсказок
+**Что внутри (3 сессии):**
+- **Сессия 1** — инфраструктура и схема: репозиторий и NestJS, docker-compose (Postgres + Redis), модель данных и seed, первые `ObjectType`/`Query`, резолверы полей наивно, воспроизводим и считаем N+1, input-типы
+- **Сессия 2** — DataLoader, мутации, ошибки, права, полиморфизм: DataLoader на каждый запрос, вычисляемые поля, JWT-мутации, мутации рецензий с guard и владением, формат ошибок и маскировка, права на уровне полей и ролей, интерфейсы и юнионы, курсорная пагинация
+- **Сессия 3** — подписки, Redis, защита, тесты: живая лента рецензий, два инстанса и Redis Pub/Sub, клиент без библиотек (`fetch` + `graphql-ws`), depth limit и query complexity, unit- и e2e-тесты, "Production Hell" — финальный сценарий без подсказок
 
-Разделы 1–7 методички — теория (over/under-fetching в REST, типы/Query/Mutation, резолверы и порядок вызова, N+1 и DataLoader, Guards и контекст в GraphQL, Subscriptions, тестирование резолверов), раздел 8 — пять сессий заданий, разделы 9–12 — чек-лист, глоссарий, вопросы для собеседования, что дальше.
+Разделы 1–8 методички — теория (типичные заблуждения о GraphQL, как GraphQL устроен внутри, итоговая архитектура, стек и структура, N+1 и DataLoader, сценарий жизни одной рецензии, ошибки и nullability, пагинация/безопасность/кэш), раздел 9 — три сессии заданий, разделы 10–13 — чек-лист, глоссарий, вопросы для собеседования, что дальше.
 
 ---
 

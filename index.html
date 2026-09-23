@@ -51,9 +51,11 @@
     img { max-width: 100%; display: block; }
     button { font: inherit; }
 
-    ::-webkit-scrollbar { width: 10px; }
+    * { scrollbar-width: thin; scrollbar-color: rgba(255,46,136,.4) var(--bg); }
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: rgba(255,46,136,.4); border-radius: 999px; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,46,136,.4); border-radius: 999px; border: 2px solid var(--bg); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--pink); }
     ::selection { background: var(--pink); color: var(--bg); }
 
     .wrap { max-width: 1400px; margin: 0 auto; padding: 0 5vw; }
@@ -990,10 +992,10 @@
       key: 'nestjs',
       category: 'backend',
       title: 'NestJS Lab',
-      subtitle: 'Helpdesk API с нуля',
+      subtitle: 'DI руками, JWT-ротация, real-time',
       image: 'nestjs/nest.png',
-      desc: 'Тот же Helpdesk-бэкенд, что был дан готовым в Vue Lab, — собран с нуля слой за слоем: decorators/reflect-metadata под капотом, DI и provider scopes, DTO/Pipes, Prisma и N+1, Guards/JWT/refresh-токены, WebSocket Gateway, тесты.',
-      stack: ['NestJS 10', 'Prisma', 'PostgreSQL', 'Passport JWT', 'Socket.IO'],
+      desc: 'Helpdesk API собран с нуля слой за слоем: свой мини-DI контейнер, границы модулей и provider scopes, Prisma и транзакции, JWT-ротация refresh-токенов с reuse-detection, RBAC через TicketPolicy, доменные события и WebSocket-шлюз, свой динамический модуль, unit и e2e тесты.',
+      stack: ['NestJS 11', 'Prisma 6', 'PostgreSQL 16', 'JWT + argon2', 'Socket.IO'],
       difficulty: 'Высокая',
       open: 'nestjs/NestJS_Lab_Plan.html',
       repo: 'https://github.com/meeymirita/nestjs-lab',
@@ -1003,10 +1005,10 @@
       key: 'graphql',
       category: 'backend',
       title: 'GraphQL Lab',
-      subtitle: 'Тот же Helpdesk без REST',
+      subtitle: 'CineGraph — каталог фильмов на GraphQL',
       image: 'graphql/GraphQL.png',
-      desc: 'Тот же backend, что в NestJS Lab — HTTP-контроллеры заменяются на GraphQL-резолверы: code-first типы, N+1 в резолверах и DataLoader, Guards через GqlExecutionContext, Subscriptions вместо WebSocket Gateway.',
-      stack: ['NestJS', '@nestjs/graphql', 'Apollo Server', 'DataLoader', 'Prisma'],
+      desc: 'Самостоятельный проект CineGraph с нуля: язык запросов и жизненный цикл запроса, N+1 в резолверах и DataLoader, JWT и права на уровне полей, интерфейсы и юнионы, курсорная пагинация, подписки через Redis, защита от тяжёлых запросов, unit и e2e тесты.',
+      stack: ['NestJS + Apollo Server', 'Prisma 7', 'PostgreSQL 17', 'DataLoader', 'Redis'],
       difficulty: 'Высокая',
       open: 'graphql/GraphQL_Lab_Plan.html',
       repo: 'https://github.com/meeymirita/graphql-lab',
