@@ -1,4 +1,4 @@
-# Group Lab: RabbitMQ, Redis, Traefik, OOP, Vue, TypeScript, Laravel, Docker
+# Group Lab: Docker, Traefik, Kubernetes, PHP, OOP, RabbitMQ, Redis, Laravel, JS, Vue, TypeScript, NestJS, GraphQL
 
 ![Group Lab](https://raw.githubusercontent.com/meeymirita/works-lab/main/images/banner.png)
 

@@ -1107,7 +1107,7 @@
       image: 'works/images/docker.png',
       desc: 'Docker и Bash с нуля: образы, контейнеры, docker-compose, сети и тома — через практику в терминале.',
       stack: ['Docker', 'Docker Compose', 'Bash'],
-      difficulty: '—',
+      difficulty: 'Базовая',
       open: 'docker/Docker_Bash_Lab.html',
       repo: 'https://github.com/meeymirita/docker-lab',
       accent: '#2496ED', accentSoft: '#2496ED22', accentShadow: 'rgba(36,150,237,.28)'
@@ -1176,7 +1176,7 @@
         style="--accent:${p.accent}; --accent-soft:${p.accentSoft}; --accent-shadow:${p.accentShadow}; transition-delay:${0.05 * i}s">
         <div class="card-number">${String(i + 1).padStart(2, '0')}</div>
         <div class="card-media">
-          <img src="${p.image}" alt="${escapeHtml(p.title)}" loading="lazy">
+          <img src="works/images/thumbs/${p.key}.webp" data-full="${p.image}" alt="${escapeHtml(p.title)}" loading="lazy" decoding="async" width="1200" height="1200">
           <span class="badge badge-diff">Сложность: ${p.difficulty}</span>
         </div>
         <div class="card-body">
