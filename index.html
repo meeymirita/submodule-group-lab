@@ -58,6 +58,15 @@
     ::-webkit-scrollbar-thumb:hover { background: var(--pink); }
     ::selection { background: var(--pink); color: var(--bg); }
 
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
     .wrap { max-width: 1400px; margin: 0 auto; padding: 0 5vw; }
     .display { font-family: 'Anton', sans-serif; text-transform: uppercase; }
     .mono { font-family: 'Space Mono', monospace; letter-spacing: .12em; text-transform: uppercase; }
@@ -88,7 +97,12 @@
       background: rgba(8,7,10,.76);
       backdrop-filter: blur(18px);
       border-bottom: 1px solid rgba(255,46,136,.35);
+      transform: translateY(0);
+      will-change: transform;
     }
+
+    nav a.nav-active { color: var(--pink); }
+    nav a.nav-active::after { right: 0; }
 
     header .wrap { display: flex; align-items: center; justify-content: space-between; padding-top: 14px; padding-bottom: 14px; gap: 16px; }
 
@@ -418,7 +432,13 @@
       margin-bottom: 24px;
       padding-bottom: 16px;
       border-bottom: 1px solid rgba(255,255,255,.08);
+      background: var(--bg);
+      position: sticky;
+      top: var(--header-h);
+      z-index: 5;
+      transition: top .3s ease;
     }
+    body.header-hidden .category-head { top: 0; }
     .category-label {
       display: inline-flex;
       align-items: center;
@@ -671,6 +691,9 @@
       transition: transform .25s ease;
     }
     .modal-overlay.is-open .modal-panel { transform: translateY(0) scale(1); }
+    /* JS adds this while GSAP Flip is morphing the panel out of its trigger button,
+       so this transition doesn't race Flip's own before/after measurement */
+    .modal-panel.js-flip { transition: none; }
 
     .modal-close {
       position: absolute;
@@ -754,6 +777,7 @@
 </head>
 
 <body>
+<script src="works/page-loader.js"></script>
 
 <div class="progress"></div>
 
@@ -921,6 +945,12 @@
     git submodules
   </span>
 </footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/Flip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/MorphSVGPlugin.min.js"></script>
+<script src="works/flip-gallery.js"></script>
 
 <script>
   var projects = [
@@ -1103,6 +1133,19 @@
     return div.innerHTML;
   }
 
+  function prefersReducedMotion() {
+    return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  }
+
+  // GSAP (+ ScrollTrigger, Flip) is loaded from cdnjs above as plain script tags.
+  // Every feature below checks gsapReady and falls back to the plain CSS/JS behavior
+  // that already existed if the CDN failed to load or the visitor asked for less motion.
+  var gsapReady = false;
+  if (window.gsap && window.ScrollTrigger && window.Flip && !prefersReducedMotion()) {
+    gsap.registerPlugin(ScrollTrigger, Flip);
+    gsapReady = true;
+  }
+
   function cardHtml(p, i) {
     var openHtml = p.open
       ? '<a href="' + p.open + '" target="_blank" rel="noopener" class="card-open">Открыть методичку</a>'
@@ -1181,7 +1224,33 @@
 
   function openAboutModal() {
     renderAboutModal();
-    aboutOverlay.classList.add('is-open');
+
+    var panel = aboutOverlay.querySelector('.modal-panel');
+    var trigger = document.getElementById('about-modal-trigger');
+
+    if (gsapReady && panel && trigger) {
+      // Morph the panel out of the "о проекте" button (GSAP Flip) instead of
+      // just letting the plain CSS scale/fade transition play.
+      try {
+        panel.classList.add('js-flip');
+        aboutOverlay.classList.add('is-open');
+        // Flip.fit(..., getVars) measures the offset/scale that would put the panel
+        // exactly over the button; gsap.from() then plays from there back to its real spot.
+        var fromVars = Flip.fit(panel, trigger, { scale: true, getVars: true });
+        gsap.from(panel, Object.assign(fromVars, {
+          duration: .45,
+          ease: 'power3.out',
+          clearProps: 'transform',
+          onComplete: function () { panel.classList.remove('js-flip'); },
+        }));
+      } catch (e) {
+        panel.classList.remove('js-flip');
+        aboutOverlay.classList.add('is-open');
+      }
+    } else {
+      aboutOverlay.classList.add('is-open');
+    }
+
     document.body.style.overflow = 'hidden';
   }
 
@@ -1221,6 +1290,7 @@
     }).join('');
     observeReveal();
     initTilt();
+    if (window.FlipGallery) FlipGallery.init('.card-media img, .about-photo-big');
   }
 
   function observeReveal() {
@@ -1247,6 +1317,19 @@
     if (window.innerWidth < 700) return;
 
     document.querySelectorAll('.card').forEach(function (card) {
+      if (card.dataset.tiltBound) return;
+      card.dataset.tiltBound = '1';
+
+      if (gsapReady) {
+        // GSAP writes transform every frame, so the card's own CSS transform transition
+        // (with its per-card reveal transition-delay) must step aside, or it restarts on
+        // every frame and every card except the first (delay 0) never visibly moves.
+        card.addEventListener('mouseenter', function () {
+          card.style.transition = 'border-color .35s ease, box-shadow .35s ease';
+          card.style.transitionDelay = '0s';
+        });
+      }
+
       card.addEventListener('mousemove', function (e) {
         var rect = card.getBoundingClientRect();
         var x = e.clientX - rect.left;
@@ -1254,18 +1337,96 @@
         var rotateY = ((x / rect.width) - .5) * 8;
         var rotateX = ((y / rect.height) - .5) * -8;
 
-        card.style.transform =
-          'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateY(-6px)';
+        if (gsapReady) {
+          // overwrite: 'auto' makes each new tween smoothly interrupt/replace the
+          // previous one instead of fighting it — the raw style-assignment version
+          // below has no such easing or interruption handling at all.
+          gsap.to(card, {
+            rotateX: rotateX, rotateY: rotateY, y: -6,
+            transformPerspective: 1000, duration: .4, ease: 'power2.out', overwrite: 'auto',
+          });
+        } else {
+          card.style.transform =
+            'perspective(1000px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) translateY(-6px)';
+        }
       });
 
       card.addEventListener('mouseleave', function () {
-        card.style.transform = '';
+        if (gsapReady) {
+          gsap.to(card, { rotateX: 0, rotateY: 0, y: 0, duration: .5, ease: 'power3.out', overwrite: 'auto' });
+        } else {
+          card.style.transform = '';
+        }
       });
     });
   }
 
+  function initHeaderAutoHide() {
+    if (!gsapReady) return;
+    var header = document.querySelector('header');
+    if (!header) return;
+
+    var hidden = false;
+    function setHidden(next) {
+      if (next === hidden) return;
+      hidden = next;
+      document.body.classList.toggle('header-hidden', hidden);
+      gsap.to(header, { yPercent: hidden ? -100 : 0, duration: .3, ease: 'power2.out', overwrite: true });
+    }
+
+    try {
+      ScrollTrigger.create({
+        start: 0,
+        end: 'max',
+        onUpdate: function (self) {
+          setHidden(self.scroll() > header.offsetHeight + 20 && self.direction === 1);
+        },
+      });
+    } catch (e) {}
+  }
+
+  function initNavActiveLinks() {
+    if (!gsapReady) return;
+
+    try {
+      document.querySelectorAll('section[id]').forEach(function (section) {
+        var link = document.querySelector('nav a[href="#' + section.id + '"]');
+        if (!link) return;
+
+        ScrollTrigger.create({
+          trigger: section,
+          start: 'top center',
+          end: 'bottom center',
+          onToggle: function (self) { link.classList.toggle('nav-active', self.isActive); },
+        });
+      });
+    } catch (e) {}
+  }
+
+  function initScrollProgress(progressEl) {
+    if (!gsapReady) return false;
+
+    try {
+      gsap.to(progressEl, {
+        width: '100%',
+        ease: 'none',
+        scrollTrigger: {
+          start: 0,
+          end: function () { return document.documentElement.scrollHeight - window.innerHeight; },
+          scrub: true,
+        },
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   function goToWork(key) {
-    window.location.href = 'works/' + key + '.html';
+    var url = 'works/' + key + '.html';
+    var p = projects.find(function (x) { return x.key === key; });
+    if (window.PageLoader && p) PageLoader.go(url, p.title, p.accent);
+    else window.location.href = url;
   }
 
   grid.addEventListener('click', function (e) {
@@ -1290,17 +1451,28 @@
 
   var progress = document.querySelector('.progress');
 
-  window.addEventListener('scroll', function () {
-    var scrollTop = window.scrollY;
-    var height = document.documentElement.scrollHeight - window.innerHeight;
+  if (!initScrollProgress(progress)) {
+    window.addEventListener('scroll', function () {
+      var scrollTop = window.scrollY;
+      var height = document.documentElement.scrollHeight - window.innerHeight;
 
-    if (height <= 0) {
-      progress.style.width = '0%';
-      return;
-    }
+      if (height <= 0) {
+        progress.style.width = '0%';
+        return;
+      }
 
-    progress.style.width = (scrollTop / height) * 100 + '%';
-  }, { passive: true });
+      progress.style.width = (scrollTop / height) * 100 + '%';
+    }, { passive: true });
+  }
+
+  initHeaderAutoHide();
+  initNavActiveLinks();
+
+  window.addEventListener('load', function () {
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
+  });
+
+  if (window.PageLoader) PageLoader.enter('Tech Performance', '#ff2e88');
 
   var hero = document.querySelector('.hero');
 
