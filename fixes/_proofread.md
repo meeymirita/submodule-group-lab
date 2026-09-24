@@ -6,7 +6,7 @@
 | Чистый JS | ✅ пройдено 23.09 | 23 | 10 | 7 | 6 | `js.md` |
 | Vue | ✅ пройдено 23.09 | 12 | 5 | 6 | 1 | `vue.md` |
 | TypeScript | ✅ пройдено 23.09 | 13 | 7 | 6 | 0 | `typescript.md` |
-| NestJS | ⬜ не начато | — | — | — | — | `nestjs.md` |
+| NestJS | ✅ пройдено 24.09 | 4 | 1 | 3 | 0 | `nestjs.md` |
 | GraphQL | ⬜ не начато | — | — | — | — | `graphql.md` |
 | Laravel | ⬜ не начато | — | — | — | — | `laravel.md` |
 | Redis | ⬜ не начато | — | — | — | — | `redis.md` |
