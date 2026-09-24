@@ -10,7 +10,7 @@
 | GraphQL | ⬜ не начато | — | — | — | — | `graphql.md` |
 | Laravel | ⬜ не начато | — | — | — | — | `laravel.md` |
 | Redis | ⬜ не начато | — | — | — | — | `redis.md` |
-| Docker | ⬜ не начато | — | — | — | — | `docker.md` |
+| Docker | ✅ пройдено 24.09 | 8 | 0 | 7 | 1 | `docker.md` |
 | Traefik | ⬜ не начато | — | — | — | — | `traefik.md` |
 | Kubernetes | ⬜ не начато | — | — | — | — | `kubernetes.md` |
 | RabbitMQ | ➖ не вычитываем (пройдена) | | | | | |
