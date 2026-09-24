@@ -107,3 +107,39 @@
 - [x] ⭐ A — исправить всё из вычитки выше
 - [ ] B — исправить только [тех] и [противоречие]
 - [ ] C — выборочно (отметь пункты выше)
+
+---
+
+## 🔁 Повторная вычитка (части 2–5 и 7, после правок 24.09)
+
+### Часть 2 (разделы 3–9, начало Сессии 1) — повторно
+Дополнительно к первому проходу целенаправленно перепроверено на скрытые рассинхроны:
+- Таблица стека и таблица прав RBAC раздела 6 (часть 2) сверены с итоговым кодом `TicketPolicy`/`TicketsController`/`CommentsService` (части 6–7): «Менять title/description — свой, пока OPEN» ↔ `assertCanUpdate` (не staff: запрет `STAFF_ONLY_FIELDS`, иначе только при `status===OPEN`); «status/priority/assignee — 403 клиенту, по графу переходов агенту/админу» ↔ `TRANSITIONS`; «удалить — только admin» ↔ `@Roles(Role.ADMIN)` на `remove()`; «внутренние заметки — не видит/не пишет клиент» ↔ `canSeeInternalComments`/`ForbiddenException` в `CommentsService.create` — совпадений с кодом не нарушено.
+- Ссылки «задание N в шаге 9.5» (раздел про циклы модулей в конце части 2 и далее) сверены с актуальной нумерацией шагов в HTML (`id="step-9-1"…"step-9-5"`, Production Hell действительно шаг 9.5 — старое рассогласование «10.3 vs 9.5», найденное в первом проходе для частей 8/9, уже устранено правкой от 24.09) — соответствует.
+- Сноски глоссария 26–29 (argon2²⁶, RBAC²⁷, Observable²⁸, «Доменное событие»²⁹), идущие в этой части, продолжают последовательность 1–25 из части 1 без пропуска и без обгона части 4 (30–31) и части 5 (32–34) — порядок сквозной по всему документу, разрывов не найдено.
+— остальное (архитектурная диаграмма и таблица модулей/экспортов/зависимостей раздела 3, стек и дерево проекта раздела 4, JWT-теория раздела 5, Pipes/Guards/Interceptors/Filters раздела 7, EventEmitter2/Socket.IO раздела 8, начало раздела 9) повторно прочитано построчно — расхождений не найдено.
+
+### Часть 3 (Сессия 1 шаги 1.2–2.3, начало Сессии 2 — шаг 3.1) — повторно
+- Прогнан вручную вывод `scratch/mini-di.ts`: порядок `console.log` в `resolve()` — строка «создаю X(deps)» печатается **до** рекурсивного разрешения зависимостей (а не после), поэтому фактический порядок строк — `TicketsService(...)` → `TicketRepository(...)` → `AppLogger()` → далее логи `.list()`/`.findAll()` — воспроизведён вручную и совпадает с указанным в методичке выводом дословно, включая `[class TicketsService]` в `scratch/decorators.ts` (актуальное поведение `util.inspect`/`console.log` для ES-классов в Node ≥10) и путь `/tickets` (без слэша, из-за `.replace(/\/$/, '')`) / `/tickets/:id`.
+- `tsconfig.build.json` `exclude` (`scratch`, `prisma`, `scripts`, `test`, `**/*spec.ts`) сверен с деревом проекта из части 2 — все перечисленные там папки (`scratch/`, `scripts/ws-client.mjs`, `prisma/seed.ts`) действительно должны быть исключены из сборки; расхождений нет.
+— остальное (DI-теория TS1272/import type, `docker-compose.yml` для Postgres 16→17, `init.sql`, `ConfigModule`/`validateEnv`, кастомные провайдеры `CLOCK`/`APP_INFO`) перепроверено, расхождений не найдено.
+
+### Часть 4 (шаги 3.2–4.2) — повторно
+- Сверено сквозное соответствие `prisma/schema.prisma` (часть 4) ↔ `prisma/seed.ts` (часть 4) ↔ `DEMO_AUTHOR_ID = 4` в `TicketsService` (часть 4, шаг 4.2): порядок `upsert` в сиде — admin(1), agent(2), agent2(3), customer(4), customer2(5) — `customer@helpdesk.local` действительно получает id 4 на чистой БД, комментарий в коде «# customer@helpdesk.local из сидов» корректен.
+- Curl-примеры шага 4.2 (`{"title":"Hi"}` → 400 по `title`/`description`; `{"...","authorId":1}` → 400 «authority should not exist») сверены с `ValidationPipe` из того же шага (whitelist/forbidNonWhitelisted/transform) и `CreateTicketDto` (`Length(5,120)`/`Length(10,5000)`, без поля `authorId`) — соответствуют; на этом шаге ещё нет `Authorization` — guard'ы появляются только в шаге 5.3, поэтому запросы без токена ожидаемо проходят.
+— остальное (модели `User`/`Ticket`/`Comment`/`TicketHistory`/`RefreshToken`, именованные связи, `PrismaService`/`PrismaModule`, DTO, CRUD) перепроверено, расхождений не найдено.
+
+### Часть 5 (шаги 4.3–5.2) — повторно
+- Сверена связка `AuthService.issueTokens(user, familyId, db: Prisma.TransactionClient)` (шаг 6.1) и её вызов из `login()` с `this.prisma` (типом `PrismaService extends PrismaClient`, а не `Prisma.TransactionClient`) — структурно совместимо (excess-property check в TS не применяется к переменным, только к литералам), `tsc` подтверждает отсутствие ошибки типов; реальной несовместимости нет.
+- Формат refresh-токена `${row.id}.${secret}` (id — UUID без точек, secret — base64url без точек) и разбор `raw.split('.')` в `findValidRow` — коллизий разделителя не возникает, `tsc`/логическая проверка подтверждают корректность.
+- Curl-пример шага 4.3 `-d '{"assigneeId":777}' → P2003` сверен с состоянием кода на этом шаге (проверка `assertAssignable` появляется только в шаге 6.2, здесь её ещё нет — Prisma сама бросает FK-ошибку) — соответствует.
+— остальное (`PrismaExceptionFilter`, интерактивная транзакция и история в `update()`, `publicUserSelect`, `JwtStrategy`/`AuthModule`/`JwtModule.registerAsync`, первая версия `AuthService`/`AuthController`) перепроверено, расхождений не найдено.
+
+### Часть 7 (шаги 7.1–8.1) — повторно
+- Сверена сигнатура `TicketsService.findOne(user: AuthUser, id: number)` (введена в шаге 6.2, часть 6) с её вызовом `await this.tickets.findOne(user, ticketId)` в `CommentsService.list`/`create` (шаг 7.1, часть 7) — порядок и типы аргументов совпадают.
+- Сверены сигнатуры `TicketsService.create(user, dto)`/`update(user, id, dto)`/`remove(user, id)`, изменённые в шаге 7.2 для публикации событий, с финальными версиями этих методов из шага 6.2 — изменения аддитивные (добавлены `this.events.emit(...)` и переменные для payload события), конфликтов сигнатур нет.
+- Проверено, что `CommentCreatedEvent`'s поле `ticket: Pick<Ticket, 'id' | 'authorId'>` заполняется из объекта, реально возвращаемого `TicketsService.findOne` (включает все скалярные поля тикета, в т.ч. `id`/`authorId`) — соответствует.
+- Ack-сценарий `scripts/ws-client.mjs` (`agent 1` → ok, `customer 1` → ok, `customer2 1` → `Ticket #1 not found`) сверен с данными сида: тикет #1 принадлежит `customer@helpdesk.local` (id 4), `customer2` (id 5) не автор → `scopeFor` в `TicketsGateway.subscribe` корректно не находит тикет — вывод в примере точен.
+— остальное (комментарии/внутренние заметки, доменные события EventEmitter2, `TicketsGateway`, `RealtimeListener`, middleware/interceptors начала шага 8.1) перепроверено, расхождений не найдено.
+
+**Итог повторной вычитки:** в частях 2–5 и 7 новых ошибок нет (0 [тех] / 0 [противоречие] / 0 [текст]) — первый проход здесь был корректным.
