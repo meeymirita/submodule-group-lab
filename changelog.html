@@ -366,6 +366,14 @@ var DAYS = [
   {lab:'site', type:'removed', text:'В 8 лабах удалены пустые заглушки <code>docker-compose.yml</code> и <code>Makefile</code> — методички создают их по шагам.'},
   {lab:'site', type:'changed', text:'<b>Все правки внесены</b>: сабмодули 11 лаб обновлены; корневой README и карточки лендинга выровнены — порядок прохождения переписан, PostgreSQL 17, Node 22+, TypeScript 5.x, Vue без упоминания NestJS, фраза про Prisma 6 vs 7.', milestone:true},
   {lab:'site', type:'changed', text:'Changelog дополнен хронологией вычитки и правок.'},
+  {lab:'site', type:'added', text:'Повторная, более глубокая вычитка NestJS (части 2–5 и 7): новых ошибок нет — первый проход здесь был верным.'},
+  {lab:'site', type:'changed', text:'Страницы лаб на сайте (<code>works</code>) сверены с исправленными методичками: чипы стека — PostgreSQL 17, Node 22+, TypeScript 5.x, Vue без NestJS, версии kind/Kubernetes.'},
+  {lab:'site', type:'added', text:'<b>Проверена связность фронтенда и бэкенда</b>: JS → Vue → TypeScript (8 находок) и OOP → Чистый PHP → RabbitMQ → Redis → Laravel (9 находок) — <code>fixes/_chain_frontend.md</code>, <code>fixes/_chain_backend.md</code>.', milestone:true},
+  {lab:'vue', type:'changed', text:'Мостики к JS-лабе: Proxy-реактивность уже собиралась руками, почему здесь долгоживущие сервисы вместо <code>exec dev</code>, соответствие <code>node --test</code> → Vitest; честная формулировка упражнения «TicketCard на TS».'},
+  {lab:'typescript', type:'changed', text:'Пояснено, почему API-слой возвращает <code>Result</code>, а не бросает исключение; мостик к <code>defineProps&lt;{…}&gt;()</code>, флаги скаффолда и осознанное отсутствие компонентных тестов.'},
+  {lab:'laravel', type:'changed', text:'Вместо несуществующих в RabbitMQ-лабе «Worker Kit» и <code>RetryChainPolicy</code> — ссылка на реальный retry через <code>x-retry-count</code> и TTL → DLX.'},
+  {lab:'redis', type:'changed', text:'Пояснено, что колонка <code>orders.priority</code> — пометка в схеме, а реальный приоритет живёт в ZSet.'},
+  {lab:'php-coffee', type:'changed', text:'<b>OOP-лаба вычитана и исправлена</b> (13 находок): вход в RabbitMQ UI, полные заголовки файлов в шагах 4.2 и 5.1, переключение акций и уведомлений через <code>.env</code>, верные числа в примерах; ссылки на RabbitMQ и Redis — в будущем времени, без выдуманных сущностей.', milestone:true},
 ]},
 ];
 
