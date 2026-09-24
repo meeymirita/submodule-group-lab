@@ -327,7 +327,7 @@ var DAYS = [
   {lab:'site', type:'added', text:'В блок «об авторе» под ссылку на GitHub добавлена ссылка на Telegram.'},
   {lab:'site', type:'added', text:'В список навыков автора добавлены недостающие чипы технологий.'},
 ]},
-{date:'2026-09-23', title:'Сегодня: NestJS и GraphQL переписаны с нуля, а сайт ожил на GSAP', items:[
+{date:'2026-09-23', title:'NestJS и GraphQL переписаны с нуля, сайт ожил на GSAP, начат аудит методичек', items:[
   {lab:'site', type:'removed', text:'Из README убрана фотография автора в разделе «Автор».'},
   {lab:'nestjs', type:'changed', text:'<b>Методичка NestJS переписана с нуля</b> как куда более глубокий и полностью самостоятельный проект: свой мини-DI контейнер, JWT-ротация refresh-токенов с обнаружением повторного использования, RBAC через <code>TicketPolicy</code>, доменные события, WebSocket-шлюз с комнатами, свой динамический модуль.', milestone:true},
   {lab:'graphql', type:'changed', text:'<b>Методичка GraphQL переписана с нуля</b> как самостоятельный проект <b>CineGraph</b> — свой домен (каталог фильмов), больше не завязанный на Helpdesk из NestJS Lab.', milestone:true},
@@ -340,6 +340,32 @@ var DAYS = [
   {lab:'site', type:'changed', text:'Исправлен наклон карточек при наведении: раньше двигалась только первая, остальным мешала CSS-задержка анимации появления.'},
   {lab:'site', type:'added', text:'Секции лендинга стали слоями: при прокрутке каждая следующая наезжает на предыдущую, а та закрепляется, уменьшается и затемняется.'},
   {lab:'site', type:'changed', text:'Changelog: новые записи теперь сверху, исправлены опечатки и склонение счётчика событий.'},
+  {lab:'site', type:'added', text:'<b>Начат аудит всех методичек</b>: появилась папка <code>fixes/</code> — по файлу находок на каждую лабу, граф зависимостей и рекомендуемый порядок прохождения (<code>_order.md</code>), общие вопросы по версиям (<code>site.md</code>), инструкция и скрипт нарезки методички для вычитки агентами. Вычитаны Чистый PHP (12 находок), Чистый JS (23), Vue (12) и TypeScript (13).', milestone:true},
+  {lab:'site', type:'changed', text:'Обложки в карточках лендинга переведены на лёгкие WebP-превью.'},
+]},
+{date:'2026-09-24', title:'Большая вычитка: все 11 методичек проверены построчно и исправлены', items:[
+  {lab:'site', type:'added', text:'Вычитка <b>NestJS</b>: 4 находки — неверные номера заданий Production Hell, пример в шаге 6.2, не учитывающий состояние тикета после шага 4.4, конфликт нумерации шагов 10.x с разделом 10.'},
+  {lab:'site', type:'added', text:'Вычитка <b>Docker</b>: 8 находок, в основном ссылки на несуществующие разделы.'},
+  {lab:'site', type:'changed', text:'Промпт агентов-вычитчиков ужесточён: читать части целиком, сверять имена и порты между шагами, проверять код локально и писать «расхождений нет» только с перечнем проверенного.'},
+  {lab:'site', type:'added', text:'Вычитка <b>Kubernetes</b>: 9 находок — ссылки на неверные разделы Traefik-лабы, не заданный <code>POSTGRES_DB</code>, путаница ролей controller-manager и scheduler.'},
+  {lab:'site', type:'added', text:'Вычитка <b>Traefik</b>: 18 находок — canary не работал (сервисы без суффикса <code>@docker</code>), порядок middlewares ломал CORS на 429, не хватало <code>package.json</code> и <code>frontend/Dockerfile</code>, <code>chmod 600 acme.json</code> предлагалось пропустить.'},
+  {lab:'site', type:'added', text:'<b>Проверка связности DevOps-цепочки</b> Docker → Traefik → Kubernetes (<code>fixes/_chain_devops.md</code>): что каждая лаба берёт у предыдущей и что используется без объяснения.', milestone:true},
+  {lab:'site', type:'added', text:'Вычитка <b>Redis</b> (7 находок: неверный порядок аргументов <code>SET NX PX</code>, VIP-очередь выдавала заказы LIFO), <b>GraphQL</b> (3 — самая чистая методичка) и <b>Laravel</b> (22). Каждая находка перепроверена: 4 сняты или уточнены после сверки с исходниками пакетов.'},
+  {lab:'site', type:'changed', text:'Во всех файлах <code>fixes/</code> отмечены решения по каждому вопросу: PostgreSQL 17 везде, «Node 22+ (24 LTS тоже подходит)», Redis 7, Prisma 6 в NestJS и 7 в GraphQL — намеренно.'},
+  {lab:'graphql', type:'changed', text:'Исправлены: число SQL в примере N+1 (≈43), несуществующая опция <code>nullable</code> в <code>buildSchemaOptions</code>, недостаточная вложенность запроса интроспекции.'},
+  {lab:'typescript', type:'changed', text:'Исправлены примеры кода и тексты ошибок компилятора (проверены <code>tsc --strict</code>), структура playground; «TypeScript 5.x (≥ 5.6)».'},
+  {lab:'nestjs', type:'changed', text:'Шаги сессии 5 перенумерованы в 9.3–9.5, номера заданий Production Hell, контрпример в шаге 6.2; убрано обещание совместимости с Vue-фронтом; PostgreSQL 17.'},
+  {lab:'redis', type:'changed', text:'Лок от cache stampede реально ставится (<code>\'PX\', 3000, \'NX\'</code>), VIP-очередь снова FIFO, шаг 2.1 переименован в «Атомарный Lua-скрипт», шпаргалка и README согласованы; строчка про Redis 8.'},
+  {lab:'kubernetes', type:'changed', text:'Лаба стала самодостаточной: блок «Перед стартом» с kind/kubectl и полным кодом <code>api/</code>; версии kind v0.24.0 / Kubernetes v1.31.0; <code>POSTGRES_DB</code>; Adminer закрыт basicAuth через Middleware CRD; ссылки на Traefik-лабу исправлены.'},
+  {lab:'js', type:'changed', text:'Починен <code>throttle</code> — тест из методички теперь проходит; мок через DI вместо неработающего <code>t.mock.method</code>; исправлены примеры с <code>this</code>, каррированием и оглавление.'},
+  {lab:'vue', type:'changed', text:'Бэкенд подписан как «готовый мини-бэкенд (Node)»; шаг 4.3 явно убирает событие <code>select</code>; исправлены <code>load()</code>, порядок <code>use(pinia)</code>/<code>use(router)</code> и номера сессий; «Vite 6+ / Pinia 2+».'},
+  {lab:'laravel', type:'changed', text:'<code>statefulApi()</code> для SPA, рабочая навигация Vue-фронта, throttle на создание задач внутри <code>v1</code>, <code>TaskAssignerTest</code> через <code>Event::fake</code>, единый <code>deleted()</code> в observer, поиск ключей Redis по шаблону; отсылки к OOP-лабе и запасной путь для RabbitMQ-драйвера.'},
+  {lab:'docker', type:'changed', text:'Ссылки на разделы, объяснение порта <code>"3000:8080"</code>, добавлены <code>host:container:ro</code> и <code>--scale</code> (на них опирается Traefik-лаба); PostgreSQL 17.'},
+  {lab:'traefik', type:'changed', text:'Canary через <code>api@docker</code>, CORS-заголовки перед rate limit, обязательный <code>chmod 600 acme.json</code>, секреты в <code>.env</code>, недостающие файлы фронта и API, mkcert подключён к роутеру; PostgreSQL 17.'},
+  {lab:'php', type:'changed', text:'Лаба больше не считает Laravel-лабу пройденной: Container и Decorator — «видели в OOP-лабе», Sanctum и 419 — «встретите в Laravel-лабе» с точными номерами разделов; исправлены иерархия Throwable, <code>PDO::ATTR_ERRMODE</code>, <code>session_start()</code>, Container v2.'},
+  {lab:'site', type:'removed', text:'В 8 лабах удалены пустые заглушки <code>docker-compose.yml</code> и <code>Makefile</code> — методички создают их по шагам.'},
+  {lab:'site', type:'changed', text:'<b>Все правки внесены</b>: сабмодули 11 лаб обновлены; корневой README и карточки лендинга выровнены — порядок прохождения переписан, PostgreSQL 17, Node 22+, TypeScript 5.x, Vue без упоминания NestJS, фраза про Prisma 6 vs 7.', milestone:true},
+  {lab:'site', type:'changed', text:'Changelog дополнен хронологией вычитки и правок.'},
 ]},
 ];
 
@@ -409,7 +435,7 @@ function renderTimeline() {
 
 renderStats();
 renderTimeline();
-document.getElementById('cl-generated').textContent = 'по состоянию на ' + formatDay('2026-09-23') + ' 2026';
+document.getElementById('cl-generated').textContent = 'по состоянию на ' + formatDay('2026-09-24') + ' 2026';
 </script>
 </body>
 </html>
