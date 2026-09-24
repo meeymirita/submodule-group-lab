@@ -30,3 +30,53 @@
 - Проброс портов наружу (`-p`) только там, где нужен вход снаружи — единая логика: у Docker-лабы это общее правило (§2.1, §7.3), у Traefik-лабы — прямое следствие (§0.7): наружу пробрасывается только сам Traefik, остальные сервисы — нет.
 - Выбор базового образа (`node:20-slim` в Docker-лабе против `node:20-alpine` в Traefik-лабе) — не расхождение: у API из Traefik-лабы нет entrypoint-скрипта на bash (только `CMD`), так что alpine здесь уместен ровно по той логике, которую объясняет Docker-лаба (§3.6) — bash нужен только когда есть entrypoint.sh.
 - PID 1 / сигналы / `exec "$@"` — подробно разобраны в Docker-лабе и не требуются в Traefik-лабе, так как её Dockerfile'ы не используют собственные entrypoint-скрипты; отсутствие темы в Traefik-лабе — не пробел, а отсутствие необходимости.
+
+## Стык Traefik → Kubernetes
+
+- **[расхождение] Kubernetes-лаба, шаг 1.4 (Сессия 1)** — «Каталог api/ с Dockerfile и server.js — тот же самый, что вы собрали в Traefик-лабе (раздел 4, шаг 2.1). Скопируйте его в k8s-lab/api/.» → В Traefik-лабе «раздел 4» — это «Технологический стек и структура проекта» (только дерево каталогов), там нет никакого «шага 2.1» и не показан код Dockerfile/server.js. Реальный код (api/server.js, api/Dockerfile) находится в разделе 9 → Сессия 2 → Шаг 2.1 «Backend API — api/Dockerfile». Ссылка «раздел 4, шаг 2.1» склеивает два разных места и не ведёт никуда конкретно → Исправить в Kubernetes-лабе: заменить на «раздел 9, Сессия 2, шаг 2.1 Traefik-лабы» (или просто «шаг 2.1»).
+
+- **[расхождение] Kubernetes-лаба, шаг 2.3 (Сессия 2)** — «Frontend — тот же nginx:alpine-образ со статикой из Traefik-лабы (раздел 4, шаг 2.2), собирается и загружается в kind так же, как api в шаге 1.4» → Та же ошибка нумерации: «раздел 4» не содержит «шаг 2.2». Реальный «Шаг 2.2» Traefik-лабы (Сессия 2) называется «Frontend — path routing + StripPrefix» и показывает только labels/StripPrefix — самого Dockerfile фронтенда (FROM nginx:alpine и т.д.) в тексте Traefik-лабы вообще нигде не приведено, есть только упоминание «nginx:alpine» в таблице стека (раздел 4). То есть Kubernetes-лаба ссылается на код, которого читатель Traefik-лабы фактически не видел → Исправить ссылку на «шаг 2.2 Traefik-лабы» и (это уже для traefik.md/вычитки) добавить в Traefik-лабу сам листинг frontend/Dockerfile рядом с шагом 2.2.
+
+- **[расхождение] Kubernetes-лаба, разделы 3.2 / 6 / 8 — три ссылки на несуществующий «раздел 2.4» Traefik-лабы**:
+  1. Service (3.2): «...тот же принцип, что "round-robin + healthcheck" у API в Traefik-лабе (раздел 2.4), только на уровень ниже»
+  2. Probes (6): «Traefik-лаба (раздел 2.4) уже показала главную боль: "запущен" ≠ "готов принимать соединения"»
+  3. HPA (8): «В Traefik-лабе (раздел 2.4) число реплик API было ровно тем числом, которое вы написали руками: docker compose up -d --scale api=3»
+  → В Traefik-лабе раздел 2 — «Как Traefik устроен внутри» (EntryPoint/Router/Middleware/Service), подраздела «2.4» там нет. Нужный материал (healthcheck-label, `docker compose up -d --scale api=3`) находится в разделе 9 → Сессия 2 → Шаг 2.4 «Масштабирование API + healthcheck». Все три раза читатель, переходя по «разделу 2.4», попадёт не туда → Исправить все три ссылки на «шаг 2.4 Traefik-лабы» (Сессия 2).
+
+- **[расхождение] Имя базы данных не совпадает** — Traefik-лаба, шаг 2.3 (Сессия 2): `POSTGRES_DB: lab` в docker-compose.yml. Kubernetes-лаба, раздел 4 и шаг 2.1 (Сессия 2): ConfigMap/`kubectl create configmap` с `DB_NAME: "traefik_lab"` → Kubernetes-лаба заявляет, что «переносит ровно тот стек» (раздел 0), но имя базы данных другое (`lab` → `traefik_lab`), без единого слова объяснения смены → Либо выставить в Kubernetes-лабе `DB_NAME: "lab"` (совпадение с Traefik-лабой), либо явно написать, что имя базы намеренно меняется.
+
+- **[наследство] ConfigMap/Secret (DB_HOST/DB_NAME/DB_PASSWORD) подключаются к api через envFrom, но унаследованный server.js их не использует** — Traefik-лаба, шаг 2.1 (Сессия 2), полный текст api/server.js:
+  ```
+  const express = require('express');
+  const os = require('os');
+  const app = express();
+  app.get('/health', (_, res) => res.json({ status: 'ok' }));
+  app.get('/users/:id', (req, res) => res.json({ id: req.params.id, servedBy: os.hostname() }));
+  app.listen(3000, () => console.log('api on :3000'));
+  ```
+  Ни одного обращения к `process.env.DB_*`, ни клиента PostgreSQL. Kubernetes-лаба (раздел 4 «ConfigMap и Secret», шаг 2.1 Сессии 2) настраивает `envFrom: configMapRef api-config + secretRef api-secret` (DB_HOST=postgres-service, DB_NAME=traefik_lab, DB_PASSWORD=supersecret) именно для контейнера `api`, и проверка — `kubectl exec -it deploy/api -- env | grep DB_` — только печатает переменные окружения, но само приложение их никак не читает и к Postgres не подключается → ConfigMap/Secret технически «работают» (переменные видны), но выглядят как реальная интеграция с БД, которой на самом деле нет — читатель может решить, что API теперь ходит в Postgres. Поправить: либо в Traefik-лабе (и, соответственно, в унаследованном коде) добавить server.js эндпоинт, реально читающий DB_HOST/DB_NAME (например, `/db-check`), либо явно написать в Kubernetes-лабе шаге 2.1, что унаследованный api/server.js эти переменные не использует и здесь только тренируется механика ConfigMap/Secret, а не реальная интеграция.
+
+- **[пробел] Обещанный маппинг «middlewares → Middleware CRD» не показан ни одним примером, и ни один middleware не перенесён; Adminer в Kubernetes-лабе остаётся без пароля** — раздел 7.1 таблица: «traefik.http.middlewares... label → отдельный объект Middleware, подключаемый через middlewares: в IngressRoute». Ни в разделе 7, ни в практической сборке (шаги 3.1–3.2, Сессия 3) не появляется ни одного `kind: Middleware`. При этом в Traefik-лабе Adminer защищён basicAuth: `"traefik.http.routers.adminer.middlewares=dash-auth"` (шаг 2.3, Сессия 2), а также у api были `api-ratelimit` и `secure-headers` (шаг 2.5). В Kubernetes-лабе IngressRoute для `db.localhost` (шаг 3.2, Сессия 3) — без единого middlewares: `- match: Host(\`db.localhost\`) ... services: [{name: adminer-service, port: 8080}]` → Adminer, защищённый паролем в Traefik-лабе, в Kubernetes-лабе становится полностью открытым, и заявленный маппинг остаётся нереализованным обещанием → Добавить в шаг 3.2 хотя бы один пример `apiVersion: traefik.io/v1alpha1 / kind: Middleware` (basicAuth) и подключить его к роуту `db.localhost`, либо честно обозначить перенос basicAuth/ratelimit как самостоятельное упражнение (как уже сделано для frontend-Deployment в шаге 2.3).
+
+### Что Kubernetes берёт из Traefik — сверка
+
+| Что | Где в Traefik-лабе | Где в коде `traefik/` | Совпадает? |
+|---|---|---|---|
+| api/Dockerfile + server.js (код) | Раздел 9 → Сессия 2 → Шаг 2.1 (методичка приводит полный код) | Не существует — `traefik/api/.gitkeep`, `docker-compose.yml` — заглушка `services:` (ожидаемо: лаба-шаблон, код пишет студент) | Содержание методички согласовано; ссылка в K8s-лабе на номер раздела — нет (см. находку выше) |
+| Образ `traefik-lab-api:v1` | Нигде не собирается с этим тегом — `api: build: ./api` без `image:`, имя образа отдал бы Compose (`<проект>-api`) | — | K8s-лаба не наследует готовый образ, а пересобирает его сама этим тегом (шаг 1.4) — зависимости от тега нет, проблемы нет |
+| Порт приложения 3000 | server.js: `app.listen(3000, ...)`; label `loadbalancer.server.port=3000` | — (заглушка) | Совпадает с `containerPort: 3000` в K8s-лабе |
+| Эндпоинт `/health` | server.js: `app.get('/health', ...)` | — (заглушка) | Совпадает с readiness/livenessProbe `path: /health, port: 3000` |
+| `servedBy: os.hostname()` (round-robin индикатор) | server.js, используется в шаге 2.4 Traefik-лабы | — (заглушка) | Совпадает с экспериментом в K8s-лабе, шаг 1.5 |
+| DB_HOST / DB_NAME / DB_PASSWORD | Не встречаются в server.js вообще; `POSTGRES_DB: lab` в шаге 2.3 | — (заглушка) | Не совпадает: server.js их не читает, DB_NAME другой (`lab` vs `traefik_lab`) — см. находки выше |
+| `postgres:16` / `postgres:16-alpine` | `image: postgres:16` (шаг 2.3) | — (заглушка) | Уже зафиксировано в `fixes/kubernetes.md` (не повторяем) |
+| `traefik:v3.1` | Закреплён в docker-compose.yml (шаг 1.3) | — (заглушка) | Совпадает, уже отмечено в `traefik.md`/`kubernetes.md` |
+| Middlewares (basicAuth `dash-auth`, `api-ratelimit`, `secure-headers`) → Middleware CRD | Шаги 2.3 и 2.5 (Сессия 2) | — (заглушка) | Не перенесено ни одного примера — см. находку [пробел] выше |
+| Модель EntryPoint→Router→Middleware→Service → Docker labels vs Kubernetes CRD provider | Раздел 2 (модель), раздел 7.1 таблица сравнения в K8s-лабе | — | Совпадает концептуально, объяснено корректно |
+
+### Что проверено и в порядке
+
+- Все пять ссылок Kubernetes-лабы на Docker-лабу существуют и содержательно совпадают с тем, что цитируется: named volume (раздел 6.1 — «Проблема, которую решают volumes»), DNS в пользовательской bridge-сети (раздел 7.2 — «Своя bridge-сеть и DNS между контейнерами»), `-p` проброс портов (раздел 7.3 — «EXPOSE vs -p»), `pg_isready`/healthcheck (раздел 8.3 — «depends_on и healthcheck», там же показан `pg_isready -U postgres`), `environment`/`.env` (раздел 8.4 — «environment vs env_file vs .env»).
+- Traefik-лаба в разделе 13 «Что дальше» действительно называет следующим шагом «Traefik + Kubernetes Ingress/IngressRoute CRD... переход от одной машины к оркестрации подов», и Kubernetes-лаба (раздел 0) цитирует эту фразу дословно точно — стык оформлен правильно.
+- Ссылка на раздел 6 Traefik-лабы («Сценарий: путь запроса от браузера до контейнера») в шаге 3.2 Kubernetes-лабы («Сравните с разделом 6 Traefik Lab») — раздел существует, содержание (EntryPoint→Router→Middleware→Service) совпадает с тем, что просят сравнить.
+- Порт API (3000), путь `/health`, `servedBy: os.hostname()` — согласованы между кодом Traefik-лабы и тем, что использует Kubernetes-лаба (readinessProbe/livenessProbe, round-robin эксперимент шага 1.5).
+- Тег образа `traefik-lab-api:v1`/`traefik-lab-frontend:v1` не наследуется как готовый артефакт — Kubernetes-лаба сама пересобирает образ этим тегом (`docker build -t ... ./api`), поэтому реальной «жёсткой» зависимости от конкретного тега в Traefik-лабе нет, только от исходников (Dockerfile+server.js).
