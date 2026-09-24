@@ -65,3 +65,11 @@
 ---
 
 ## 📖 Вычитка методички
+
+### Часть 7 (шаги 7.1–8.1)
+- — остальное в шагах 7.1–8.1 (комментарии/внутренние заметки, доменные события EventEmitter2, WebSocket-шлюз TicketsGateway, начало middleware/interceptors) проверено технически — код, импорты, состав модулей (TicketsModule exports, AuthModule exports JwtModule, @Global() PrismaModule), сигнатуры сервисов/политик (TicketPolicy.scopeFor/canSeeInternalComments/assertCanUpdate) и curl-примеры сверены с остальной методичкой — расхождений не найдено.
+
+### Часть 8 (шаги 8.1–9.2)
+- **[противоречие] Шаг 8.1, «Под капотом: … что не отменяет таймаут …»** — «Настоящая отмена требует `AbortController`, передаваемого вниз, и таймаутов на уровне БД (`statement_timeout`). Задание 6 в Production Hell.» → в таблице шага 10.3 тема «Таймаут, который ничего не отменил» — это задание **№5** (№6 в этой же таблице — «Перебор паролей по разным email») → исправить на «Задание 5 в Production Hell».
+- **[противоречие] Шаг 8.3, «Под капотом: … IP за прокси»** — «…лимит по IP легко обойти пулом адресов — для логина надёжнее ключ «IP + email» (задание 7 в Production Hell).» → в таблице шага 10.3 тема ключа «IP + email» для rate limiting — это задание **№6** (№7 в этой же таблице — «Цикл модулей», про `forwardRef`, к rate limiting отношения не имеет) → исправить на «задание 6 в Production Hell».
+- — остальное в шагах 8.1–9.2 (middleware/interceptors, Swagger + CLI-плагин, CORS/helmet/throttler, unit-тесты с моками Prisma, начало e2e-сетапа test/utils.ts, test/auth.e2e-spec.ts) проверено технически (импорты, DI, порядок APP_GUARD/APP_INTERCEPTOR, соответствие env-переменных ранее заданным, jest.resetAllMocks vs clearAllMocks, argon2/cookie-парсинг) — иных расхождений не найдено.
