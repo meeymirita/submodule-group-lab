@@ -11,7 +11,7 @@
 | Laravel | ⬜ не начато | — | — | — | — | `laravel.md` |
 | Redis | ⬜ не начато | — | — | — | — | `redis.md` |
 | Docker | ✅ пройдено 24.09 | 8 | 0 | 7 | 1 | `docker.md` |
-| Traefik | ⬜ не начато | — | — | — | — | `traefik.md` |
+| Traefik | 🔄 идёт | — | — | — | — | `traefik.md` |
 | Kubernetes | 🔄 идёт | — | — | — | — | `kubernetes.md` |
 | RabbitMQ | ➖ не вычитываем (пройдена) | | | | | |
 | OOP (php-coffee) | ➖ не вычитываем (в работе) | | | | | |
