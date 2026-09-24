@@ -12,7 +12,7 @@
 | Redis | ⬜ не начато | — | — | — | — | `redis.md` |
 | Docker | ✅ пройдено 24.09 | 8 | 0 | 7 | 1 | `docker.md` |
 | Traefik | 🔄 идёт | — | — | — | — | `traefik.md` |
-| Kubernetes | 🔄 идёт | — | — | — | — | `kubernetes.md` |
+| Kubernetes | ✅ пройдено 24.09 | 9 | 2 | 7 | 0 | `kubernetes.md` |
 | RabbitMQ | ➖ не вычитываем (пройдена) | | | | | |
 | OOP (php-coffee) | ➖ не вычитываем (в работе) | | | | | |
 
