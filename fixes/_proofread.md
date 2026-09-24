@@ -8,7 +8,7 @@
 | TypeScript | ✅ пройдено 23.09 | 13 | 7 | 6 | 0 | `typescript.md` |
 | NestJS | ✅ пройдено 24.09 | 4 | 1 | 3 | 0 | `nestjs.md` |
 | GraphQL | ✅ пройдено 24.09 | 3 | 2 | 1 | 0 | `graphql.md` |
-| Laravel | 🔄 идёт | — | — | — | — | `laravel.md` |
+| Laravel | ✅ пройдено 24.09 | 22 | 13 | 4 | 5 | `laravel.md` |
 | Redis | ✅ пройдено 24.09 | 7 | 2 | 4 | 1 | `redis.md` |
 | Docker | ✅ пройдено 24.09 | 8 | 0 | 7 | 1 | `docker.md` |
 | Traefik | ✅ пройдено 24.09 | 18 | 8 | 7 | 3 | `traefik.md` |
