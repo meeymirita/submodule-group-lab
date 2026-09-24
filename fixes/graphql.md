@@ -33,3 +33,7 @@ PostgreSQL 17, Redis 7, DataLoader, bcryptjs.
 ### 2. Redis 7
 - [ ] ⭐ A — как решишь в `site.md` (вопрос 3)
 - [ ] B — отдельно: оставить 7
+
+---
+
+## 📖 Вычитка методички
