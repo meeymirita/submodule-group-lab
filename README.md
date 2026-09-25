@@ -1,4 +1,4 @@
-# Group Lab: Docker, Traefik, Kubernetes, PHP, OOP, RabbitMQ, Redis, Laravel, JS, Vue, TypeScript, NestJS, GraphQL
+# Group Lab: Docker, Traefik, Kubernetes, PHP, OOP, RabbitMQ, Redis, Laravel, JS, Vue, TypeScript, NestJS, GraphQL, PostgreSQL
 
 ![Group Lab](https://raw.githubusercontent.com/meeymirita/works-lab/main/images/banner.png)
 
@@ -18,9 +18,9 @@
 
 ## Работы
 
-Порядок — от простого к сложному, с учётом того, что лабы переиспользуют друг друга: OOP-лаба даёт фундамент для RabbitMQ и Laravel; «Чистый PHP» встал рядом с OOP, потому что тоже про язык, но без фреймворка (её ссылки на Laravel-лабу — в будущем времени, так как та ещё не пройдена). Kubernetes использует код `api/` из Traefik-лабы (в самой Kubernetes-лабе он тоже приведён целиком) — без пройденной Traefik-лабы не имеет смысла. RabbitMQ стоит пройти до Redis (методичка постоянно сравнивает Streams с брокером) и до Laravel-лабы (она ссылается на обе). «Чистый JS» — общий фундамент для Vue и TypeScript; Vue — до TypeScript (сессия 5 использует Vue). NestJS и GraphQL — самостоятельные проекты, каждый со своим доменом: NestJS не собирает бэкенд Vue-лабы (это отдельное изучение технологии с нуля, домен Helpdesk похож на Vue Lab только по смыслу), а GraphQL не требует прохождения NestJS. Docker и Traefik самодостаточны и не завязаны на остальные.
+Порядок — от простого к сложному, с учётом того, что лабы переиспользуют друг друга: OOP-лаба даёт фундамент для RabbitMQ и Laravel; «Чистый PHP» встал рядом с OOP, потому что тоже про язык, но без фреймворка (её ссылки на Laravel-лабу — в будущем времени, так как та ещё не пройдена). Kubernetes использует код `api/` из Traefik-лабы (в самой Kubernetes-лабе он тоже приведён целиком) — без пройденной Traefik-лабы не имеет смысла. RabbitMQ стоит пройти до Redis (методичка постоянно сравнивает Streams с брокером) и до Laravel-лабы (она ссылается на обе). «Чистый JS» — общий фундамент для Vue и TypeScript; Vue — до TypeScript (сессия 5 использует Vue). NestJS и GraphQL — самостоятельные проекты, каждый со своим доменом: NestJS не собирает бэкенд Vue-лабы (это отдельное изучение технологии с нуля, домен Helpdesk похож на Vue Lab только по смыслу), а GraphQL не требует прохождения NestJS. PostgreSQL — тоже самостоятельная: разбирает то, что во всех остальных лабах пряталось за ORM, поэтому её можно проходить в любой момент, но полезнее всего — после одной-двух лаб с Laravel, когда Eloquent уже знаком. Docker и Traefik самодостаточны и не завязаны на остальные.
 
-> **Аудит и вычитка (24.09.2026).** Все методички, кроме пройденной RabbitMQ Lab, вычитаны построчно и исправлены, проверены стыки между лабами (DevOps, фронтенд, бэкенд). Находки, принятые решения и инструкция для повторной вычитки — в [`fixes/`](fixes/README.md), хронология — в [changelog](changelog.html).
+> **Аудит и вычитка (24.09.2026).** Все методички, кроме пройденной RabbitMQ Lab, вычитаны построчно и исправлены, проверены стыки между лабами (DevOps, фронтенд, бэкенд). Находки, принятые решения и инструкция для повторной вычитки — в [`fixes/`](fixes/README.md), хронология — в [changelog](changelog.html). PostgreSQL Lab добавлена позже (25.09) и пока не вычитана.
 
 | № | Папка | Лаба | Сложность | Репозиторий |
 |---|---|---|---|---|
@@ -37,6 +37,7 @@
 | 11 | [`nestjs`](nestjs) | NestJS — Helpdesk API с нуля (свой DI, JWT-ротация, WebSocket) | Высокая | [nestjs-lab](https://github.com/meeymirita/nestjs-lab) |
 | 12 | [`graphql`](graphql) | GraphQL — CineGraph, самостоятельный проект (резолверы, DataLoader, Subscriptions) | Высокая | [graphql-lab](https://github.com/meeymirita/graphql-lab) |
 | 13 | [`laravel`](laravel) | Laravel 13 изнутри — TaskFlow (таск-трекер с ролями) | Высокая | [laravel-lab](https://github.com/meeymirita/laravel-lab) |
+| 14 | [`postgresql`](postgresql) | PostgreSQL — Coffee Shop изнутри (EXPLAIN, индексы, изоляция, блокировки, MVCC) | Средняя–высокая | [postgresql-lab](https://github.com/meeymirita/postgresql-lab) |
 
 > Личный прогресс (моя пометка, не часть плана репозитория): ✅ пройдено — RabbitMQ. 🔵 сейчас прохожу — OOP (`php-coffee`).
 
@@ -317,6 +318,29 @@
 - **Сессия 10** — фабрики для всех моделей, feature-тесты (`RefreshDatabase`), fakes/моки (Event/Notification/Mail), финальный прогон
 
 Лаба построена вокруг карты Laravel (`Kernel → Middleware → Router → Controller`, плюс сквозные Container/Events/Auth и менеджеры Database/Cache/Queue/Mail/Broadcasting) и проходит по каждому слою последовательно — от жизненного цикла запроса до тестов.
+
+---
+
+## 14. PostgreSQL Lab (`postgresql/`)
+
+> **Сложность: средняя–высокая.** Проект полностью самостоятельный (свой репозиторий `postgresql-lab`, только SQL-файлы и `docker-compose.yml`), ни от одной другой лабы не зависит — общая с OOP- и PHP-лабами только идея «кофейни». Входной уровень — «умею SELECT/INSERT»; если JOIN пока «тёмный лес», есть вводная сессия 0. Параллели с Laravel/Eloquent даны по ходу, но фреймворк знать не обязательно.
+
+**О чём:** Postgres есть почти в каждой лабе, но везде он был «чёрным ящиком за ORM». Здесь — то, что происходит под ORM, на базе кофейни с реальным объёмом данных (20 кофеен, 100 000 клиентов, 1 000 000 заказов, 2,5 млн позиций, 3 млн событий): устройство Postgres изнутри (процессы, страницы, shared buffers, WAL, планировщик), чтение `EXPLAIN (ANALYZE, BUFFERS)`, индексы под конкретный запрос (B-tree, частичные, функциональные, покрывающие, GIN, BRIN), статистика, N+1 глазами базы, изоляция и аномалии, блокировки и дедлоки, MVCC и VACUUM, партиционирование.
+
+**Стек:** PostgreSQL 17 в Docker + `psql` + `pgbench`; расширения `pg_stat_statements`, `pg_trgm`, `pageinspect`, `btree_gist`. Никакого фреймворка и ORM.
+
+**Формат:** методичка [`PostgreSQL_Lab_CoffeeShop.html`](postgresql/PostgreSQL_Lab_CoffeeShop.html) — методичка готова, прохождение впереди. У каждого шага — «Под капотом» и тренировка с ответами под спойлером; главный артефакт — журнал `NOTES.md` с планами «до/после».
+
+**Что внутри (7 сессий):**
+- **Сессия 0** — JOIN с нуля на песочнице из пяти клиентов и семи заказов: INNER/LEFT/RIGHT/FULL, ловушка «условие в WHERE», self-join, anti- и semi-join, JOIN + GROUP BY
+- **Сессия 1** — Postgres в Docker с инструментами наблюдения, `psql` как рабочее место, схема кофейни, миллион заказов за минуту, SQL-инструментарий (CTE, оконные функции, FILTER, LATERAL)
+- **Сессия 2** — EXPLAIN и B-tree: от Seq Scan на миллион строк до 20 прочитанных записей, составные индексы, статистика, частичные и функциональные индексы
+- **Сессия 3** — алгоритмы JOIN и `work_mem`, GIN и BRIN, расширенная статистика, N+1 через `pg_stat_statements`, пагинация, охота на медленные запросы
+- **Сессия 4** — транзакции и изоляция: потерянное обновление через `pgbench`, Read Committed, Repeatable Read, Serializable и write skew, ограничения как последняя линия обороны
+- **Сессия 5** — блокировки: `FOR UPDATE`, очередь на `SKIP LOCKED`, дедлок, `pg_blocking_pids()`, миграции без простоя, advisory locks
+- **Сессия 6** — MVCC и VACUUM изнутри (`pageinspect`, `xmin`/`xmax`, горизонт, HOT, wraparound), партиционирование журнала событий, "Production Hell" — задания без подсказок
+
+Разделы 1–8 методички — теория (чего не видно из ORM, как PostgreSQL устроен внутри, архитектура и схема данных, стек и структура, индексы, как читать EXPLAIN, транзакции и блокировки, MVCC/VACUUM/партиционирование/N+1), раздел 9 — семь сессий заданий, разделы 10–13 — чек-лист, глоссарий, вопросы для собеседования, что дальше.
 
 ---
 

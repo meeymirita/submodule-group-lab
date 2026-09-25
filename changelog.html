@@ -172,7 +172,7 @@
   <div class="wrap">
     <div class="kicker mono">История проекта</div>
     <h1 class="cl-h1 display">Change<span class="accent-word">log</span></h1>
-    <p class="cl-lead">Полная хронология: каждый коммит во всех 15 репозиториях проекта (главный сайт + 14 лаб-сабмодулей), от самого первого дня до сегодняшнего — что добавлялось, что переписывалось, что убиралось. Сверху — самые свежие изменения.</p>
+    <p class="cl-lead">Полная хронология: каждый коммит во всех 16 репозиториях проекта (главный сайт + 15 сабмодулей: 14 лаб и витрина works), от самого первого дня до сегодняшнего — что добавлялось, что переписывалось, что убиралось. Сверху — самые свежие изменения.</p>
     <div class="cl-stats" id="cl-stats"></div>
     <div class="cl-legend" id="cl-legend"></div>
   </div>
@@ -199,6 +199,7 @@ var LABS = {
   kubernetes:  { label: 'Kubernetes Lab',         color: '#326CE5' },
   nestjs:      { label: 'NestJS Lab',             color: '#E0234E' },
   graphql:     { label: 'GraphQL Lab',            color: '#E535AB' },
+  postgresql:  { label: 'PostgreSQL Lab',         color: '#4A90D9' },
 };
 
 var TYPES = {
@@ -376,6 +377,13 @@ var DAYS = [
   {lab:'php-coffee', type:'changed', text:'<b>OOP-лаба вычитана и исправлена</b> (13 находок): вход в RabbitMQ UI, полные заголовки файлов в шагах 4.2 и 5.1, переключение акций и уведомлений через <code>.env</code>, верные числа в примерах; ссылки на RabbitMQ и Redis — в будущем времени, без выдуманных сущностей.', milestone:true},
   {lab:'site', type:'changed', text:'README выровнены: в главном README — блок «Аудит и вычитка» со ссылками на <code>fixes/</code> и changelog, OOP-лаба отмечена исправленной; README OOP-лабы — PostgreSQL 17 и RabbitMQ Lab как следующий по порядку этап. README остальных лаб уже соответствуют исправленным методичкам (проверено поиском по всем файлам).'},
   {lab:'site', type:'added', text:'В главный README добавлен раздел «Как это выглядит» — скриншоты карточек на главной, страницы лабы, оглавления и методички (на примере NestJS Lab).'},
+]},
+{date:'2026-09-25', title:'Родилась PostgreSQL-лаба — четырнадцатая', items:[
+  {lab:'postgresql', type:'added', text:'<b>Родился репозиторий PostgreSQL Lab</b> и сразу подключён сабмодулем <code>postgresql/</code>.', milestone:true},
+  {lab:'postgresql', type:'added', text:'Добавлена методичка <b>«Coffee Shop изнутри»</b>: семь сессий — от JOIN с нуля на песочнице до EXPLAIN, индексов B-tree/GIN/BRIN, статистики, N+1 глазами базы, уровней изоляции, блокировок и дедлоков, MVCC/VACUUM и партиционирования на миллионе заказов кофейни; финал — Production Hell.'},
+  {lab:'postgresql', type:'added', text:'README лабы: о чём, стек (PostgreSQL 17 + <code>psql</code> + <code>pgbench</code>, без ORM), формат и план по сессиям.'},
+  {lab:'site', type:'added', text:'Лаба PostgreSQL появилась на сайте: карточка на лендинге (бэкенд), страница <code>works/postgresql.html</code> с оглавлением методички, раздел 14 в README; счётчики лаб — 14.'},
+  {lab:'site', type:'changed', text:'В <code>fixes/</code> PostgreSQL добавлена в порядок прохождения (самостоятельная, №14) и в таблицу вычитки — пока не начата.'},
 ]},
 ];
 

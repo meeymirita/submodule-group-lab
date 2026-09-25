@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TECH PERFORMANCE — лабораторные работы</title>
-  <meta name="description" content="Сборный репозиторий лабораторных работ: RabbitMQ, Redis, Traefik, Kubernetes, OOP, Vue, TypeScript, NestJS, GraphQL, Laravel, Docker.">
+  <meta name="description" content="Сборный репозиторий лабораторных работ: RabbitMQ, Redis, Traefik, Kubernetes, OOP, Vue, TypeScript, NestJS, GraphQL, Laravel, PostgreSQL, Docker.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -883,12 +883,12 @@
       </h1>
 
       <p class="lead strong">
-        RabbitMQ · Redis · Traefik · Kubernetes · PHP OOP · Vue · TypeScript · NestJS · GraphQL · Laravel · Docker
+        RabbitMQ · Redis · Traefik · Kubernetes · PHP OOP · Vue · TypeScript · NestJS · GraphQL · Laravel · PostgreSQL · Docker
       </p>
 
       <div class="system-status mono">
         <span></span>
-        system online / 13 labs loaded
+        system online / 14 labs loaded
       </div>
     </div>
 
@@ -912,7 +912,7 @@
 
       <div class="stats">
         <div class="stat" style="--stat-color:#ff2e88">
-          <div class="stat-num">13</div>
+          <div class="stat-num">14</div>
           <div class="stat-label">лабораторных</div>
         </div>
         <div class="stat" style="--stat-color:#7df9ff">
@@ -926,8 +926,8 @@
 
 <div class="marquee">
   <div class="marquee-track display">
-    <span>group lab · 13 лабораторных · git submodules · методички ·</span>
-    <span>group lab · 13 лабораторных · git submodules · методички ·</span>
+    <span>group lab · 14 лабораторных · git submodules · методички ·</span>
+    <span>group lab · 14 лабораторных · git submodules · методички ·</span>
   </div>
 </div>
 
@@ -940,7 +940,7 @@
           <h2 class="section-h2 display">Работы</h2>
           <p class="mono">Нажми на карточку, чтобы открыть страницу лабы</p>
         </div>
-        <div class="works-count">13</div>
+        <div class="works-count">14</div>
       </div>
     </div>
 
@@ -1100,6 +1100,19 @@
       accent: '#FF6600', accentSoft: '#FF660022', accentShadow: 'rgba(255,102,0,.28)'
     },
     {
+      key: 'postgresql',
+      category: 'backend',
+      title: 'PostgreSQL Lab',
+      subtitle: 'Coffee Shop изнутри — база без ORM',
+      image: 'postgresql/postgresql.png',
+      desc: 'Что происходит под ORM на миллионе заказов кофейни: JOIN с нуля, EXPLAIN и индексы B-tree/GIN/BRIN под конкретный запрос, статистика, N+1 глазами базы, уровни изоляции и аномалии, блокировки и дедлоки, SKIP LOCKED, MVCC и VACUUM, партиционирование.',
+      stack: ['PostgreSQL 17', 'psql', 'pgbench', 'Docker'],
+      difficulty: 'Средняя–высокая',
+      open: 'postgresql/PostgreSQL_Lab_CoffeeShop.html',
+      repo: 'https://github.com/meeymirita/postgresql-lab',
+      accent: '#4A90D9', accentSoft: '#4A90D922', accentShadow: 'rgba(74,144,217,.28)'
+    },
+    {
       key: 'docker',
       category: 'devops',
       title: 'Docker Lab',
@@ -1205,7 +1218,7 @@
 
   var categoryDescriptions = {
     frontend: 'То, что видит пользователь: реактивный UI без фреймворка на чистом JS, потом Vue 3 (компоненты, роутинг, состояние) и TypeScript поверх этого — типы, generics, сквозная типизация от API до браузера.',
-    backend: 'Серверная часть: ООП и чистый PHP без фреймворка, Laravel «изнутри», NestJS с нуля (DI, Guards, WebSocket) и GraphQL над тем же бэкендом — резолверы вместо REST-контроллеров.',
+    backend: 'Серверная часть: ООП и чистый PHP без фреймворка, Laravel «изнутри», NestJS с нуля (DI, Guards, WebSocket) и GraphQL над тем же бэкендом — резолверы вместо REST-контроллеров, и PostgreSQL изнутри — то, что происходит под ORM.',
     devops: 'Инфраструктура вокруг кода: Docker и Bash с нуля, Traefik как reverse proxy, и Kubernetes — миграция того же стека из Compose в настоящий кластер.'
   };
 
