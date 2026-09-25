@@ -29,6 +29,7 @@ LABS = {
     'graphql': 'graphql/GraphQL_Lab_Plan.html',
     'php-coffee': 'php-coffee/docs/OOP_Lab_CoffeeShop.html',
     'rabbitmq': 'rabbitmq/docs/RabbitMQ_Lab_Plan_v1_pro_max.html',
+    'postgresql': 'postgresql/PostgreSQL_Lab_CoffeeShop.html',
 }
 PART = 20000
 

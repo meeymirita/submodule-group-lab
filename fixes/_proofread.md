@@ -58,7 +58,7 @@
 ### Шаги для одной лабы
 1. Нарезать методичку (из корня репо, папка вывода — во временной/scratchpad-папке, НЕ в репо):
    `python3 fixes/_tools/prep.py <лаба> <scratch>/proof-<лаба>`
-   Имена лаб: nestjs, graphql, laravel, redis, docker, traefik, kubernetes (пути к HTML — внутри prep.py).
+   Имена лаб: nestjs, graphql, laravel, redis, docker, traefik, kubernetes, postgresql (пути к HTML — внутри prep.py).
    Скрипт печатает число частей (`part_NN.txt` по ~20 тыс. символов) и блоков кода (`pre_blocks.txt`).
 2. Дописать в конец `fixes/<лаба>.md`: `\n---\n\n## 📖 Вычитка методички\n`
 3. В таблице выше поставить лабе `🔄 идёт`.
@@ -103,5 +103,6 @@
 | GraphQL | 8 | 3 |
 | Laravel | 9 | 3–4 |
 | NestJS | 10 | 4 |
+| PostgreSQL | 13 (~265 тыс. символов, 261 блок кода) | 5 |
 
 Рекомендуемый порядок: Kubernetes → Redis → Docker → Traefik → GraphQL → Laravel → NestJS (от дешёвых к дорогим).
