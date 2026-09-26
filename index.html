@@ -694,21 +694,24 @@
     .modal-panel {
       position: relative;
       width: 100%;
-      max-width: 720px;
+      max-width: 1320px;
       max-height: calc(100vh - 48px);
       overflow-y: auto;
       background: var(--bg-alt);
       border: 1px solid rgba(255,46,136,.35);
       border-radius: 20px;
       box-shadow: 0 30px 80px rgba(0,0,0,.6), 0 0 40px rgba(255,46,136,.08);
-      padding: clamp(24px,4vw,44px);
+      padding: clamp(24px,3vw,48px);
       transform: translateY(16px) scale(.97);
       transition: transform .25s ease;
     }
     .modal-overlay.is-open .modal-panel { transform: translateY(0) scale(1); }
-    /* JS adds this while GSAP Flip is morphing the panel out of its trigger button,
-       so this transition doesn't race Flip's own before/after measurement */
-    .modal-panel.js-flip { transition: none; }
+
+    .modal-body { display: grid; grid-template-columns: 1.35fr 1fr; gap: 40px; align-items: start; margin-top: 24px; }
+    .modal-body-left, .modal-body-right { min-width: 0; }
+    @media (max-width: 880px) {
+      .modal-body { grid-template-columns: 1fr; gap: 24px; margin-top: 18px; }
+    }
 
     .modal-close {
       position: absolute;
@@ -731,27 +734,100 @@
 
     .modal-kicker { font-size: 11px; color: var(--pink); margin-bottom: 10px; }
     .modal-title { font-size: clamp(24px,3.4vw,34px); line-height: 1.05; margin: 0 0 16px; padding-right: 40px; }
-    .modal-intro { color: var(--text-dim); font-size: 14px; line-height: 1.65; margin: 0 0 30px; }
+    .modal-intro { color: var(--text-dim); font-size: 14px; line-height: 1.65; margin: 0 0 22px; }
 
-    .modal-cats { display: flex; flex-direction: column; gap: 18px; }
-    .modal-cat {
+    .modal-slider {
+      position: relative;
+      aspect-ratio: 8 / 5;
+      border-radius: 14px;
+      overflow: hidden;
       border: 1px solid var(--line);
-      border-left: 3px solid var(--cat-color,var(--pink));
-      border-radius: 12px;
-      padding: 16px 18px;
-      background: rgba(247,242,245,.02);
+      background: rgba(0,0,0,.25);
+      margin-bottom: 12px;
     }
-    .modal-cat-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
-    .modal-cat-dot { width: 7px; height: 7px; border-radius: 999px; background: var(--cat-color); box-shadow: 0 0 10px var(--cat-color); flex: 0 0 auto; }
-    .modal-cat-title { font-size: 15px; font-weight: 700; }
-    .modal-cat-count { margin-left: auto; font-size: 10px; color: var(--text-dimmer); }
+    .modal-slider-track { display: flex; width: 100%; height: 100%; transition: transform .5s cubic-bezier(.65,0,.35,1); }
+    .modal-slide { flex: 0 0 100%; width: 100%; height: 100%; }
+    .modal-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .modal-slider-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 34px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      border: 1px solid rgba(247,242,245,.25);
+      background: rgba(4,3,5,.55);
+      backdrop-filter: blur(4px);
+      color: var(--text);
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+      transition: border-color .2s ease, color .2s ease, background .2s ease;
+    }
+    .modal-slider-arrow:hover { border-color: var(--pink); color: var(--pink); }
+    .modal-slider-arrow.prev { left: 10px; }
+    .modal-slider-arrow.next { right: 10px; }
+    .modal-slider-dots { position: absolute; left: 0; right: 0; bottom: 10px; display: flex; justify-content: center; gap: 7px; }
+    .modal-slider-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      border: none;
+      padding: 0;
+      background: rgba(247,242,245,.35);
+      cursor: pointer;
+      transition: background .2s ease, transform .2s ease;
+    }
+    .modal-slider-dot.is-active { background: var(--pink); transform: scale(1.3); }
+    .modal-slide-caption {
+      min-height: 32px;
+      font-size: 12px;
+      color: var(--text-dimmer);
+      line-height: 1.5;
+      margin: 0 0 26px;
+      opacity: 1;
+      transition: opacity .15s ease;
+    }
+    .modal-slide-caption.is-fading { opacity: 0; }
+
+    .modal-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); margin-bottom: 18px; }
+    .modal-tab {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      padding: 0 4px 10px;
+      margin-right: 14px;
+      font: inherit;
+      font-size: 12px;
+      color: var(--text-dimmer);
+      cursor: pointer;
+      transition: color .2s ease, border-color .2s ease;
+    }
+    .modal-tab:hover { color: var(--text-dim); }
+    .modal-tab.is-active { color: var(--text); border-color: var(--cat-color,var(--pink)); }
+    .modal-tab-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--cat-color,var(--pink)); box-shadow: 0 0 8px var(--cat-color,var(--pink)); flex: 0 0 auto; }
+    .modal-tab-count { color: var(--text-dimmer); }
+
+    .modal-tab-panel {
+      border-left: 3px solid var(--cat-color,var(--pink));
+      border-radius: 0 12px 12px 0;
+      padding: 4px 0 4px 18px;
+      animation: modal-tab-fade .25s ease;
+    }
+    @keyframes modal-tab-fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
     .modal-cat-desc { font-size: 13px; color: var(--text-dim); line-height: 1.55; margin: 0 0 10px; }
     .modal-cat-labs { display: flex; flex-wrap: wrap; gap: 6px; }
 
     @media (max-width: 640px) {
       .modal-panel { padding: 22px; border-radius: 16px; }
-      .modal-cat-count { margin-left: 0; }
-      .modal-cat-head { flex-wrap: wrap; }
+      .modal-tabs { overflow-x: auto; }
+      .modal-tab { margin-right: 10px; white-space: nowrap; }
     }
 
     @media (max-width: 980px) {
@@ -813,11 +889,28 @@
   <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="about-modal-title">
     <button type="button" class="modal-close" id="about-modal-close" aria-label="Закрыть">✕</button>
     <div class="modal-kicker mono">О проекте</div>
-    <h2 class="modal-title display" id="about-modal-title">Что здесь вообще происходит</h2>
-    <p class="modal-intro">Это сборный репозиторий с обучающими лабораторными работами: каждая — отдельный
-      проект от первой строчки кода до финального сценария без подсказок, со своей методичкой, стеком и
-      git-историей. Работы сгруппированы по трём направлениям — фронтенд, бэкенд и devops.</p>
-    <div class="modal-cats" id="about-modal-cats"></div>
+    <h2 class="modal-title display" id="about-modal-title"><span class="accent-word">ANITECH</span> ПРЕДСТАВЛЯЕТ</h2>
+
+    <div class="modal-body">
+      <div class="modal-body-left">
+        <div class="modal-slider" id="about-modal-slider">
+          <div class="modal-slider-track" id="about-slider-track"></div>
+          <button type="button" class="modal-slider-arrow prev" id="about-slider-prev" aria-label="Предыдущий скриншот">‹</button>
+          <button type="button" class="modal-slider-arrow next" id="about-slider-next" aria-label="Следующий скриншот">›</button>
+          <div class="modal-slider-dots" id="about-slider-dots"></div>
+        </div>
+        <p class="modal-slide-caption mono" id="about-slide-caption"></p>
+      </div>
+
+      <div class="modal-body-right">
+        <p class="modal-intro">Это сборный репозиторий с обучающими лабораторными работами: каждая — отдельный
+          проект от первой строчки кода до финального сценария без подсказок, со своей методичкой, стеком и
+          git-историей. Работы сгруппированы по трём направлениям — фронтенд, бэкенд и devops.</p>
+
+        <div class="modal-tabs mono" id="about-modal-tabs" role="tablist"></div>
+        <div class="modal-tab-panel" id="about-modal-tab-panel" role="tabpanel"></div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1223,76 +1316,170 @@
     devops: 'Инфраструктура вокруг кода: Docker и Bash с нуля, Traefik как reverse proxy, и Kubernetes — миграция того же стека из Compose в настоящий кластер.'
   };
 
-  function renderAboutModal() {
-    var container = document.getElementById('about-modal-cats');
-    if (!container) return;
+  var activeCategoryKey = categories[0].key;
 
-    container.innerHTML = categories.map(function (cat) {
+  function renderAboutTabs() {
+    var tabsEl = document.getElementById('about-modal-tabs');
+    if (!tabsEl) return;
+
+    tabsEl.innerHTML = categories.map(function (cat) {
       var items = projects.filter(function (p) { return p.category === cat.key; });
-      if (!items.length) return '';
-
-      var labChips = items.map(function (p) {
-        return '<span class="chip" style="--accent:' + p.accent + '; --accent-soft:' + p.accentSoft + '">' + escapeHtml(p.title.replace(' Lab', '')) + '</span>';
-      }).join('');
-
+      var isActive = cat.key === activeCategoryKey;
       return `
-        <div class="modal-cat" style="--cat-color:${cat.color}">
-          <div class="modal-cat-head">
-            <span class="modal-cat-dot"></span>
-            <span class="modal-cat-title">${escapeHtml(cat.title)}</span>
-            <span class="modal-cat-count mono">${items.length} ${items.length === 1 ? 'лаба' : 'лабы'}</span>
-          </div>
-          <p class="modal-cat-desc">${escapeHtml(categoryDescriptions[cat.key] || '')}</p>
-          <div class="modal-cat-labs">${labChips}</div>
-        </div>
+        <button type="button" class="modal-tab${isActive ? ' is-active' : ''}" data-cat="${cat.key}"
+          style="--cat-color:${cat.color}" role="tab" aria-selected="${isActive}">
+          <span class="modal-tab-dot"></span>${escapeHtml(cat.title)}
+          <span class="modal-tab-count">${items.length}</span>
+        </button>
       `;
     }).join('');
+  }
+
+  function renderAboutTabPanel() {
+    var panelEl = document.getElementById('about-modal-tab-panel');
+    if (!panelEl) return;
+
+    var cat = categories.filter(function (c) { return c.key === activeCategoryKey; })[0];
+    var items = projects.filter(function (p) { return p.category === activeCategoryKey; });
+    var labChips = items.map(function (p) {
+      return '<span class="chip" style="--accent:' + p.accent + '; --accent-soft:' + p.accentSoft + '">' + escapeHtml(p.title.replace(' Lab', '')) + '</span>';
+    }).join('');
+
+    panelEl.style.setProperty('--cat-color', cat.color);
+    panelEl.innerHTML = `
+      <p class="modal-cat-desc">${escapeHtml(categoryDescriptions[activeCategoryKey] || '')}</p>
+      <div class="modal-cat-labs">${labChips}</div>
+    `;
+  }
+
+  function renderAboutModal() {
+    renderAboutTabs();
+    renderAboutTabPanel();
+  }
+
+  document.getElementById('about-modal-tabs').addEventListener('click', function (e) {
+    var btn = e.target.closest('.modal-tab');
+    if (!btn) return;
+    activeCategoryKey = btn.dataset.cat;
+    renderAboutTabs();
+    renderAboutTabPanel();
+  });
+
+  // Слайдер скриншотов ------------------------------------------------------
+  var aboutScreenshots = [
+    { src: 'docs/screenshots/1-cards.jpg', alt: 'Карточки лаб на главной странице', caption: 'Главная страница: 14 лаб карточками, сгруппированы по фронтенду, бэкенду и devops.' },
+    { src: 'docs/screenshots/2-lab-page.jpg', alt: 'Страница лабы', caption: 'Страница лабы — стек, README, ссылка на репозиторий и открытие методички.' },
+    { src: 'docs/screenshots/3-toc.jpg', alt: 'Оглавление методички', caption: 'Оглавление методички: сессии и шаги, прогресс сохраняется прямо в браузере.' },
+    { src: 'docs/screenshots/4-manual.jpg', alt: 'Методичка', caption: 'Сама методичка — код, «Под капотом», тренировки с ответами под спойлером.' }
+  ];
+  var sliderIndex = 0;
+  var sliderTimer = null;
+  var sliderInited = false;
+
+  function goToSlide(i, instant) {
+    var count = aboutScreenshots.length;
+    sliderIndex = (i % count + count) % count;
+
+    var track = document.getElementById('about-slider-track');
+    if (track) track.style.transform = 'translateX(-' + (sliderIndex * 100) + '%)';
+
+    var dots = document.querySelectorAll('#about-slider-dots .modal-slider-dot');
+    dots.forEach(function (d, idx) { d.classList.toggle('is-active', idx === sliderIndex); });
+
+    var caption = document.getElementById('about-slide-caption');
+    if (!caption) return;
+    if (instant) {
+      caption.textContent = aboutScreenshots[sliderIndex].caption;
+      return;
+    }
+    caption.classList.add('is-fading');
+    setTimeout(function () {
+      caption.textContent = aboutScreenshots[sliderIndex].caption;
+      caption.classList.remove('is-fading');
+    }, 150);
+  }
+
+  function stopSliderAutoplay() {
+    if (sliderTimer) { clearInterval(sliderTimer); sliderTimer = null; }
+  }
+
+  function startSliderAutoplay() {
+    stopSliderAutoplay();
+    if (prefersReducedMotion()) return;
+    sliderTimer = setInterval(function () { goToSlide(sliderIndex + 1); }, 5000);
+  }
+
+  function renderAboutSlider() {
+    if (sliderInited) return;
+    sliderInited = true;
+
+    var track = document.getElementById('about-slider-track');
+    var dots = document.getElementById('about-slider-dots');
+    if (!track || !dots) return;
+
+    track.innerHTML = aboutScreenshots.map(function (s) {
+      return '<div class="modal-slide"><img src="' + s.src + '" alt="' + escapeHtml(s.alt) + '" loading="lazy"></div>';
+    }).join('');
+    dots.innerHTML = aboutScreenshots.map(function (_, i) {
+      return '<button type="button" class="modal-slider-dot" data-i="' + i + '" aria-label="Скриншот ' + (i + 1) + '"></button>';
+    }).join('');
+    goToSlide(0, true);
+
+    document.getElementById('about-slider-prev').addEventListener('click', function () { goToSlide(sliderIndex - 1); startSliderAutoplay(); });
+    document.getElementById('about-slider-next').addEventListener('click', function () { goToSlide(sliderIndex + 1); startSliderAutoplay(); });
+    dots.addEventListener('click', function (e) {
+      var btn = e.target.closest('.modal-slider-dot');
+      if (!btn) return;
+      goToSlide(parseInt(btn.dataset.i, 10));
+      startSliderAutoplay();
+    });
+
+    var sliderEl = document.getElementById('about-modal-slider');
+    sliderEl.addEventListener('mouseenter', stopSliderAutoplay);
+    sliderEl.addEventListener('mouseleave', startSliderAutoplay);
+
+    // Свайп на тач-устройствах.
+    var touchStartX = null;
+    track.addEventListener('touchstart', function (e) { touchStartX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend', function (e) {
+      if (touchStartX === null) return;
+      var dx = e.changedTouches[0].clientX - touchStartX;
+      touchStartX = null;
+      if (Math.abs(dx) < 40) return;
+      goToSlide(sliderIndex + (dx < 0 ? 1 : -1));
+      startSliderAutoplay();
+    }, { passive: true });
   }
 
   var aboutOverlay = document.getElementById('about-modal-overlay');
 
   function openAboutModal() {
     renderAboutModal();
-
-    var panel = aboutOverlay.querySelector('.modal-panel');
-    var trigger = document.getElementById('about-modal-trigger');
-
-    if (gsapReady && panel && trigger) {
-      // Morph the panel out of the "о проекте" button (GSAP Flip) instead of
-      // just letting the plain CSS scale/fade transition play.
-      try {
-        panel.classList.add('js-flip');
-        aboutOverlay.classList.add('is-open');
-        // Flip.fit(..., getVars) measures the offset/scale that would put the panel
-        // exactly over the button; gsap.from() then plays from there back to its real spot.
-        var fromVars = Flip.fit(panel, trigger, { scale: true, getVars: true });
-        gsap.from(panel, Object.assign(fromVars, {
-          duration: .45,
-          ease: 'power3.out',
-          clearProps: 'transform',
-          onComplete: function () { panel.classList.remove('js-flip'); },
-        }));
-      } catch (e) {
-        panel.classList.remove('js-flip');
-        aboutOverlay.classList.add('is-open');
-      }
-    } else {
-      aboutOverlay.classList.add('is-open');
-    }
-
+    renderAboutSlider();
+    // Плавное появление модалки — просто CSS-переход оверлея/панели ниже,
+    // без «вылета» из шапки (раньше здесь был GSAP Flip, морфящий панель
+    // из кнопки-триггера — смотрелось резко, особенно при автооткрытии).
+    aboutOverlay.classList.add('is-open');
     document.body.style.overflow = 'hidden';
+    startSliderAutoplay();
   }
 
   function closeAboutModal() {
     aboutOverlay.classList.remove('is-open');
     document.body.style.overflow = '';
+    stopSliderAutoplay();
     try { localStorage.setItem('about-modal-seen', '1'); } catch (e) {}
   }
 
   document.getElementById('about-modal-trigger').addEventListener('click', openAboutModal);
   document.getElementById('about-modal-close').addEventListener('click', closeAboutModal);
   aboutOverlay.addEventListener('click', function (e) { if (e.target === aboutOverlay) closeAboutModal(); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeAboutModal(); });
+  document.addEventListener('keydown', function (e) {
+    if (!aboutOverlay.classList.contains('is-open')) return;
+    if (e.key === 'Escape') closeAboutModal();
+    if (e.key === 'ArrowLeft') { goToSlide(sliderIndex - 1); startSliderAutoplay(); }
+    if (e.key === 'ArrowRight') { goToSlide(sliderIndex + 1); startSliderAutoplay(); }
+  });
 
   var aboutModalSeen = false;
   try { aboutModalSeen = !!localStorage.getItem('about-modal-seen'); } catch (e) {}
