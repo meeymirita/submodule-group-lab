@@ -864,6 +864,110 @@
       .about-photo-wrap { justify-content: center; }
       .btn { padding: 13px 20px; font-size: 11px; }
     }
+
+    /* ---- routes: which order to take the labs in ---- */
+    .routes-section { position: relative; z-index: 1; background: var(--bg); padding: clamp(60px,9vw,120px) 0; }
+    .routes-head { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(24px,5vw,70px); align-items: end; margin-bottom: clamp(28px,4vw,44px); }
+    .routes-head .lead { font-size: clamp(14px,1.3vw,16px); }
+
+    .route-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 26px; }
+    .route-tab {
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 10px 16px; border-radius: 999px;
+      border: 1px solid var(--line); background: transparent; color: var(--text-dim);
+      font-family: 'Space Mono',monospace; font-size: 12px; letter-spacing: .08em;
+      cursor: pointer; transition: border-color .2s ease, color .2s ease, background .2s ease;
+    }
+    .route-tab::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--track); box-shadow: 0 0 10px var(--track); }
+    .route-tab:hover { color: var(--text); border-color: var(--track); }
+    .route-tab.is-active { color: var(--bg); background: var(--track); border-color: var(--track); }
+    .route-tab.is-active::before { background: var(--bg); box-shadow: none; }
+
+    .route-info {
+      display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); gap: clamp(20px,4vw,50px);
+      padding: 22px 24px; margin-bottom: 26px;
+      border: 1px solid var(--line); border-left: 3px solid var(--track, var(--pink));
+      background: linear-gradient(90deg, rgba(255,255,255,.025), transparent);
+    }
+    .route-info h3 { font-weight: 900; font-size: clamp(22px,2.4vw,30px); margin: 0 0 8px; line-height: 1.1; }
+    .route-info .route-meta { font-size: 11px; letter-spacing: .14em; color: var(--track); text-transform: uppercase; }
+    .route-info p { margin: 0; color: var(--text-dim); font-size: 14px; line-height: 1.7; }
+
+    .route-chain { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 6px; margin-top: 16px; list-style: none; padding: 0; }
+    .route-chain li { display: contents; }
+    .route-chain a {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 6px 11px; border: 1px solid var(--accent); border-radius: 6px;
+      font-size: 12px; color: var(--text); background: color-mix(in srgb, var(--accent) 10%, transparent);
+      transition: background .2s ease, transform .2s ease;
+    }
+    .route-chain a:hover { background: color-mix(in srgb, var(--accent) 25%, transparent); transform: translateY(-2px); }
+    .route-chain b { font-family: 'Space Mono',monospace; font-size: 10px; color: var(--accent); }
+    .route-chain .arrow { color: var(--text-dimmer); font-size: 12px; }
+
+    /* the map: 3 lanes x 6 steps, arrows drawn in an svg layer on top */
+    .route-map-scroll { overflow-x: auto; margin: 0 -4px; padding: 0 4px 6px; }
+    .route-map {
+      position: relative; min-width: 940px;
+      display: grid; grid-template-columns: 92px repeat(6, minmax(0,1fr));
+      grid-auto-rows: minmax(92px, auto);
+      column-gap: 34px; row-gap: 40px; padding: 34px 0 10px;
+    }
+    .route-map svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+    .route-lane {
+      grid-column: 1; align-self: center;
+      font-family: 'Space Mono',monospace; font-size: 11px; letter-spacing: .18em; color: var(--text-dimmer);
+      border-right: 1px solid var(--line); padding-right: 12px; line-height: 1.5;
+    }
+    .route-lane strong { display: block; color: var(--text); font-size: 12px; }
+
+    .route-node {
+      position: relative; z-index: 1; align-self: center;
+      display: flex; flex-direction: column; gap: 4px;
+      padding: 14px 14px 12px; border-radius: 10px;
+      border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
+      background: color-mix(in srgb, var(--accent) 8%, var(--bg));
+      transition: opacity .35s ease, filter .35s ease, transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+    .route-node:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 14px 34px -14px var(--accent); }
+    .route-node-title { font-weight: 900; font-size: 14px; line-height: 1.15; letter-spacing: .02em; text-transform: uppercase; }
+    .route-node-diff { font-family: 'Space Mono',monospace; font-size: 9px; letter-spacing: .06em; color: var(--text-dimmer); }
+    .route-node::before { content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 2px; border-radius: 2px; background: var(--accent); }
+    .route-step {
+      position: absolute; top: -11px; right: 10px;
+      min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px;
+      display: grid; place-items: center;
+      font-family: 'Space Mono',monospace; font-size: 10px; font-weight: 700;
+      background: var(--track, var(--pink)); color: var(--bg);
+      transform: scale(0); transition: transform .3s cubic-bezier(.3,1.6,.5,1);
+    }
+    .route-map.has-track .route-node.is-off { opacity: .22; filter: grayscale(.8); }
+    .route-map.has-track .route-node.is-on { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 12px 30px -16px var(--accent); }
+    .route-node.is-on .route-step { transform: scale(1); }
+
+    .route-edge { fill: none; stroke: rgba(247,242,245,.16); stroke-width: 1.5; transition: stroke .35s ease, opacity .35s ease; }
+    .route-edge.is-skip { stroke-dasharray: 3 5; }
+    .route-edge.is-hidden { opacity: 0; }
+    .route-edge.is-on { stroke: var(--track, var(--pink)); stroke-width: 2; stroke-dasharray: 7 7; animation: route-flow .9s linear infinite; }
+    .route-arrowhead { fill: rgba(247,242,245,.3); }
+    .route-arrowhead-on { fill: var(--track, var(--pink)); }
+    @keyframes route-flow { to { stroke-dashoffset: -14; } }
+
+    .route-hint { margin-top: 14px; font-size: 11px; color: var(--text-dimmer); letter-spacing: .06em; }
+    .route-hint-mobile { display: none; color: var(--cyan); }
+
+    .hero-right .lead + .lead { margin-top: 16px; padding-left: 14px; border-left: 2px solid var(--pink); color: var(--text); }
+
+    @media (prefers-reduced-motion: reduce) { .route-edge.is-on { animation: none; } }
+
+    @media (max-width: 880px) {
+      .routes-head, .route-info { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .route-info { padding: 18px 16px; }
+      .route-tab { padding: 9px 13px; font-size: 11px; }
+      .route-hint-mobile { display: inline; }
+    }
   </style>
 </head>
 
@@ -878,6 +982,7 @@
     <nav class="mono">
       <button type="button" class="about-trigger" id="about-modal-trigger">о проекте</button>
       <a href="#top">об авторе</a>
+      <a href="#routes">маршруты</a>
       <a href="#works">работы</a>
       <a href="changelog.html">changelog</a>
       <a href="https://github.com/meeymirita/submodule-group-lab" target="_blank" rel="noopener" class="nav-cta">репозиторий ↗</a>
@@ -993,9 +1098,15 @@
         коммитов, документом и обложкой. Ниже — витрина всех лаб: что внутри,
         какой стек и куда открыть, чтобы посмотреть.
       </p>
+      <p class="lead">
+        Проходить всё подряд не обязательно: выбери цель — фронтенд, бэкенд
+        на PHP или Node, инфраструктура — и иди по своей цепочке, каждая
+        следующая лаба опирается на предыдущую.
+      </p>
 
       <div class="btn-row">
-        <a href="#works" class="btn btn-primary">смотреть работы ↓</a>
+        <a href="#routes" class="btn btn-primary">выбрать маршрут ↓</a>
+        <a href="#works" class="btn btn-outline">все работы</a>
         <a href="https://github.com/meeymirita/submodule-group-lab" target="_blank" rel="noopener" class="btn btn-outline">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 .5C5.73.5.9 5.33.9 11.6c0 4.96 3.22 9.17 7.68 10.66.56.1.77-.24.77-.54 0-.27-.01-1.15-.02-2.09-3.12.68-3.78-1.34-3.78-1.34-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.94.1-.73.39-1.22.71-1.5-2.49-.28-5.11-1.25-5.11-5.55 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.42.11-2.96 0 0 .95-.3 3.12 1.15 2.17-1.45 3.12-1.15 3.12-1.15.61 1.54.23 2.68.11 2.96.72.79 1.16 1.79 1.16 3.02 0 4.31-2.63 5.26-5.13 5.54.4.35.76 1.03.76 2.08 0 1.5-.01 2.71-.01 3.08 0 .3.2.65.78.54A11.1 11.1 0 0 0 23.1 11.6C23.1 5.33 18.27.5 12 .5Z"/>
@@ -1018,6 +1129,33 @@
   </div>
 </section>
 
+<section id="routes" class="routes-section">
+  <div class="wrap">
+    <div class="routes-head reveal">
+      <div>
+        <div class="kicker mono">02 / маршруты</div>
+        <h2 class="section-h2 display">С чего начать</h2>
+      </div>
+      <p class="lead">
+        Каждая лаба самостоятельна, но вместе они складываются в цепочки: сначала
+        язык без фреймворка, потом архитектура и данные, потом фреймворк и
+        продакшен-обвязка. Выбери трек — на карте подсветится порядок прохождения.
+      </p>
+    </div>
+
+    <div class="reveal">
+      <div class="route-tabs" id="route-tabs" role="tablist"></div>
+
+      <div class="route-info" id="route-info"></div>
+
+      <div class="route-map-scroll">
+        <div class="route-map" id="route-map"></div>
+      </div>
+      <p class="route-hint mono"><span class="route-hint-mobile">← листай карту вбок → · </span>клик по лабе открывает её методичку · пунктир — «можно перепрыгнуть»</p>
+    </div>
+  </div>
+</section>
+
 <div class="marquee">
   <div class="marquee-track display">
     <span>group lab · 14 лабораторных · git submodules · методички ·</span>
@@ -1030,7 +1168,7 @@
     <div class="works-head reveal">
       <div class="works-title-line">
         <div>
-          <div class="kicker mono">02 / витрина</div>
+          <div class="kicker mono">03 / витрина</div>
           <h2 class="section-h2 display">Работы</h2>
           <p class="mono">Нажми на карточку, чтобы открыть страницу лабы</p>
         </div>
@@ -1583,7 +1721,7 @@
   function initLayeredPanels() {
     if (!gsapReady) return;
 
-    var panels = [document.getElementById('top'), document.getElementById('intro')]
+    var panels = [document.getElementById('top'), document.getElementById('intro'), document.getElementById('routes')]
       .concat(Array.prototype.slice.call(document.querySelectorAll('.category-block')))
       .filter(Boolean);
 
@@ -1760,6 +1898,164 @@
     if (glowOne) glowOne.style.transform = 'translate(' + x + 'px,' + y + 'px)';
     if (glowTwo) glowTwo.style.transform = 'translate(' + (-x) + 'px,' + (-y) + 'px)';
   });
+
+  // ---- routes: lanes x steps map + per-track highlight ----
+  // row = lane, col = step inside the lane (1-based)
+  var routeLanes = [
+    { label: 'JS / TS', sub: 'фронт и Node', nodes: ['js', 'vue', 'typescript', 'nestjs', 'graphql'] },
+    { label: 'PHP', sub: 'бэкенд', nodes: ['php', 'php-coffee', 'postgresql', 'laravel', 'rabbitmq', 'redis'] },
+    { label: 'INFRA', sub: 'devops', nodes: ['docker', 'traefik', 'kubernetes'] }
+  ];
+
+  // skip: drawn as a dashed arc over the lane, only shown for the tracks that use it
+  var routeEdges = [
+    ['js', 'vue'], ['vue', 'typescript'], ['typescript', 'nestjs'], ['nestjs', 'graphql'],
+    ['js', 'typescript', { skip: true, tracks: ['node'] }],
+    ['php', 'php-coffee'], ['php-coffee', 'postgresql'], ['postgresql', 'laravel'], ['laravel', 'rabbitmq'], ['rabbitmq', 'redis'],
+    ['docker', 'traefik'], ['traefik', 'kubernetes']
+  ];
+
+  var routeTracks = [
+    {
+      key: 'all', label: 'Весь путь', color: '#f8c8dc',
+      title: 'Хочу пройти всё',
+      text: 'Docker первым — контейнеры понадобятся почти в каждой следующей лабе. Дальше PHP-ветка целиком, потом JavaScript-ветка, а в конце оркестрация: Traefik и Kubernetes, когда уже есть что деплоить.',
+      path: ['docker', 'php', 'php-coffee', 'postgresql', 'laravel', 'rabbitmq', 'redis', 'js', 'vue', 'typescript', 'nestjs', 'graphql', 'traefik', 'kubernetes']
+    },
+    {
+      key: 'front', label: 'Фронтенд', color: '#7df9ff',
+      title: 'Хочу во фронтенд',
+      text: 'Начни с чистого JavaScript — без замыканий, event loop и прототипов Vue будет казаться магией. Потом Vue: компоненты, Pinia, роутер. TypeScript последним — в его финале типизируются API и Vue-приложение насквозь.',
+      path: ['js', 'vue', 'typescript']
+    },
+    {
+      key: 'node', label: 'Бэкенд на Node', color: '#E0234E',
+      title: 'Хочу бэкенд на Node.js',
+      text: 'Тот же фундамент JavaScript, но Vue можно перепрыгнуть — сразу в TypeScript, NestJS без типов не пишут. Nest даёт DI, модули и JWT, а GraphQL надстраивается уже поверх него.',
+      path: ['js', 'typescript', 'nestjs', 'graphql']
+    },
+    {
+      key: 'php', label: 'Бэкенд на PHP', color: '#ff2e88',
+      title: 'Хочу бэкенд на PHP / Laravel',
+      text: 'Сначала чистый PHP — чтобы видеть, что Laravel делает под капотом. Потом ООП и паттерны на домене кофейни, PostgreSQL без ORM, и только потом Laravel. RabbitMQ и Redis — в конце: outbox, воркеры, кэш и локи опираются на всё предыдущее.',
+      path: ['php', 'php-coffee', 'postgresql', 'laravel', 'rabbitmq', 'redis']
+    },
+    {
+      key: 'devops', label: 'DevOps', color: '#42d392',
+      title: 'Хочу в инфраструктуру',
+      text: 'Docker и Bash — база под всё остальное. Затем Traefik: reverse proxy, service discovery, TLS. Kubernetes последним — его методичка прямо требует пройденных Docker Lab и Traefik Lab.',
+      path: ['docker', 'traefik', 'kubernetes']
+    }
+  ];
+
+  var routeMap = document.getElementById('route-map');
+  var routeTabs = document.getElementById('route-tabs');
+  var routeInfo = document.getElementById('route-info');
+  var activeTrack = routeTracks[0];
+
+  function projectByKey(key) {
+    return projects.filter(function (p) { return p.key === key; })[0];
+  }
+
+  function renderRouteMap() {
+    var html = '<svg aria-hidden="true"></svg>';
+    routeLanes.forEach(function (lane, row) {
+      html += '<div class="route-lane" style="grid-row:' + (row + 1) + '"><strong>' + escapeHtml(lane.label) + '</strong>' + escapeHtml(lane.sub) + '</div>';
+      lane.nodes.forEach(function (key, col) {
+        var p = projectByKey(key);
+        if (!p) return;
+        html += '<a class="route-node" data-key="' + key + '" href="' + (p.open || p.repo) + '" target="_blank" rel="noopener"'
+          + ' style="grid-row:' + (row + 1) + ';grid-column:' + (col + 2) + ';--accent:' + p.accent + '">'
+          + '<span class="route-step"></span>'
+          + '<span class="route-node-title">' + escapeHtml(p.title.replace(/ Lab$/, '')) + '</span>'
+          + '<span class="route-node-diff">' + escapeHtml(p.difficulty) + '</span>'
+          + '</a>';
+      });
+    });
+    routeMap.innerHTML = html;
+
+    routeTabs.innerHTML = routeTracks.map(function (t) {
+      return '<button type="button" class="route-tab" role="tab" data-track="' + t.key + '" style="--track:' + t.color + '">' + escapeHtml(t.label) + '</button>';
+    }).join('');
+  }
+
+  function drawRouteEdges() {
+    var svg = routeMap.querySelector('svg');
+    // offsets, not getBoundingClientRect: the layered panels scale the section while pinned
+    var rects = {};
+    routeMap.querySelectorAll('.route-node').forEach(function (el) {
+      var l = el.offsetLeft, t = el.offsetTop, w = el.offsetWidth, h = el.offsetHeight;
+      rects[el.dataset.key] = { l: l, r: l + w, t: t, cx: l + w / 2, cy: t + h / 2 };
+    });
+
+    var path = activeTrack.path;
+    var out = '<defs>'
+      + '<marker id="route-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="route-arrowhead" d="M0 0L10 5L0 10z"/></marker>'
+      + '<marker id="route-arrow-on" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="route-arrowhead-on" d="M0 0L10 5L0 10z"/></marker>'
+      + '</defs>';
+
+    routeEdges.forEach(function (e) {
+      var a = rects[e[0]], b = rects[e[1]], opts = e[2] || {};
+      if (!a || !b) return;
+      var ia = path.indexOf(e[0]), ib = path.indexOf(e[1]);
+      var on = ia !== -1 && ib === ia + 1;
+      var hidden = opts.tracks && opts.tracks.indexOf(activeTrack.key) === -1;
+      var d;
+      if (opts.skip) {
+        var lift = 30;
+        d = 'M' + a.cx + ' ' + a.t + ' C' + a.cx + ' ' + (a.t - lift) + ' ' + b.cx + ' ' + (b.t - lift) + ' ' + b.cx + ' ' + (b.t - 4);
+      } else {
+        var x1 = a.r, x2 = b.l - 4, mid = (x1 + x2) / 2;
+        d = 'M' + x1 + ' ' + a.cy + ' C' + mid + ' ' + a.cy + ' ' + mid + ' ' + b.cy + ' ' + x2 + ' ' + b.cy;
+      }
+      var cls = 'route-edge' + (opts.skip ? ' is-skip' : '') + (on ? ' is-on' : '') + (hidden ? ' is-hidden' : '');
+      out += '<path class="' + cls + '" d="' + d + '" marker-end="url(#route-arrow' + (on ? '-on' : '') + ')"/>';
+    });
+
+    svg.innerHTML = out;
+  }
+
+  function setRouteTrack(key) {
+    activeTrack = routeTracks.filter(function (t) { return t.key === key; })[0] || routeTracks[0];
+    var t = activeTrack;
+    routeMap.style.setProperty('--track', t.color);
+    routeInfo.style.setProperty('--track', t.color);
+    routeMap.classList.add('has-track');
+
+    routeTabs.querySelectorAll('.route-tab').forEach(function (btn) {
+      var isActive = btn.dataset.track === t.key;
+      btn.classList.toggle('is-active', isActive);
+      btn.setAttribute('aria-selected', isActive);
+    });
+
+    routeMap.querySelectorAll('.route-node').forEach(function (el) {
+      var i = t.path.indexOf(el.dataset.key);
+      el.classList.toggle('is-on', i !== -1);
+      el.classList.toggle('is-off', i === -1);
+      el.querySelector('.route-step').textContent = i === -1 ? '' : i + 1;
+    });
+
+    var chain = t.path.map(function (key, i) {
+      var p = projectByKey(key);
+      return '<li>' + (i ? '<span class="arrow">→</span>' : '')
+        + '<a href="' + (p.open || p.repo) + '" target="_blank" rel="noopener" style="--accent:' + p.accent + '"><b>' + String(i + 1).padStart(2, '0') + '</b>' + escapeHtml(p.title.replace(/ Lab$/, '')) + '</a></li>';
+    }).join('');
+
+    routeInfo.innerHTML = '<div><div class="route-meta mono">' + t.path.length + ' ' + (t.path.length < 5 ? 'лабы' : 'лаб') + ' · по порядку</div>'
+      + '<h3>' + escapeHtml(t.title) + '</h3></div>'
+      + '<div><p>' + escapeHtml(t.text) + '</p><ol class="route-chain">' + chain + '</ol></div>';
+
+    drawRouteEdges();
+  }
+
+  renderRouteMap();
+  routeTabs.addEventListener('click', function (e) {
+    var btn = e.target.closest('.route-tab');
+    if (btn) setRouteTrack(btn.dataset.track);
+  });
+  window.addEventListener('resize', drawRouteEdges);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawRouteEdges);
+  setRouteTrack('all');
 
   render();
   initLayeredPanels();
