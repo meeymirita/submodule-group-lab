@@ -38,7 +38,7 @@
 | 12 | [`graphql`](graphql) | GraphQL — CineGraph, самостоятельный проект (резолверы, DataLoader, Subscriptions) | Высокая | [graphql-lab](https://github.com/meeymirita/graphql-lab) |
 | 13 | [`laravel`](laravel) | Laravel 13 изнутри — TaskFlow (таск-трекер с ролями) | Высокая | [laravel-lab](https://github.com/meeymirita/laravel-lab) |
 | 14 | [`postgresql`](postgresql) | PostgreSQL — Coffee Shop изнутри (EXPLAIN, индексы, изоляция, блокировки, MVCC) | Средняя–высокая | [postgresql-lab](https://github.com/meeymirita/postgresql-lab) |
-| 15 | [`nuxt`](nuxt) | Nuxt 4 — Help Center (SSR/SSG/SWR/SPA, Nitro, Drizzle, Nuxt Content) · *заглушка* | Высокая | [nuxt-lab](https://github.com/meeymirita/nuxt-lab) |
+| 15 | [`nuxt`](nuxt) | Nuxt 4 — Help Center (SSR/SSG/SWR/SPA, Nitro, Drizzle, Nuxt Content) | Высокая | [nuxt-lab](https://github.com/meeymirita/nuxt-lab) |
 
 > Личный прогресс (моя пометка, не часть плана репозитория): ✅ пройдено — RabbitMQ. 🔵 сейчас прохожу — OOP (`php-coffee`).
 
@@ -347,13 +347,23 @@
 
 ## 15. Nuxt Lab — Help Center (`nuxt/`)
 
-> **Заглушка — методичка ещё не написана.** Репозиторий, карточка на главной и страница `works/nuxt.html` уже на месте; кнопка «Открыть методичку» появится, когда `Nuxt_Lab_HelpCenter.html` ляжет в `nuxt/`.
+> **Сложность: высокая.** Проект полностью самостоятельный (свой репозиторий `nuxt-lab`), кода из других лаб не берёт. Vue предполагается знакомым на уровне Vue-лабы (`ref`, `computed`, props/emits, Pinia, Router — не объясняются заново), TypeScript — на уровне сессий 1–3 TS-лабы. Логично проходить после Vue и TypeScript.
 
-**О чём:** публичный центр поддержки, где у каждой зоны свой режим рендеринга: база знаний — prerender (SSG), статус сервисов — SWR-кеш, обращения клиента — SSR с сессией, кабинет агента — SPA (`ssr: false`). Идёт после Vue и TypeScript.
+**О чём:** публичный центр поддержки, где у каждой зоны свой режим рендеринга: база знаний — prerender (SSG), статус сервисов — SWR-кеш, обращения клиента — SSR с сессией, кабинет агента — SPA (`ssr: false`). Всё, что Nuxt добавляет поверх Vue: SSR и гидрация, payload, Nitro, состояние на сервере, `routeRules`, SEO. Почти в каждой сессии — шаг «сначала сломать, потом починить»: двойной запрос, hydration mismatch, потерянная cookie, утечка состояния между пользователями, общий кеш на все запросы.
 
-**Стек:** Nuxt 4.5+ (с пометками про v5), TypeScript strict + `nuxi typecheck`, Nitro server routes, SQLite + Drizzle, Zod-схемы в `shared/`, nuxt-auth-utils, `@pinia/nuxt`, Nuxt Content v3, Vitest + `@nuxt/test-utils`, Docker Compose.
+**Стек:** Nuxt 4.5+ (с пометками про v5), TypeScript strict + `nuxi typecheck`, Nitro server routes, SQLite + Drizzle, Zod-схемы в `shared/`, nuxt-auth-utils, `@pinia/nuxt`, Nuxt Content v3, `@nuxtjs/sitemap` + `@nuxtjs/robots`, Vitest + `@nuxt/test-utils`, Docker Compose.
 
-**План:** 6 сессий, ~20,5 ч — стенд и основы; данные и гидрация; Nitro и БД; авторизация и состояние; контент, кеш, рендеринг; SEO и продакшн.
+**Формат:** методичка [`Nuxt_Lab_HelpCenter.html`](nuxt/Nuxt_Lab_HelpCenter.html) — методичка готова, прохождение впереди. У каждого шага: код → «зачем» → команда → ожидаемый результат → «проверь себя».
+
+**Что внутри (6 сессий, ~20,5 ч):**
+- **Сессия 1** — стенд и основы: скаффолд Nuxt 4, файловый роутинг, layouts, что генерирует `.nuxt/`, SSR vs SPA руками (`view-source`, `ssr: false`, `ClientOnly`)
+- **Сессия 2** — данные и гидрация: server route и тип ответа из хендлера, payload и двойной запрос через `$fetch`, `useFetch` (query, `lazy`, `pick`, `refresh`), ошибки, hydration mismatch
+- **Сессия 3** — Nitro и БД: Drizzle + SQLite, `readValidatedBody` + Zod, middleware request-id, одна схема в `shared/` на клиент и сервер, форма обращения
+- **Сессия 4** — авторизация и состояние: nuxt-auth-utils и роли, route middleware, cookie при SSR, утечка состояния через модульный `ref` → `useState`/`useCookie`, Pinia + `callOnce`, кабинет агента на `ssr: false`
+- **Сессия 5** — контент, кеш, рендеринг: Nuxt Content v3, `defineCachedEventHandler` и ключ кеша, `routeRules` (пререндер, SWR) на prod-сборке, инвалидация
+- **Сессия 6** — SEO и продакшн: `useSeoMeta`, sitemap/robots, `runtimeConfig`, тесты (unit, компонент, e2e), `nuxt build` и multi-stage Dockerfile, финал «Vue Lab vs Nuxt Lab»
+
+Разделы 1–10 методички — теория (зачем Nuxt поверх Vue, азбука, рендеринг и гидрация под капотом, режимы рендеринга, данные, Nitro, состояние на SSR, авторизация, контент и SEO, структура проекта), раздел 11 — шесть сессий заданий, разделы 12–15 — чек-лист, глоссарий, вопросы для собеседования, что дальше.
 
 ---
 
