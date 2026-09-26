@@ -46,3 +46,6 @@
 [submodule "fixes"]
 	path = fixes
 	url = https://github.com/meeymirita/lab-fixes.git
+[submodule "nuxt"]
+	path = nuxt
+	url = https://github.com/meeymirita/nuxt-lab.git

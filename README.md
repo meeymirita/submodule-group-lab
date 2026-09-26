@@ -38,6 +38,7 @@
 | 12 | [`graphql`](graphql) | GraphQL — CineGraph, самостоятельный проект (резолверы, DataLoader, Subscriptions) | Высокая | [graphql-lab](https://github.com/meeymirita/graphql-lab) |
 | 13 | [`laravel`](laravel) | Laravel 13 изнутри — TaskFlow (таск-трекер с ролями) | Высокая | [laravel-lab](https://github.com/meeymirita/laravel-lab) |
 | 14 | [`postgresql`](postgresql) | PostgreSQL — Coffee Shop изнутри (EXPLAIN, индексы, изоляция, блокировки, MVCC) | Средняя–высокая | [postgresql-lab](https://github.com/meeymirita/postgresql-lab) |
+| 15 | [`nuxt`](nuxt) | Nuxt 4 — Help Center (SSR/SSG/SWR/SPA, Nitro, Drizzle, Nuxt Content) · *заглушка* | Высокая | [nuxt-lab](https://github.com/meeymirita/nuxt-lab) |
 
 > Личный прогресс (моя пометка, не часть плана репозитория): ✅ пройдено — RabbitMQ. 🔵 сейчас прохожу — OOP (`php-coffee`).
 
@@ -341,6 +342,18 @@
 - **Сессия 6** — MVCC и VACUUM изнутри (`pageinspect`, `xmin`/`xmax`, горизонт, HOT, wraparound), партиционирование журнала событий, "Production Hell" — задания без подсказок
 
 Разделы 1–8 методички — теория (чего не видно из ORM, как PostgreSQL устроен внутри, архитектура и схема данных, стек и структура, индексы, как читать EXPLAIN, транзакции и блокировки, MVCC/VACUUM/партиционирование/N+1), раздел 9 — семь сессий заданий, разделы 10–13 — чек-лист, глоссарий, вопросы для собеседования, что дальше.
+
+---
+
+## 15. Nuxt Lab — Help Center (`nuxt/`)
+
+> **Заглушка — методичка ещё не написана.** Репозиторий, карточка на главной и страница `works/nuxt.html` уже на месте; кнопка «Открыть методичку» появится, когда `Nuxt_Lab_HelpCenter.html` ляжет в `nuxt/`.
+
+**О чём:** публичный центр поддержки, где у каждой зоны свой режим рендеринга: база знаний — prerender (SSG), статус сервисов — SWR-кеш, обращения клиента — SSR с сессией, кабинет агента — SPA (`ssr: false`). Идёт после Vue и TypeScript.
+
+**Стек:** Nuxt 4.5+ (с пометками про v5), TypeScript strict + `nuxi typecheck`, Nitro server routes, SQLite + Drizzle, Zod-схемы в `shared/`, nuxt-auth-utils, `@pinia/nuxt`, Nuxt Content v3, Vitest + `@nuxt/test-utils`, Docker Compose.
+
+**План:** 6 сессий, ~20,5 ч — стенд и основы; данные и гидрация; Nitro и БД; авторизация и состояние; контент, кеш, рендеринг; SEO и продакшн.
 
 ---
 
