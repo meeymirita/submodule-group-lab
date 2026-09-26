@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Changelog — ANITECH PERFORMANCE</title>
+<title>Хронология — ANITECH PERFORMANCE</title>
 <meta name="description" content="Полная хронология проекта: что добавлялось, менялось и убиралось в каждой лабе и на сайте, коммит за коммитом, с самого первого дня.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+KR:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Onest:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
   :root {
@@ -35,7 +35,7 @@
     margin: 0;
     background: var(--bg);
     color: var(--text);
-    font-family: 'Noto Sans KR', system-ui, -apple-system, sans-serif;
+    font-family: 'Onest', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     line-height: 1.5;
     overflow-x: hidden;
@@ -62,8 +62,8 @@
   ::selection { background: var(--pink); color: var(--bg); }
 
   .wrap { max-width: 1000px; margin: 0 auto; padding: 0 5vw; }
-  .display { font-family: 'Anton', sans-serif; text-transform: uppercase; }
-  .mono { font-family: 'Space Mono', monospace; letter-spacing: .12em; text-transform: uppercase; }
+  .display { font-family: 'Dela Gothic One', sans-serif; text-transform: uppercase; }
+  .mono { font-family: 'JetBrains Mono', monospace; letter-spacing: .12em; text-transform: uppercase; }
 
   @keyframes pulse { 0%,100% { transform: scale(1); opacity: .5; } 50% { transform: scale(1.12); opacity: 1; } }
 
@@ -97,7 +97,7 @@
   .cl-lead { max-width: 62ch; font-size: clamp(15px,1.4vw,17px); line-height: 1.7; color: var(--text-dim); position: relative; z-index: 1; margin: 0; }
 
   .cl-stats { display: flex; flex-wrap: wrap; gap: clamp(20px,4vw,44px); margin-top: 30px; position: relative; z-index: 1; }
-  .cl-stat-num { font-family: 'Anton',sans-serif; font-size: clamp(28px,3.4vw,40px); color: var(--pink); line-height: 1; }
+  .cl-stat-num { font-family: 'Dela Gothic One',sans-serif; font-size: clamp(28px,3.4vw,40px); color: var(--pink); line-height: 1; }
   .cl-stat-label { font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--text-dimmer); margin-top: 4px; }
 
   .cl-legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; position: relative; z-index: 1; }
@@ -137,7 +137,7 @@
   }
   .cl-lab-tag .dot { width: 7px; height: 7px; border-radius: 999px; background: var(--lab-color); box-shadow: 0 0 8px var(--lab-color); flex: 0 0 auto; }
   .cl-type-badge {
-    display: inline-flex; align-items: center; font-family: 'Space Mono',monospace; font-size: 9.5px;
+    display: inline-flex; align-items: center; font-family: 'JetBrains Mono',monospace; font-size: 9.5px;
     letter-spacing: .08em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px;
     background: var(--type-soft); color: var(--type-color); border: 1px solid var(--type-color);
     width: fit-content;
@@ -153,15 +153,59 @@
     .cl-day { padding-left: 20px; }
     .cl-day-banner { margin-left: -20px; padding-left: 18px; }
   }
+
+  /* ===== редизайн «аниме-опенинг»: та же стилистика, что на главной ===== */
+  :root { --paper: #f4efe6; --ink: #050407; --halftone: radial-gradient(rgba(247,242,245,.16) 1.1px, transparent 1.6px) 0 0 / 9px 9px; }
+  .mono { letter-spacing: .08em; }
+  header { background: rgba(5,4,7,.86); border-bottom: 2px solid var(--pink); }
+  .logo { font-size: 17px; letter-spacing: .02em; }
+  nav a.nav-cta { border-radius: 4px; box-shadow: 3px 3px 0 var(--cyan); transition: transform .15s ease, box-shadow .15s ease; }
+  nav a.nav-cta:hover { opacity: 1; transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--cyan); }
+
+  .cl-hero { background: var(--ink); isolation: isolate; }
+  .cl-glow {
+    z-index: -1;
+    background: repeating-conic-gradient(from 0deg at 80% 30%, rgba(247,242,245,.06) 0deg 1.2deg, transparent 1.2deg 7deg);
+    mask-image: radial-gradient(closest-side at 80% 30%, transparent 8%, #000 70%);
+  }
+  .cl-hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--halftone); opacity: .5; mask-image: linear-gradient(110deg, transparent 40%, #000 90%); pointer-events: none; }
+  .kicker {
+    display: inline-flex; align-items: center; gap: 10px; padding: 6px 12px 6px 10px; margin-bottom: 18px;
+    background: var(--paper); color: var(--ink); font-size: 11px; font-weight: 700; letter-spacing: .14em;
+    transform: skewX(-12deg); box-shadow: 4px 4px 0 var(--pink);
+  }
+  .kicker::before { content: ""; width: 8px; height: 8px; background: var(--pink); }
+  .cl-h1 { font-size: clamp(38px,6.4vw,76px); line-height: 1; font-weight: 400; }
+  .cl-h1 .accent-word { position: relative; z-index: 0; color: var(--ink); padding: 0 .1em; }
+  .cl-h1 .accent-word::before { content: ""; position: absolute; inset: .08em -.02em .02em; z-index: -1; background: var(--pink); transform: skewX(-10deg); }
+  .cl-stat { padding: 12px 16px; background: rgba(5,4,7,.7); border: 1px solid var(--line); border-left: 4px solid var(--pink); }
+  .cl-stat:nth-child(2) { border-left-color: var(--cyan); }
+  .cl-stat:nth-child(3) { border-left-color: #ffd23f; }
+  .cl-stat-num { color: var(--paper); font-weight: 400; }
+  .cl-legend-item { border-radius: 0; border-width: 2px; }
+
+  .cl-day { border-left: 2px dashed var(--line); }
+  .cl-day-banner {
+    background: var(--bg-alt); border: 2px solid var(--paper); border-left-width: 2px;
+    box-shadow: 6px 6px 0 var(--pink); margin-right: 8px;
+  }
+  .cl-day-banner::before { border-radius: 0; transform: translateY(-50%) rotate(45deg); background: var(--pink); border-color: var(--paper); box-shadow: none; }
+  .cl-day-date { font-weight: 400; }
+  .cl-item { border-radius: 0; border-width: 2px; transition: transform .15s ease, box-shadow .15s ease; }
+  .cl-item:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--lab-color, var(--line)); }
+  .cl-item.milestone { background: var(--bg-alt); box-shadow: 5px 5px 0 var(--lab-color, var(--pink)); }
+  .cl-type-badge { border-radius: 0; }
+  .cl-footer { border-top: 2px solid var(--pink); }
 </style>
 </head>
 <body>
 
 <header>
   <div class="wrap">
-    <a href="index.html#top" class="logo display">ANITECH PERFORMANCE</a>
+    <a href="index.html#intro" class="logo display">ANITECH PERFORMANCE</a>
     <nav class="mono">
-      <a href="index.html#works">работы</a>
+      <a href="index.html#routes">маршруты</a>
+      <a href="index.html#works">лабы</a>
       <a href="https://github.com/meeymirita/anitech-performance" target="_blank" rel="noopener" class="nav-cta">репозиторий ↗</a>
     </nav>
   </div>
@@ -171,8 +215,8 @@
   <div class="cl-glow"></div>
   <div class="wrap">
     <div class="kicker mono">История проекта</div>
-    <h1 class="cl-h1 display">Change<span class="accent-word">log</span></h1>
-    <p class="cl-lead">Полная хронология: каждый коммит во всех 16 репозиториях проекта (главный сайт + 15 сабмодулей: 14 лаб и витрина works), от самого первого дня до сегодняшнего — что добавлялось, что переписывалось, что убиралось. Сверху — самые свежие изменения.</p>
+    <h1 class="cl-h1 display">Хроно<span class="accent-word">логия</span></h1>
+    <p class="cl-lead">Каждый коммит во всех репозиториях платформы — главный сайт, 15 лаб, витрина works и lab-fixes — от самого первого дня до сегодняшнего: что добавлялось, что переписывалось, что убиралось. Сверху — самые свежие изменения.</p>
     <div class="cl-stats" id="cl-stats"></div>
     <div class="cl-legend" id="cl-legend"></div>
   </div>
@@ -180,7 +224,7 @@
 
 <div class="wrap timeline" id="timeline"></div>
 
-<footer class="cl-footer mono">Group Lab · собрано с ❤ · <span id="cl-generated"></span></footer>
+<footer class="cl-footer mono">ANITECH · обучающая платформа · <span id="cl-generated"></span></footer>
 
 <script>
 // ── справочник лаб: цвет + подпись ──────────────────────────────────────
@@ -403,6 +447,7 @@ var DAYS = [
   {lab:'nuxt', type:'changed', text:'<b>Методичка вычитана и исправлена</b> (8 частей, 10 находок): два <code>useFetch</code> с одним URL в разных строках не делят данные — автоключ включает место вызова, шаг 2.2 переписан на явный <code>key</code>; комментарий в конце строки <code>COPY</code> ломал сборку prod-образа в шаге 6.4; «чужое» обращение №3 в шаге 4.3 на деле принадлежит Борису; фильтр «В работе» и поиск по «пароль» возвращают больше, чем в ожидаемом результате; middleware первой страницы повторяется в браузере при гидрации; мелочи в деревьях <code>.nuxt/</code> и проекта. Удалены пустые заглушки <code>docker-compose.yml</code> и <code>Makefile</code>.', milestone:true},
   {lab:'site', type:'changed', text:'В <code>fixes/</code>: <code>nuxt.md</code> с находками, таблица вычитки — Nuxt «✅ пройдено 26.09» (10 находок), решение по варианту A применено; <code>prep.py</code> умеет нарезать Nuxt.'},
   {lab:'site', type:'changed', text:'Слайды категорий в «Работах» получили пустое место снизу: у высоких категорий (бэкенд) нижний ряд карточек стоял вплотную к краю экрана, и кнопку «Открыть методичку» сразу перекрывал следующий слайд.'},
+  {lab:'site', type:'changed', text:'<b>Редизайн «аниме-опенинг»</b>: сайт стал обучающей платформой в стилистике аниме-заставки. Первый экран — анимированный заголовок ANITECH со вспышкой, лучами и глитчем; лабы пронумерованы, категории стали направлениями, разделы — главами с плашками; карточки в рамках манги с жёсткой тенью и звёздами сложности; на карте маршрутов у каждой лабы окошко «к карточке / методичка». Все 15 страниц лаб — в том же стиле, с превью предыдущей и следующей лабы; «Хронология» — тоже. Шрифты с кириллицей: Dela Gothic One, Onest, JetBrains Mono.', milestone:true},
   {lab:'site', type:'renamed', text:'<b>Общий репозиторий переименован</b>: <code>submodule-group-lab</code> → <code>anitech-performance</code>, под бренд сайта. Ссылки в README всех 15 лаб, на главной и в хронологии ведут на новое имя; старые ссылки GitHub перенаправляет сам.', milestone:true},
 ]},
 ];
@@ -433,7 +478,7 @@ function renderStats() {
     { num: DAYS.length, label: 'дней с изменениями' },
   ];
   document.getElementById('cl-stats').innerHTML = stats.map(function (s) {
-    return '<div><div class="cl-stat-num display">' + s.num + '</div><div class="cl-stat-label mono">' + s.label + '</div></div>';
+    return '<div class="cl-stat"><div class="cl-stat-num display">' + s.num + '</div><div class="cl-stat-label mono">' + s.label + '</div></div>';
   }).join('');
 
   document.getElementById('cl-legend').innerHTML = Object.keys(TYPES).map(function (k) {
