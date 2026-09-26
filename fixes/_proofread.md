@@ -13,7 +13,7 @@
 | Docker | ✅ пройдено 24.09 | 8 | 0 | 7 | 1 | `docker.md` |
 | Traefik | ✅ пройдено 24.09 | 18 | 8 | 7 | 3 | `traefik.md` |
 | Kubernetes | ✅ пройдено 24.09 | 9 | 2 | 7 | 0 | `kubernetes.md` |
-| RabbitMQ | ➖ не вычитываем (пройдена) | | | | | |
+| RabbitMQ | ✅ пройдено 26.09 | 6 | 3 | 3 | 0 | `rabbitmq.md` |
 | OOP (php-coffee) | ✅ пройдено 24.09 | 13 | 7 | 5 | 1 | `php-coffee.md` |
 | PostgreSQL | ✅ пройдено 26.09 | 10 | 3 | 6 | 1 | `postgresql.md` |
 
