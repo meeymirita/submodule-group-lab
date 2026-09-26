@@ -434,7 +434,10 @@
       box-shadow: 0 0 0 100vmax var(--bg);
       clip-path: inset(0 -100vmax);
     }
-    .layer-panel.category-block { padding-top: 24px; }
+    /* padding-bottom: a panel taller than the screen pins at 'bottom bottom', so without it the
+       last row of cards (and its «Открыть методичку» button) sits flush against the screen edge
+       right when the next panel starts covering it */
+    .layer-panel.category-block { padding-top: 24px; padding-bottom: clamp(80px,14vh,160px); }
     /* the last layer must fill the screen on its own, or the pinned panel beneath it
        shows through the gap below it while it slides up */
     .layer-panel.is-last { min-height: 100vh; }
