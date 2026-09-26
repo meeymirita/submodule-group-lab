@@ -973,8 +973,8 @@
     }
 
     /* =====================================================================
-       РЕДИЗАЙН «АНИМЕ-ОПЕНИНГ»: сайт как заставка сериала, лабы — серии,
-       категории — арки, секции — главы. Всё ниже переопределяет базовые стили.
+       РЕДИЗАЙН «АНИМЕ-ОПЕНИНГ»: обучающая платформа в стилистике аниме-заставки —
+       лабы с номерами, категории — направления, секции — разделы. Всё ниже переопределяет базовые стили.
        ===================================================================== */
     :root {
       --paper: #f4efe6;
@@ -1109,10 +1109,6 @@
     .op-stat b { font-family: 'Dela Gothic One', sans-serif; font-weight: 400; font-size: clamp(30px,3.2vw,44px); line-height: 1; }
     .op-stat b small { font-size: .45em; color: var(--text-dimmer); }
     .op-stat > span { font-size: 13px; color: var(--text-dim); line-height: 1.4; }
-    .op-watch .watch-bar { grid-column: 1 / -1; }
-
-    .watch-bar { display: block; height: 6px; background: rgba(247,242,245,.1); overflow: hidden; }
-    .watch-bar > i { display: block; height: 100%; width: 0; background: repeating-linear-gradient(-45deg, var(--sun) 0 8px, #e6b800 8px 16px); transition: width .6s cubic-bezier(.2,.8,.2,1); }
 
     .op-scroll {
       position: absolute; left: 50%; bottom: 22px; translate: -50% 0;
@@ -1120,11 +1116,11 @@
     }
     .op-scroll span { animation: float 1.6s ease-in-out infinite; }
 
-    /* ---------- глава 1: главный герой ---------- */
+    /* ---------- раздел 1: автор ---------- */
     .about-section { background: var(--bg); }
     .about-glow { background: var(--halftone); opacity: .35; mask-image: linear-gradient(250deg, #000 10%, transparent 55%); }
     .about-photo-box::before {
-      content: "главный герой"; top: -16px; left: -10px; padding: 7px 12px;
+      content: "автор"; top: -16px; left: -10px; padding: 7px 12px;
       background: var(--sun); color: var(--ink); font: 700 11px 'JetBrains Mono', monospace; letter-spacing: .1em;
       transform: rotate(-4deg); box-shadow: 3px 3px 0 var(--ink);
     }
@@ -1134,7 +1130,7 @@
     .about-link { border-width: 2px; }
     .about-link:hover { transform: translate(-3px,-3px); box-shadow: 5px 5px 0 var(--cyan); }
 
-    /* ---------- глава 2: маршруты ---------- */
+    /* ---------- раздел 2: маршруты ---------- */
     .route-info {
       position: relative; border: 2px solid var(--paper); border-left-width: 2px;
       background: var(--bg-alt); box-shadow: 8px 8px 0 var(--track, var(--pink));
@@ -1157,13 +1153,11 @@
     .tape-b .marquee-track { animation-direction: reverse; animation-duration: 30s; }
     .tapes .marquee-track span { font-size: clamp(16px,2.2vw,26px); color: var(--ink); }
 
-    /* ---------- глава 3: серии ---------- */
-    .works-count-box { display: grid; justify-items: end; gap: 10px; }
+    /* ---------- раздел 3: лабораторные ---------- */
+    .works-count-box { display: grid; justify-items: end; }
     .works-count { font-size: 110px; color: transparent; -webkit-text-stroke: 2px rgba(247,242,245,.25); }
-    .works-watch { font-size: 11px; color: var(--text-dim); display: grid; gap: 6px; min-width: 220px; }
-    .works-watch b { color: var(--sun); }
 
-    /* арки: верхняя кромка — полосатая лента цвета арки */
+    /* направления: верхняя кромка — полосатая лента цвета направления */
     .category-block { position: relative; }
     .layer-panel.category-block { padding-top: 40px; }
     .category-block::before {
@@ -1222,17 +1216,6 @@
     .badge .stars { color: var(--sun); letter-spacing: 1px; }
     .badge .stars i { font-style: normal; color: rgba(247,242,245,.25); }
 
-    .card-stamp {
-      position: absolute; z-index: 6; top: 22px; right: 16px;
-      padding: 6px 12px; border: 3px solid var(--pink); color: var(--pink);
-      font: 400 17px 'Dela Gothic One', sans-serif; text-transform: uppercase; letter-spacing: .06em;
-      background: rgba(5,4,7,.6);
-      transform: rotate(12deg) scale(2.2); opacity: 0;
-      transition: transform .3s cubic-bezier(.3,1.6,.5,1), opacity .2s ease;
-      pointer-events: none;
-    }
-    .card.is-watched .card-stamp { transform: rotate(12deg) scale(1); opacity: 1; }
-    .card.is-watched .card-media img { filter: saturate(.5) contrast(1.05); }
 
     .card-body { transform: none; }
     .card-title { font-size: 22px; font-weight: 400; line-height: 1.2; }
@@ -1241,13 +1224,6 @@
     .card-open { border-radius: 0; border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--paper); }
     .card-open:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--paper); filter: none; }
     .card-repo { border-radius: 0; border-width: 2px; }
-    .card-watch {
-      width: 44px; flex: 0 0 auto; border: 2px solid var(--line); background: transparent;
-      color: var(--text-dimmer); font-size: 17px; font-weight: 900; cursor: pointer;
-      transition: background .15s ease, color .15s ease, border-color .15s ease, transform .15s ease;
-    }
-    .card-watch:hover { border-color: var(--sun); color: var(--sun); transform: translate(-2px,-2px); }
-    .card-watch[aria-pressed="true"] { background: var(--sun); border-color: var(--sun); color: var(--ink); }
 
     .feature-strip { border-top: 2px solid var(--line); border-bottom: 2px solid var(--line); }
     .site-footer { border-top: 2px solid var(--pink); }
@@ -1285,7 +1261,7 @@
       <button type="button" class="about-trigger" id="about-modal-trigger">о проекте</button>
       <a href="#top">об авторе</a>
       <a href="#routes">маршруты</a>
-      <a href="#works">серии</a>
+      <a href="#works">лабы</a>
       <a href="changelog.html">хронология</a>
       <a href="https://github.com/meeymirita/anitech-performance" target="_blank" rel="noopener" class="nav-cta">репозиторий ↗</a>
     </nav>
@@ -1329,7 +1305,7 @@
   <div class="op-slab op-slab-b" aria-hidden="true"></div>
 
   <div class="wrap op-inner">
-    <div class="op-season mono"><span class="op-live"></span>Сезон 1 · 15 серий · в эфире</div>
+    <div class="op-season mono"><span class="op-live"></span>Обучающая платформа · 15 лабораторных</div>
 
     <h1 class="op-title display" aria-label="ANITECH PERFORMANCE">
       <span class="op-title-main" data-text="ANITECH" aria-hidden="true">ANITECH</span>
@@ -1338,23 +1314,19 @@
 
     <div class="op-cols">
       <div>
-        <p class="op-tagline">Учебный сериал о бэкенде, фронтенде и инфраструктуре: пятнадцать серий от Docker до Kubernetes. У каждой — своя методичка, свой репозиторий и финал без подсказок.</p>
-        <p class="op-note">Каждую серию веду и прохожу сам, методички к ним написаны вместе с Claude. Смотреть подряд не обязательно — выбери маршрут и иди по своей арке.</p>
+        <p class="op-tagline">Обучающая платформа по бэкенду, фронтенду и инфраструктуре: пятнадцать лабораторных от Docker до Kubernetes. У каждой — своя методичка, свой репозиторий и финальное задание без подсказок.</p>
+        <p class="op-note">Каждую лабу веду и прохожу сам, методички к ним написаны вместе с Claude. Проходить всё подряд не обязательно — выбери маршрут и иди по своему направлению.</p>
         <div class="op-actions">
-          <a href="#works" class="op-btn op-btn-main">Смотреть с первой серии ↓</a>
+          <a href="#works" class="op-btn op-btn-main">Все лабораторные ↓</a>
           <a href="#routes" class="op-btn">Выбрать маршрут</a>
           <a href="https://github.com/meeymirita/anitech-performance" target="_blank" rel="noopener" class="op-btn op-btn-ghost">GitHub ↗</a>
         </div>
       </div>
 
       <div class="op-meta">
-        <div class="op-stat"><b>15</b><span>серий в сезоне</span></div>
-        <div class="op-stat"><b>3</b><span>арки: фронтенд, бэкенд, инфраструктура</span></div>
-        <div class="op-stat op-watch">
-          <b><span data-watched-count>0</span><small>/15</small></b>
-          <span>просмотрено — отмечай галочкой на карточке</span>
-          <i class="watch-bar"><i data-watched-fill></i></i>
-        </div>
+        <div class="op-stat"><b>15</b><span>лабораторных с методичками</span></div>
+        <div class="op-stat"><b>3</b><span>направления: фронтенд, бэкенд, инфраструктура</span></div>
+        <div class="op-stat"><b>14</b><span>технологий: от PHP и Vue до Kubernetes</span></div>
       </div>
     </div>
   </div>
@@ -1366,7 +1338,7 @@
   <div class="about-glow"></div>
   <div class="wrap about-grid reveal">
     <div class="about-text">
-      <div class="kicker mono">Глава 1 · главный герой</div>
+      <div class="kicker mono">Раздел 1 · автор</div>
       <h2 class="section-h2 display">Об <span class="accent-word">авторе</span></h2>
       <p>
         Бэкенд-разработчик, 2 года опыта, фокус — PHP/Laravel: проектирую API, строю
@@ -1412,13 +1384,13 @@
   <div class="wrap">
     <div class="routes-head reveal">
       <div>
-        <div class="kicker mono">Глава 2 · маршруты</div>
+        <div class="kicker mono">Раздел 2 · маршруты</div>
         <h2 class="section-h2 display">С чего начать</h2>
       </div>
       <p class="lead">
         Каждая лаба самостоятельна, но вместе они складываются в цепочки: сначала
         язык без фреймворка, потом архитектура и данные, потом фреймворк и
-        продакшен-обвязка. Выбери арку — на карте подсветится порядок серий.
+        продакшен-обвязка. Выбери трек — на карте подсветится порядок прохождения.
       </p>
     </div>
 
@@ -1438,14 +1410,14 @@
 <div class="tapes" aria-hidden="true">
   <div class="marquee tape-a">
     <div class="marquee-track display">
-      <span>смотрите далее · 15 серий · 3 арки · методичка к каждой серии ·</span>
-      <span>смотрите далее · 15 серий · 3 арки · методичка к каждой серии ·</span>
+      <span>15 лабораторных · 3 направления · методичка к каждой лабе ·</span>
+      <span>15 лабораторных · 3 направления · методичка к каждой лабе ·</span>
     </div>
   </div>
   <div class="marquee tape-b">
     <div class="marquee-track display">
-      <span>не переключайтесь · от Docker до Kubernetes · финал без подсказок ·</span>
-      <span>не переключайтесь · от Docker до Kubernetes · финал без подсказок ·</span>
+      <span>от Docker до Kubernetes · практика с первого шага · финал без подсказок ·</span>
+      <span>от Docker до Kubernetes · практика с первого шага · финал без подсказок ·</span>
     </div>
   </div>
 </div>
@@ -1455,13 +1427,12 @@
     <div class="works-head reveal">
       <div class="works-title-line">
         <div>
-          <div class="kicker mono">Глава 3 · серии</div>
-          <h2 class="section-h2 display">Все <span class="accent-word">серии</span></h2>
-          <p class="mono">Карточка открывает страницу серии · галочка отмечает её просмотренной</p>
+          <div class="kicker mono">Раздел 3 · лабораторные</div>
+          <h2 class="section-h2 display">Все <span class="accent-word">лабы</span></h2>
+          <p class="mono">Нажми на карточку, чтобы открыть страницу лабы</p>
         </div>
         <div class="works-count-box">
           <div class="works-count">15</div>
-          <div class="works-watch mono"><span>просмотрено <b data-watched-count>0</b> из 15</span><i class="watch-bar"><i data-watched-fill></i></i></div>
         </div>
       </div>
     </div>
@@ -1470,16 +1441,16 @@
 
     <div class="feature-strip mono reveal">
       <span><strong>ANITECH PERFORMANCE</strong> · учись · собирай · экспериментируй</span>
-      <span><strong>Сезон 1</strong> · 2026 · продолжение следует</span>
+      <span><strong>2026</strong> · обучающая платформа</span>
     </div>
   </div>
 </section>
 
 <footer class="wrap site-footer mono">
-  <span>ANITECH · конец сезона</span>
+  <span>ANITECH · обучающая платформа</span>
   <span class="footer-git">
     <span class="spinner"></span>
-    15 репозиториев · один сериал
+    15 лабораторных · 15 репозиториев
   </span>
 </footer>
 
@@ -1731,11 +1702,10 @@
       <article class="card reveal" data-key="${p.key}" tabindex="0" role="link"
         aria-label="Подробнее о ${escapeHtml(p.title)}"
         style="--accent:${p.accent}; --accent-soft:${p.accentSoft}; --accent-shadow:${p.accentShadow}; transition-delay:${0.05 * i}s">
-        <div class="card-ep"><span>серия</span><b>${String(i + 1).padStart(2, '0')}</b></div>
+        <div class="card-ep"><span>лаба</span><b>${String(i + 1).padStart(2, '0')}</b></div>
         <div class="card-media">
           <img src="works/images/thumbs/${p.key}.webp" data-full="${p.image}" alt="${escapeHtml(p.title)}" loading="lazy" decoding="async" width="1200" height="1200">
           <span class="badge badge-diff" title="Сложность: ${escapeHtml(p.difficulty)}"><span class="stars">${difficultyStars(p.difficulty)}</span>${escapeHtml(p.difficulty)}</span>
-          <span class="card-stamp" aria-hidden="true">просмотрено</span>
         </div>
         <div class="card-body">
           <h3 class="card-title">${escapeHtml(p.title)}</h3>
@@ -1744,7 +1714,6 @@
           <div class="chips">${chips}</div>
           <div class="card-actions">
             ${openHtml}
-            <button type="button" class="card-watch" data-watch="${p.key}" aria-pressed="false" title="Отметить серию просмотренной" aria-label="Отметить «${escapeHtml(p.title)}» просмотренной">✓</button>
             <a href="${p.repo}" target="_blank" rel="noopener" class="card-repo" aria-label="GitHub">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 .5C5.73.5.9 5.33.9 11.6c0 4.96 3.22 9.17 7.68 10.66.56.1.77-.24.77-.54 0-.27-.01-1.15-.02-2.09-3.12.68-3.78-1.34-3.78-1.34-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.94.1-.73.39-1.22.71-1.5-2.49-.28-5.11-1.25-5.11-5.55 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.42.11-2.96 0 0 .95-.3 3.12 1.15.9-.25 1.87-.38 2.83-.38.96 0 1.93.13 2.83.38 2.17-1.45 3.12-1.15 3.12-1.15.61 1.54.23 2.68.11 2.96.72.79 1.16 1.79 1.16 3.02 0 4.31-2.63 5.26-5.13 5.54.4.35.76 1.03.76 2.08 0 1.5-.01 2.71-.01 3.08 0 .3.2.65.78.54A11.1 11.1 0 0 0 23.1 11.6C23.1 5.33 18.27.5 12 .5Z"/>
@@ -1757,9 +1726,9 @@
   }
 
   var categories = [
-    { key: 'frontend', label: 'Арка 1', title: 'Фронтенд', color: '#7df9ff' },
-    { key: 'backend', label: 'Арка 2', title: 'Бэкенд', color: '#ff2e88' },
-    { key: 'devops', label: 'Арка 3', title: 'Инфраструктура', color: '#42d392' }
+    { key: 'frontend', label: 'Направление 1', title: 'Фронтенд', color: '#7df9ff' },
+    { key: 'backend', label: 'Направление 2', title: 'Бэкенд', color: '#ff2e88' },
+    { key: 'devops', label: 'Направление 3', title: 'Инфраструктура', color: '#42d392' }
   ];
 
   var categoryDescriptions = {
@@ -1944,28 +1913,6 @@
     return many;
   }
 
-  // «Просмотрено»: список ключей лаб в localStorage. Тот же ключ читает страница серии в works/.
-  var WATCH_KEY = 'anitech-watched';
-  function getWatched() {
-    try { var v = JSON.parse(localStorage.getItem(WATCH_KEY) || '[]'); return Array.isArray(v) ? v : []; }
-    catch (e) { return []; }
-  }
-  function setWatched(list) {
-    try { localStorage.setItem(WATCH_KEY, JSON.stringify(list)); } catch (e) {}
-  }
-  function updateWatchUI() {
-    var watched = getWatched();
-    document.querySelectorAll('.card').forEach(function (card) {
-      var on = watched.indexOf(card.dataset.key) !== -1;
-      card.classList.toggle('is-watched', on);
-      var btn = card.querySelector('.card-watch');
-      if (btn) btn.setAttribute('aria-pressed', on);
-    });
-    var count = watched.filter(function (k) { return projectByKey(k); }).length;
-    document.querySelectorAll('[data-watched-count]').forEach(function (el) { el.textContent = count; });
-    document.querySelectorAll('[data-watched-fill]').forEach(function (el) { el.style.width = (count / projects.length * 100) + '%'; });
-  }
-
   function render() {
     var n = 0;
     grid.innerHTML = categories.map(function (cat) {
@@ -1977,7 +1924,7 @@
           <div class="category-head">
             <span class="category-label mono"><span class="category-dot"></span>${escapeHtml(cat.label)}</span>
             <h3 class="category-title">${escapeHtml(cat.title)}</h3>
-            <span class="category-count mono">${items.length} ${plural(items.length, 'серия', 'серии', 'серий')}</span>
+            <span class="category-count mono">${items.length} ${plural(items.length, 'лаба', 'лабы', 'лаб')}</span>
           </div>
           <div class="grid">
             ${items.map(function (p) { n += 1; return cardHtml(p, n - 1); }).join('')}
@@ -1986,7 +1933,6 @@
       `;
     }).join('');
     observeReveal();
-    updateWatchUI();
     if (window.FlipGallery) FlipGallery.init('.card-media img, .about-photo-big');
   }
 
@@ -2188,16 +2134,6 @@
   }
 
   grid.addEventListener('click', function (e) {
-    var watchBtn = e.target.closest('.card-watch');
-    if (watchBtn) {
-      var key = watchBtn.dataset.watch;
-      var list = getWatched();
-      var i = list.indexOf(key);
-      if (i === -1) list.push(key); else list.splice(i, 1);
-      setWatched(list);
-      updateWatchUI();
-      return;
-    }
     if (e.target.closest('.card-actions')) return;
 
     var card = e.target.closest('.card');
@@ -2437,9 +2373,6 @@
   initLayeredPanels();
   observeReveal();
   playOpening();
-  // отметки могли поменяться на странице серии (вкладка вернулась из истории)
-  window.addEventListener('pageshow', updateWatchUI);
-  window.addEventListener('storage', function (e) { if (e.key === WATCH_KEY) updateWatchUI(); });
 </script>
 
 </body>
