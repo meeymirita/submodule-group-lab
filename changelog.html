@@ -387,9 +387,11 @@ var DAYS = [
   {lab:'site', type:'added', text:'В блок «об авторе» добавлен чип PostgreSQL.'},
   {lab:'site', type:'changed', text:'В <code>fixes/</code> PostgreSQL добавлена в порядок прохождения (самостоятельная, №14) и в таблицу вычитки — пока не начата.'},
 ]},
-{date:'2026-09-26', title:'PostgreSQL Lab вычитана и исправлена', items:[
+{date:'2026-09-26', title:'PostgreSQL и RabbitMQ вычитаны и исправлены', items:[
   {lab:'postgresql', type:'changed', text:'<b>Методичка вычитана построчно</b> (13 частей, 10 находок) и исправлена: диаграмма схемы данных (<code>inventory</code> 8 000 → 4 000), оборванная фраза про background writer, тренировка на <code>\\gset</code> использовала ещё не созданную таблицу <code>customers</code>, число активных заказов в шаге 4.2 (0,3% → 0,15%) и неверный индекс в сравнении размеров, перепутанный субъект в объяснении <code>SKIP LOCKED</code>, дедлок на бонусах падал на собственный <code>CHECK</code>, отсутствующий <code>DROP INDEX</code> перед пересозданием <code>CONCURRENTLY</code> в шаге 10.1.', milestone:true},
   {lab:'site', type:'changed', text:'В <code>fixes/</code> таблица вычитки: PostgreSQL — «✅ пройдено 26.09» (10 находок), решение по варианту A применено.'},
+  {lab:'rabbitmq', type:'changed', text:'<b>Методичка вычитана дополнительно</b>, хотя лаба уже пройдена пользователем без замеченных ошибок (5 частей, 6 находок) и исправлена: quorum-очереди не «ограниченно», а вообще не поддерживают <code>x-max-priority</code>; consumer priority — с RabbitMQ 3.2, а не «3.8+»; перечитывание <code>definitions.json</code> через <code>docker compose restart</code> вместо <code>down -v</code>, сносившего volume postgres; таблица outbox называла таблицу «outbox» вместо <code>outbox_messages</code>; <code>LAB_CRASH_BEFORE_ACK</code>/<code>LAB_SIMULATE_SMTP_FAILURE</code> не долетали до воркеров (только <code>env_file</code>, без <code>environment:</code>) — оба crash-теста не воспроизводились как написано; перенумерован глоссарий (термины 18–21 не совпадали с порядком появления в тексте).', milestone:true},
+  {lab:'site', type:'changed', text:'В <code>fixes/</code> таблица вычитки: RabbitMQ — «✅ пройдено 26.09» (6 находок), решение по варианту A применено; RabbitMQ больше не отмечена как «не вычитываем».'},
 ]},
 ];
 
