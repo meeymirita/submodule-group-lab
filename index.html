@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ANITECH PERFORMANCE — лабораторные работы</title>
-  <meta name="description" content="Сборный репозиторий лабораторных работ: RabbitMQ, Redis, Traefik, Kubernetes, OOP, Vue, Nuxt, TypeScript, NestJS, GraphQL, Laravel, PostgreSQL, Docker.">
+  <meta name="description" content="Сборный репозиторий лабораторных работ: PHP, Laravel, PostgreSQL, RabbitMQ, Redis, JavaScript, TypeScript, Vue, Nuxt, NestJS, GraphQL, Docker, Traefik, Kubernetes.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -884,7 +884,7 @@
     .route-tab.is-active::before { background: var(--bg); box-shadow: none; }
 
     .route-info {
-      display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); gap: clamp(20px,4vw,50px);
+      display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); gap: 18px clamp(20px,4vw,50px);
       padding: 22px 24px; margin-bottom: 26px;
       border: 1px solid var(--line); border-left: 3px solid var(--track, var(--pink));
       background: linear-gradient(90deg, rgba(255,255,255,.025), transparent);
@@ -893,7 +893,7 @@
     .route-info .route-meta { font-size: 11px; letter-spacing: .14em; color: var(--track); text-transform: uppercase; }
     .route-info p { margin: 0; color: var(--text-dim); font-size: 14px; line-height: 1.7; }
 
-    .route-chain { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 6px; margin-top: 16px; list-style: none; padding: 0; }
+    .route-chain { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 6px; margin: 0; padding: 18px 0 0; list-style: none; border-top: 1px solid var(--line); }
     .route-chain li { display: contents; }
     .route-chain a {
       display: inline-flex; align-items: center; gap: 7px;
@@ -1032,14 +1032,15 @@
         TypeScript, чтобы доводить фичу от бэка до интерфейса самостоятельно.
       </p>
       <div class="chips">
-        <span class="chip" style="--accent:#FF2D20">Laravel</span>
         <span class="chip" style="--accent:#777BB4">PHP</span>
+        <span class="chip" style="--accent:#FF2D20">Laravel</span>
         <span class="chip" style="--accent:#4A90D9">PostgreSQL</span>
         <span class="chip" style="--accent:#FF6600">RabbitMQ</span>
         <span class="chip" style="--accent:#DC382D">Redis</span>
-        <span class="chip" style="--accent:#42B883">Vue.js</span>
-        <span class="chip" style="--accent:#3178C6">TypeScript</span>
         <span class="chip" style="--accent:#F4D35E">JavaScript</span>
+        <span class="chip" style="--accent:#3178C6">TypeScript</span>
+        <span class="chip" style="--accent:#42B883">Vue</span>
+        <span class="chip" style="--accent:#00DC82">Nuxt</span>
         <span class="chip" style="--accent:#E0234E">NestJS</span>
         <span class="chip" style="--accent:#E535AB">GraphQL</span>
         <span class="chip" style="--accent:#2496ED">Docker</span>
@@ -1082,7 +1083,7 @@
       </h1>
 
       <p class="lead strong">
-        RabbitMQ · Redis · Traefik · Kubernetes · PHP OOP · Vue · Nuxt · TypeScript · NestJS · GraphQL · Laravel · PostgreSQL · Docker
+        PHP · Laravel · PostgreSQL · RabbitMQ · Redis · JavaScript · TypeScript · Vue · Nuxt · NestJS · GraphQL · Docker · Traefik · Kubernetes
       </p>
 
       <div class="system-status mono">
@@ -2057,7 +2058,8 @@
 
     routeInfo.innerHTML = '<div><div class="route-meta mono">' + t.path.length + ' ' + (t.path.length < 5 ? 'лабы' : 'лаб') + ' · по порядку</div>'
       + '<h3>' + escapeHtml(t.title) + '</h3></div>'
-      + '<div><p>' + escapeHtml(t.text) + '</p><ol class="route-chain">' + chain + '</ol></div>';
+      + '<div><p>' + escapeHtml(t.text) + '</p></div>'
+      + '<ol class="route-chain">' + chain + '</ol>';
 
     drawRouteEdges();
   }
