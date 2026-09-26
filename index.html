@@ -8,7 +8,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+KR:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Onest:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -31,7 +31,7 @@
       margin: 0;
       background: var(--bg);
       color: var(--text);
-      font-family: 'Noto Sans KR', system-ui, -apple-system, sans-serif;
+      font-family: 'Onest', system-ui, -apple-system, sans-serif;
       -webkit-font-smoothing: antialiased;
       line-height: 1.5;
       overflow-x: hidden;
@@ -68,8 +68,8 @@
     }
 
     .wrap { max-width: 1400px; margin: 0 auto; padding: 0 5vw; }
-    .display { font-family: 'Anton', sans-serif; text-transform: uppercase; }
-    .mono { font-family: 'Space Mono', monospace; letter-spacing: .12em; text-transform: uppercase; }
+    .display { font-family: 'Dela Gothic One', sans-serif; text-transform: uppercase; }
+    .mono { font-family: 'JetBrains Mono', monospace; letter-spacing: .12em; text-transform: uppercase; }
 
     .progress {
       position: fixed;
@@ -202,7 +202,7 @@
       padding: 5px 9px;
       background: var(--pink);
       color: var(--bg);
-      font: 700 9px 'Space Mono',monospace;
+      font: 700 9px 'JetBrains Mono',monospace;
       letter-spacing: .1em;
     }
 
@@ -401,7 +401,7 @@
 
     .stats { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 22px; width: 100%; max-width: 400px; margin-top: 46px; }
     .stat { min-width: 0; border-left: 2px solid var(--stat-color,var(--pink)); padding-left: 16px; }
-    .stat-num { font-family: 'Anton',sans-serif; font-size: clamp(38px,4.5vw,56px); line-height: 1; }
+    .stat-num { font-family: 'Dela Gothic One',sans-serif; font-size: clamp(38px,4.5vw,56px); line-height: 1; }
     .stat-label { font-size: 11px; line-height: 1.4; letter-spacing: .12em; text-transform: uppercase; color: var(--text-dimmer); margin-top: 7px; }
 
     .marquee {
@@ -419,7 +419,7 @@
     .works-head { margin-bottom: clamp(26px,4vw,44px); }
     .works-head p { margin: 8px 0 0; font-size: 13px; color: var(--text-dimmer); letter-spacing: .06em; }
     .works-title-line { display: flex; align-items: flex-end; justify-content: space-between; gap: 30px; }
-    .works-count { color: rgba(255,255,255,.18); font: 100px/0.8 'Anton',sans-serif; }
+    .works-count { color: rgba(255,255,255,.18); font: 100px/0.8 'Dela Gothic One',sans-serif; }
 
     .grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; perspective: 1400px; }
 
@@ -473,7 +473,7 @@
       background: var(--category-color);
       box-shadow: 0 0 12px var(--category-color);
     }
-    .category-title { font-family: 'Anton',sans-serif; font-size: clamp(22px,2.6vw,32px); margin: 0; }
+    .category-title { font-family: 'Dela Gothic One',sans-serif; font-size: clamp(22px,2.6vw,32px); margin: 0; }
     .category-count { margin-left: auto; font-size: 12px; color: var(--text-dimmer); letter-spacing: .1em; white-space: nowrap; }
 
     .card {
@@ -523,7 +523,7 @@
       z-index: 5;
       right: 14px;
       top: 12px;
-      font: 70px/.8 'Anton',sans-serif;
+      font: 70px/.8 'Dela Gothic One',sans-serif;
       color: rgba(255,255,255,.12);
       pointer-events: none;
       transition: color .3s ease, transform .3s ease;
@@ -581,15 +581,15 @@
     .badge-diff { top: 12px; left: 12px; }
 
     .card-body { position: relative; z-index: 3; padding: 22px; display: flex; flex-direction: column; flex: 1; transform: translateZ(25px); }
-    .card-title { font-family: 'Anton',sans-serif; text-transform: uppercase; font-size: 25px; margin: 0; line-height: 1.15; color: var(--text); }
-    .card-subtitle { font-family: 'Space Mono',monospace; font-size: 10px; letter-spacing: .08em; margin: 6px 0 0; color: var(--accent); }
+    .card-title { font-family: 'Dela Gothic One',sans-serif; text-transform: uppercase; font-size: 25px; margin: 0; line-height: 1.15; color: var(--text); }
+    .card-subtitle { font-family: 'JetBrains Mono',monospace; font-size: 10px; letter-spacing: .08em; margin: 6px 0 0; color: var(--accent); }
     .card-desc { font-size: 13px; color: var(--text-dim); margin: 14px 0 0; line-height: 1.65; }
 
     .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
 
     .chip {
       font-size: 10px;
-      font-family: 'Space Mono',monospace;
+      font-family: 'JetBrains Mono',monospace;
       padding: 5px 10px;
       border-radius: 999px;
       background: var(--accent-soft,rgba(247,242,245,.06));
@@ -878,7 +878,7 @@
       display: inline-flex; align-items: center; gap: 9px;
       padding: 10px 16px; border-radius: 999px;
       border: 1px solid var(--line); background: transparent; color: var(--text-dim);
-      font-family: 'Space Mono',monospace; font-size: 12px; letter-spacing: .08em;
+      font-family: 'JetBrains Mono',monospace; font-size: 12px; letter-spacing: .08em;
       cursor: pointer; transition: border-color .2s ease, color .2s ease, background .2s ease;
     }
     .route-tab::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--track); box-shadow: 0 0 10px var(--track); }
@@ -905,7 +905,7 @@
       transition: background .2s ease, transform .2s ease;
     }
     .route-chain a:hover { background: color-mix(in srgb, var(--accent) 25%, transparent); transform: translateY(-2px); }
-    .route-chain b { font-family: 'Space Mono',monospace; font-size: 10px; color: var(--accent); }
+    .route-chain b { font-family: 'JetBrains Mono',monospace; font-size: 10px; color: var(--accent); }
     .route-chain .arrow { color: var(--text-dimmer); font-size: 12px; }
 
     /* the map: 3 lanes x 6 steps, arrows drawn in an svg layer on top */
@@ -919,7 +919,7 @@
     .route-map svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
     .route-lane {
       grid-column: 1; align-self: center;
-      font-family: 'Space Mono',monospace; font-size: 11px; letter-spacing: .18em; color: var(--text-dimmer);
+      font-family: 'JetBrains Mono',monospace; font-size: 11px; letter-spacing: .18em; color: var(--text-dimmer);
       border-right: 1px solid var(--line); padding-right: 12px; line-height: 1.5;
     }
     .route-lane strong { display: block; color: var(--text); font-size: 12px; }
@@ -934,13 +934,13 @@
     }
     .route-node:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 14px 34px -14px var(--accent); }
     .route-node-title { font-weight: 900; font-size: 14px; line-height: 1.15; letter-spacing: .02em; text-transform: uppercase; }
-    .route-node-diff { font-family: 'Space Mono',monospace; font-size: 9px; letter-spacing: .06em; color: var(--text-dimmer); }
+    .route-node-diff { font-family: 'JetBrains Mono',monospace; font-size: 9px; letter-spacing: .06em; color: var(--text-dimmer); }
     .route-node::before { content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 2px; border-radius: 2px; background: var(--accent); }
     .route-step {
       position: absolute; top: -11px; right: 10px;
       min-width: 22px; height: 22px; padding: 0 6px; border-radius: 999px;
       display: grid; place-items: center;
-      font-family: 'Space Mono',monospace; font-size: 10px; font-weight: 700;
+      font-family: 'JetBrains Mono',monospace; font-size: 10px; font-weight: 700;
       background: var(--track, var(--pink)); color: var(--bg);
       transform: scale(0); transition: transform .3s cubic-bezier(.3,1.6,.5,1);
     }
@@ -971,6 +971,305 @@
       .route-tab { padding: 9px 13px; font-size: 11px; }
       .route-hint-mobile { display: inline; }
     }
+
+    /* =====================================================================
+       РЕДИЗАЙН «АНИМЕ-ОПЕНИНГ»: сайт как заставка сериала, лабы — серии,
+       категории — арки, секции — главы. Всё ниже переопределяет базовые стили.
+       ===================================================================== */
+    :root {
+      --paper: #f4efe6;
+      --sun: #ffd23f;
+      --ink: #050407;
+      --halftone: radial-gradient(rgba(247,242,245,.16) 1.1px, transparent 1.6px) 0 0 / 9px 9px;
+    }
+
+    body { font-family: 'Onest', system-ui, -apple-system, sans-serif; }
+    .display { letter-spacing: .01em; }
+    .mono { letter-spacing: .08em; }
+
+    /* шапка: чернильная полоса с розовой кромкой */
+    header { background: rgba(5,4,7,.86); border-bottom: 2px solid var(--pink); }
+    .logo { font-size: 17px; letter-spacing: .02em; }
+    nav a.nav-cta { border-radius: 4px; box-shadow: 3px 3px 0 var(--cyan); transition: transform .15s ease, box-shadow .15s ease; }
+    nav a.nav-cta:hover { opacity: 1; transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--cyan); }
+
+    /* ---------- главы: заголовки секций ---------- */
+    .kicker {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 6px 12px 6px 10px; margin-bottom: 18px;
+      background: var(--paper); color: var(--ink);
+      font-size: 11px; font-weight: 700; letter-spacing: .14em;
+      transform: skewX(-12deg);
+      box-shadow: 4px 4px 0 var(--pink);
+    }
+    .kicker::before { content: ""; width: 8px; height: 8px; background: var(--pink); transform: skewX(12deg); }
+    .section-h2 { font-size: clamp(34px,5.4vw,72px); line-height: 1; letter-spacing: 0; }
+    .section-h2 .accent-word {
+      position: relative; z-index: 0; color: var(--ink); padding: 0 .12em;
+    }
+    .section-h2 .accent-word::before {
+      content: ""; position: absolute; inset: .08em -.02em .02em; z-index: -1;
+      background: var(--pink); transform: skewX(-10deg);
+    }
+
+    /* ---------- заставка ---------- */
+    .opening {
+      position: relative; overflow: hidden; isolation: isolate;
+      min-height: calc(100vh - var(--header-h));
+      display: grid; align-content: center;
+      padding: clamp(40px,7vh,90px) 0 clamp(80px,12vh,130px);
+      background: var(--ink);
+    }
+    .op-lines {
+      position: absolute; inset: -40%; z-index: -3; pointer-events: none;
+      background: repeating-conic-gradient(from 0deg at 62% 42%, rgba(247,242,245,.07) 0deg 1.2deg, transparent 1.2deg 7deg);
+      mask-image: radial-gradient(closest-side at 62% 42%, transparent 12%, #000 60%);
+      animation: op-spin 90s linear infinite;
+      transition: translate .4s ease-out;
+    }
+    @keyframes op-spin { to { rotate: 360deg; } }
+    .op-halftone {
+      position: absolute; inset: -30px; z-index: -2; pointer-events: none;
+      background: var(--halftone);
+      mask-image: linear-gradient(115deg, transparent 35%, #000 75%);
+      opacity: .7; transition: translate .4s ease-out;
+    }
+    .op-slab { position: absolute; z-index: -1; pointer-events: none; transform: skewY(-9deg); }
+    .op-slab-a { left: -10%; right: 42%; top: 58%; height: 26%; background: linear-gradient(90deg, var(--pink), rgba(255,46,136,.0)); opacity: .9; }
+    .op-slab-b { left: 48%; right: -10%; top: 8%; height: 9%; background: linear-gradient(270deg, var(--cyan), rgba(125,249,255,0)); opacity: .55; }
+    .op-flash { position: absolute; inset: 0; z-index: 5; background: #fff; opacity: 0; visibility: hidden; pointer-events: none; }
+
+    .op-season {
+      display: inline-flex; align-items: center; gap: 10px; width: max-content;
+      font-size: 12px; color: var(--cyan); margin-bottom: clamp(14px,2.4vh,26px);
+    }
+    .op-live { width: 9px; height: 9px; border-radius: 50%; background: var(--pink); box-shadow: 0 0 14px var(--pink); animation: blink 1.4s steps(1) infinite; }
+
+    .op-title { margin: 0; line-height: .9; }
+    .op-title-main {
+      position: relative; display: block; white-space: nowrap;
+      font-size: clamp(52px,12.5vw,190px); color: var(--paper);
+      text-shadow: 6px 6px 0 var(--pink), 12px 12px 0 rgba(125,249,255,.35);
+    }
+    .op-ch { display: inline-block; }
+    /* глитч: две смещённые копии вспыхивают раз в несколько секунд */
+    .op-title-main::before, .op-title-main::after {
+      content: attr(data-text); position: absolute; inset: 0; pointer-events: none;
+      text-shadow: none; opacity: 0;
+    }
+    .op-title-main::before { color: var(--cyan); }
+    .op-title-main::after { color: var(--pink); }
+    .opening.is-played .op-title-main::before { animation: op-glitch-a 5s steps(1) infinite 1s; }
+    .opening.is-played .op-title-main::after { animation: op-glitch-b 5s steps(1) infinite 1s; }
+    @keyframes op-glitch-a {
+      0%, 88%, 100% { opacity: 0; }
+      89% { opacity: .9; transform: translate(-6px, 2px); clip-path: inset(10% 0 55% 0); }
+      91% { opacity: .9; transform: translate(5px, -2px); clip-path: inset(60% 0 8% 0); }
+      93% { opacity: .9; transform: translate(-3px, 0); clip-path: inset(35% 0 40% 0); }
+    }
+    @keyframes op-glitch-b {
+      0%, 88%, 100% { opacity: 0; }
+      90% { opacity: .9; transform: translate(6px, -3px); clip-path: inset(45% 0 30% 0); }
+      92% { opacity: .9; transform: translate(-5px, 3px); clip-path: inset(5% 0 75% 0); }
+    }
+    .op-title-sub {
+      display: inline-block; margin-top: clamp(8px,1.4vw,18px);
+      font-size: clamp(18px,3.6vw,52px); letter-spacing: .28em;
+      color: transparent; -webkit-text-stroke: 1.5px var(--paper);
+    }
+
+    .op-cols {
+      display: grid; grid-template-columns: minmax(0,1.25fr) minmax(0,.9fr);
+      gap: clamp(28px,5vw,80px); align-items: end; margin-top: clamp(26px,5vh,54px);
+    }
+    .op-tagline { margin: 0; max-width: 58ch; font-size: clamp(16px,1.5vw,20px); line-height: 1.6; font-weight: 500; color: var(--paper); }
+    .op-note { margin: 14px 0 0; max-width: 58ch; padding-left: 14px; border-left: 3px solid var(--pink); color: var(--text-dim); font-size: 14px; line-height: 1.65; }
+    .op-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    .op-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 22px; border: 2px solid var(--paper); color: var(--paper);
+      font-weight: 700; font-size: 14px;
+      box-shadow: 5px 5px 0 var(--paper); background: var(--ink);
+      transition: transform .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease;
+    }
+    .op-btn:hover { transform: translate(-3px,-3px); box-shadow: 8px 8px 0 var(--paper); }
+    .op-btn:active { transform: translate(3px,3px); box-shadow: 1px 1px 0 var(--paper); }
+    .op-btn-main { background: var(--pink); border-color: var(--pink); color: var(--ink); box-shadow: 5px 5px 0 var(--cyan); }
+    .op-btn-main:hover { box-shadow: 8px 8px 0 var(--cyan); }
+    .op-btn-ghost { border-color: rgba(247,242,245,.35); box-shadow: none; color: var(--text-dim); }
+    .op-btn-ghost:hover { box-shadow: 5px 5px 0 rgba(247,242,245,.35); color: var(--paper); }
+
+    .op-meta { display: grid; gap: 12px; }
+    .op-stat {
+      display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 4px 16px;
+      padding: 14px 16px; background: rgba(5,4,7,.72); border: 1px solid var(--line); border-left: 4px solid var(--pink);
+    }
+    .op-stat:nth-child(2) { border-left-color: var(--cyan); }
+    .op-stat:nth-child(3) { border-left-color: var(--sun); }
+    .op-stat b { font-family: 'Dela Gothic One', sans-serif; font-weight: 400; font-size: clamp(30px,3.2vw,44px); line-height: 1; }
+    .op-stat b small { font-size: .45em; color: var(--text-dimmer); }
+    .op-stat > span { font-size: 13px; color: var(--text-dim); line-height: 1.4; }
+    .op-watch .watch-bar { grid-column: 1 / -1; }
+
+    .watch-bar { display: block; height: 6px; background: rgba(247,242,245,.1); overflow: hidden; }
+    .watch-bar > i { display: block; height: 100%; width: 0; background: repeating-linear-gradient(-45deg, var(--sun) 0 8px, #e6b800 8px 16px); transition: width .6s cubic-bezier(.2,.8,.2,1); }
+
+    .op-scroll {
+      position: absolute; left: 50%; bottom: 22px; translate: -50% 0;
+      font-size: 11px; color: var(--text-dimmer); display: flex; flex-direction: column; align-items: center; gap: 4px;
+    }
+    .op-scroll span { animation: float 1.6s ease-in-out infinite; }
+
+    /* ---------- глава 1: главный герой ---------- */
+    .about-section { background: var(--bg); }
+    .about-glow { background: var(--halftone); opacity: .35; mask-image: linear-gradient(250deg, #000 10%, transparent 55%); }
+    .about-photo-box::before {
+      content: "главный герой"; top: -16px; left: -10px; padding: 7px 12px;
+      background: var(--sun); color: var(--ink); font: 700 11px 'JetBrains Mono', monospace; letter-spacing: .1em;
+      transform: rotate(-4deg); box-shadow: 3px 3px 0 var(--ink);
+    }
+    .about-photo-box::after { inset: 0; border: none; transform: none; background: var(--halftone); opacity: .4; mix-blend-mode: overlay; border-radius: 0; }
+    .about-photo-big { border-radius: 0; border: 3px solid var(--paper); box-shadow: 12px 12px 0 var(--pink); }
+    .about-photo-box:hover .about-photo-big { transform: translate(-4px,-4px); box-shadow: 16px 16px 0 var(--pink); }
+    .about-link { border-width: 2px; }
+    .about-link:hover { transform: translate(-3px,-3px); box-shadow: 5px 5px 0 var(--cyan); }
+
+    /* ---------- глава 2: маршруты ---------- */
+    .route-info {
+      position: relative; border: 2px solid var(--paper); border-left-width: 2px;
+      background: var(--bg-alt); box-shadow: 8px 8px 0 var(--track, var(--pink));
+    }
+    .route-info .route-meta { color: var(--track); }
+    .route-chain a { border-radius: 0; border-width: 2px; }
+    .route-tab { border-radius: 0; transform: skewX(-10deg); border: 2px solid var(--line); font-weight: 700; }
+    .route-tab:hover { transform: skewX(-10deg) translate(-2px,-2px); box-shadow: 4px 4px 0 var(--track); }
+    .route-tab.is-active { box-shadow: 4px 4px 0 var(--paper); }
+    .route-node { border-radius: 0; border-width: 2px; }
+    .route-map.has-track .route-node.is-on { box-shadow: 5px 5px 0 var(--accent); }
+    .route-step { border-radius: 0; transform: scale(0) rotate(-8deg); }
+    .route-node.is-on .route-step { transform: scale(1) rotate(-8deg); }
+
+    /* ---------- ленты-перебивки ---------- */
+    .tapes { position: relative; z-index: 1; background: var(--bg); padding: 46px 0; overflow: hidden; }
+    .tapes .marquee { border: none; padding: 12px 0; width: 110%; margin-left: -5%; }
+    .tape-a { background: var(--pink); transform: rotate(-2.2deg); box-shadow: 0 6px 0 var(--ink); position: relative; z-index: 2; }
+    .tape-b { background: var(--cyan); transform: rotate(1.6deg); margin-top: -14px; }
+    .tape-b .marquee-track { animation-direction: reverse; animation-duration: 30s; }
+    .tapes .marquee-track span { font-size: clamp(16px,2.2vw,26px); color: var(--ink); }
+
+    /* ---------- глава 3: серии ---------- */
+    .works-count-box { display: grid; justify-items: end; gap: 10px; }
+    .works-count { font-size: 110px; color: transparent; -webkit-text-stroke: 2px rgba(247,242,245,.25); }
+    .works-watch { font-size: 11px; color: var(--text-dim); display: grid; gap: 6px; min-width: 220px; }
+    .works-watch b { color: var(--sun); }
+
+    /* арки: верхняя кромка — полосатая лента цвета арки */
+    .category-block { position: relative; }
+    .layer-panel.category-block { padding-top: 40px; }
+    .category-block::before {
+      content: ""; position: absolute; left: -100vmax; right: -100vmax; top: 0; height: 10px;
+      background: repeating-linear-gradient(-45deg, var(--category-color) 0 14px, transparent 14px 28px);
+      opacity: .7;
+    }
+    /* шире сетки на ширину жёсткой тени карточек, чтобы она не выглядывала из-под липкой шапки */
+    .category-head { border-bottom: 2px solid var(--category-color); align-items: center; margin-left: -16px; margin-right: -16px; padding-left: 16px; padding-right: 16px; }
+    .category-label {
+      padding: 6px 12px; background: var(--category-color); color: var(--ink);
+      font-weight: 700; transform: skewX(-12deg); letter-spacing: .14em;
+    }
+    .category-dot { display: none; }
+    .category-title { font-size: clamp(26px,3.2vw,42px); font-weight: 400; }
+    .category-count { color: var(--category-color); }
+
+    /* карточка = панель манги */
+    .grid { gap: 26px; perspective: none; }
+    .card {
+      border: 2px solid var(--paper); background: var(--bg-alt);
+      box-shadow: 7px 7px 0 var(--accent);
+      transform-style: flat; overflow: visible;
+      transition: transform .18s ease, box-shadow .18s ease, opacity .8s ease;
+    }
+    .card.reveal { transition: transform .8s cubic-bezier(.2,.8,.2,1), box-shadow .18s ease, opacity .8s ease; }
+    .card.reveal.in-view { transition: transform .18s ease, box-shadow .18s ease, opacity .8s ease; }
+    .card::before, .card::after { display: none; }
+    .card:hover { transform: translate(-4px,-4px); border-color: var(--paper); box-shadow: 12px 12px 0 var(--accent); }
+    .card:focus-visible { outline: 3px solid var(--sun); outline-offset: 4px; }
+
+    .card-ep {
+      position: absolute; z-index: 7; top: -14px; left: 14px;
+      display: flex; align-items: baseline; gap: 6px;
+      padding: 5px 12px 6px; background: var(--paper); color: var(--ink);
+      transform: rotate(-3deg); box-shadow: 3px 3px 0 var(--accent);
+      transition: transform .2s cubic-bezier(.3,1.6,.5,1);
+    }
+    .card-ep span { font: 700 10px 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; }
+    .card-ep b { font: 400 22px/1 'Dela Gothic One', sans-serif; }
+    .card:hover .card-ep { transform: rotate(-6deg) scale(1.08); }
+
+    .card-media { transform: none; border-bottom: 2px solid var(--paper); overflow: hidden; }
+    .card-media img { filter: saturate(.95) contrast(1.05); }
+    /* лучи-«спидлайны» проступают при наведении */
+    .card-media::before {
+      opacity: 0; mix-blend-mode: screen;
+      background: repeating-conic-gradient(from 0deg at 50% 45%, rgba(255,255,255,.22) 0deg 1.5deg, transparent 1.5deg 9deg);
+      transition: opacity .25s ease;
+    }
+    .card:hover .card-media::before { opacity: .55; animation: op-spin 30s linear infinite; }
+    .card-media::after { background: linear-gradient(to top, rgba(15,12,18,.95) 0%, rgba(15,12,18,.1) 45%, transparent 100%), var(--halftone); }
+
+    .badge { border-radius: 0; background: rgba(5,4,7,.85); border: 1px solid rgba(247,242,245,.3); display: inline-flex; gap: 8px; align-items: center; }
+    .badge-diff { top: auto; bottom: 12px; left: 12px; }
+    .badge .stars { color: var(--sun); letter-spacing: 1px; }
+    .badge .stars i { font-style: normal; color: rgba(247,242,245,.25); }
+
+    .card-stamp {
+      position: absolute; z-index: 6; top: 22px; right: 16px;
+      padding: 6px 12px; border: 3px solid var(--pink); color: var(--pink);
+      font: 400 17px 'Dela Gothic One', sans-serif; text-transform: uppercase; letter-spacing: .06em;
+      background: rgba(5,4,7,.6);
+      transform: rotate(12deg) scale(2.2); opacity: 0;
+      transition: transform .3s cubic-bezier(.3,1.6,.5,1), opacity .2s ease;
+      pointer-events: none;
+    }
+    .card.is-watched .card-stamp { transform: rotate(12deg) scale(1); opacity: 1; }
+    .card.is-watched .card-media img { filter: saturate(.5) contrast(1.05); }
+
+    .card-body { transform: none; }
+    .card-title { font-size: 22px; font-weight: 400; line-height: 1.2; }
+    .chip { border-radius: 0; }
+    .card-actions { border-top: 2px dashed var(--line); align-items: stretch; }
+    .card-open { border-radius: 0; border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--paper); }
+    .card-open:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--paper); filter: none; }
+    .card-repo { border-radius: 0; border-width: 2px; }
+    .card-watch {
+      width: 44px; flex: 0 0 auto; border: 2px solid var(--line); background: transparent;
+      color: var(--text-dimmer); font-size: 17px; font-weight: 900; cursor: pointer;
+      transition: background .15s ease, color .15s ease, border-color .15s ease, transform .15s ease;
+    }
+    .card-watch:hover { border-color: var(--sun); color: var(--sun); transform: translate(-2px,-2px); }
+    .card-watch[aria-pressed="true"] { background: var(--sun); border-color: var(--sun); color: var(--ink); }
+
+    .feature-strip { border-top: 2px solid var(--line); border-bottom: 2px solid var(--line); }
+    .site-footer { border-top: 2px solid var(--pink); }
+
+    /* модалка «О проекте» — та же манга-рамка */
+    .modal-panel { border-radius: 0; border: 2px solid var(--paper); box-shadow: 12px 12px 0 var(--pink); }
+    .modal-slider { border-radius: 0; border: 2px solid var(--line); }
+    .modal-close { border-radius: 0; }
+
+    @media (max-width: 980px) {
+      .op-cols { grid-template-columns: 1fr; align-items: start; }
+    }
+    @media (max-width: 700px) {
+      .opening { min-height: 0; padding-top: 48px; }
+      .op-title-main { text-shadow: 3px 3px 0 var(--pink), 6px 6px 0 rgba(125,249,255,.35); }
+      .op-title-sub { -webkit-text-stroke-width: 1px; letter-spacing: .18em; }
+      .op-btn { width: 100%; justify-content: center; }
+      .op-scroll { display: none; }
+      .works-count-box { justify-items: start; margin-top: 16px; }
+      .works-count { font-size: 64px; }
+      .card { box-shadow: 5px 5px 0 var(--accent); }
+    }
   </style>
 </head>
 
@@ -981,13 +1280,13 @@
 
 <header>
   <div class="wrap">
-    <a href="#top" class="logo display">ANITECH PERFORMANCE</a>
+    <a href="#intro" class="logo display">ANITECH PERFORMANCE</a>
     <nav class="mono">
       <button type="button" class="about-trigger" id="about-modal-trigger">о проекте</button>
       <a href="#top">об авторе</a>
       <a href="#routes">маршруты</a>
-      <a href="#works">работы</a>
-      <a href="changelog.html">changelog</a>
+      <a href="#works">серии</a>
+      <a href="changelog.html">хронология</a>
       <a href="https://github.com/meeymirita/anitech-performance" target="_blank" rel="noopener" class="nav-cta">репозиторий ↗</a>
     </nav>
   </div>
@@ -1022,14 +1321,55 @@
   </div>
 </div>
 
+<section id="intro" class="opening">
+  <div class="op-flash" aria-hidden="true"></div>
+  <div class="op-lines" aria-hidden="true"></div>
+  <div class="op-halftone" aria-hidden="true"></div>
+  <div class="op-slab op-slab-a" aria-hidden="true"></div>
+  <div class="op-slab op-slab-b" aria-hidden="true"></div>
+
+  <div class="wrap op-inner">
+    <div class="op-season mono"><span class="op-live"></span>Сезон 1 · 15 серий · в эфире</div>
+
+    <h1 class="op-title display" aria-label="ANITECH PERFORMANCE">
+      <span class="op-title-main" data-text="ANITECH" aria-hidden="true">ANITECH</span>
+      <span class="op-title-sub" aria-hidden="true">PERFORMANCE</span>
+    </h1>
+
+    <div class="op-cols">
+      <div>
+        <p class="op-tagline">Учебный сериал о бэкенде, фронтенде и инфраструктуре: пятнадцать серий от Docker до Kubernetes. У каждой — своя методичка, свой репозиторий и финал без подсказок.</p>
+        <p class="op-note">Каждую серию веду и прохожу сам, методички к ним написаны вместе с Claude. Смотреть подряд не обязательно — выбери маршрут и иди по своей арке.</p>
+        <div class="op-actions">
+          <a href="#works" class="op-btn op-btn-main">Смотреть с первой серии ↓</a>
+          <a href="#routes" class="op-btn">Выбрать маршрут</a>
+          <a href="https://github.com/meeymirita/anitech-performance" target="_blank" rel="noopener" class="op-btn op-btn-ghost">GitHub ↗</a>
+        </div>
+      </div>
+
+      <div class="op-meta">
+        <div class="op-stat"><b>15</b><span>серий в сезоне</span></div>
+        <div class="op-stat"><b>3</b><span>арки: фронтенд, бэкенд, инфраструктура</span></div>
+        <div class="op-stat op-watch">
+          <b><span data-watched-count>0</span><small>/15</small></b>
+          <span>просмотрено — отмечай галочкой на карточке</span>
+          <i class="watch-bar"><i data-watched-fill></i></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a href="#top" class="op-scroll mono" aria-label="Листать ниже">листай <span>↓</span></a>
+</section>
+
 <section id="top" class="about-section">
   <div class="about-glow"></div>
   <div class="wrap about-grid reveal">
     <div class="about-text">
-      <div class="kicker mono">01 / автор</div>
+      <div class="kicker mono">Глава 1 · главный герой</div>
       <h2 class="section-h2 display">Об <span class="accent-word">авторе</span></h2>
       <p>
-        Backend-разработчик, 2 года опыта, фокус — PHP/Laravel: проектирую API, строю
+        Бэкенд-разработчик, 2 года опыта, фокус — PHP/Laravel: проектирую API, строю
         бизнес-логику, работаю с очередями и кэшем через RabbitMQ и Redis для быстрых
         и надёжных систем. При необходимости подключаюсь и к фронту — Vue.js и
         TypeScript, чтобы доводить фичу от бэка до интерфейса самостоятельно.
@@ -1067,83 +1407,18 @@
   </div>
 </section>
 
-<section id="intro" class="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-glow-two"></div>
-
-  <div class="wrap hero-content reveal">
-    <div class="hero-left">
-      <div class="eyebrow mono">
-        <span class="eyebrow-dot"></span>
-        персональная учебная витрина
-      </div>
-
-      <h1 class="display">
-        Личный
-        <span class="accent-word">лабораторный</span>
-        <span class="outline-word">репозиторий</span>
-      </h1>
-
-      <p class="lead strong">
-        PHP · Laravel · PostgreSQL · RabbitMQ · Redis · JavaScript · TypeScript · Vue · Nuxt · NestJS · GraphQL · Docker · Traefik · Kubernetes
-      </p>
-
-      <div class="system-status mono">
-        <span></span>
-        system online / 15 labs loaded
-      </div>
-    </div>
-
-    <div class="hero-right">
-      <p class="lead">
-        Каждую лабу веду и прохожу сам, а методички к ним разработал совместно
-        с Claude — отдельный git submodule на работу, со своей историей
-        коммитов, документом и обложкой. Ниже — витрина всех лаб: что внутри,
-        какой стек и куда открыть, чтобы посмотреть.
-      </p>
-      <p class="lead">
-        Проходить всё подряд не обязательно: выбери цель — фронтенд, бэкенд
-        на PHP или Node, инфраструктура — и иди по своей цепочке, каждая
-        следующая лаба опирается на предыдущую.
-      </p>
-
-      <div class="btn-row">
-        <a href="#routes" class="btn btn-primary">выбрать маршрут ↓</a>
-        <a href="#works" class="btn btn-outline">все работы</a>
-        <a href="https://github.com/meeymirita/anitech-performance" target="_blank" rel="noopener" class="btn btn-outline">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 .5C5.73.5.9 5.33.9 11.6c0 4.96 3.22 9.17 7.68 10.66.56.1.77-.24.77-.54 0-.27-.01-1.15-.02-2.09-3.12.68-3.78-1.34-3.78-1.34-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.94.1-.73.39-1.22.71-1.5-2.49-.28-5.11-1.25-5.11-5.55 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.42.11-2.96 0 0 .95-.3 3.12 1.15 2.17-1.45 3.12-1.15 3.12-1.15.61 1.54.23 2.68.11 2.96.72.79 1.16 1.79 1.16 3.02 0 4.31-2.63 5.26-5.13 5.54.4.35.76 1.03.76 2.08 0 1.5-.01 2.71-.01 3.08 0 .3.2.65.78.54A11.1 11.1 0 0 0 23.1 11.6C23.1 5.33 18.27.5 12 .5Z"/>
-          </svg>
-          github
-        </a>
-      </div>
-
-      <div class="stats">
-        <div class="stat" style="--stat-color:#ff2e88">
-          <div class="stat-num">15</div>
-          <div class="stat-label">лабораторных</div>
-        </div>
-        <div class="stat" style="--stat-color:#7df9ff">
-          <div class="stat-num">8</div>
-          <div class="stat-label">стеков технологий</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <section id="routes" class="routes-section">
   <div class="wrap">
     <div class="routes-head reveal">
       <div>
-        <div class="kicker mono">02 / маршруты</div>
+        <div class="kicker mono">Глава 2 · маршруты</div>
         <h2 class="section-h2 display">С чего начать</h2>
       </div>
       <p class="lead">
         Каждая лаба самостоятельна, но вместе они складываются в цепочки: сначала
         язык без фреймворка, потом архитектура и данные, потом фреймворк и
-        продакшен-обвязка. Выбери трек — на карте подсветится порядок прохождения.
+        продакшен-обвязка. Выбери арку — на карте подсветится порядок серий.
       </p>
     </div>
 
@@ -1160,10 +1435,18 @@
   </div>
 </section>
 
-<div class="marquee">
-  <div class="marquee-track display">
-    <span>group lab · 15 лабораторных · git submodules · методички ·</span>
-    <span>group lab · 15 лабораторных · git submodules · методички ·</span>
+<div class="tapes" aria-hidden="true">
+  <div class="marquee tape-a">
+    <div class="marquee-track display">
+      <span>смотрите далее · 15 серий · 3 арки · методичка к каждой серии ·</span>
+      <span>смотрите далее · 15 серий · 3 арки · методичка к каждой серии ·</span>
+    </div>
+  </div>
+  <div class="marquee tape-b">
+    <div class="marquee-track display">
+      <span>не переключайтесь · от Docker до Kubernetes · финал без подсказок ·</span>
+      <span>не переключайтесь · от Docker до Kubernetes · финал без подсказок ·</span>
+    </div>
   </div>
 </div>
 
@@ -1172,28 +1455,31 @@
     <div class="works-head reveal">
       <div class="works-title-line">
         <div>
-          <div class="kicker mono">03 / витрина</div>
-          <h2 class="section-h2 display">Работы</h2>
-          <p class="mono">Нажми на карточку, чтобы открыть страницу лабы</p>
+          <div class="kicker mono">Глава 3 · серии</div>
+          <h2 class="section-h2 display">Все <span class="accent-word">серии</span></h2>
+          <p class="mono">Карточка открывает страницу серии · галочка отмечает её просмотренной</p>
         </div>
-        <div class="works-count">15</div>
+        <div class="works-count-box">
+          <div class="works-count">15</div>
+          <div class="works-watch mono"><span>просмотрено <b data-watched-count>0</b> из 15</span><i class="watch-bar"><i data-watched-fill></i></i></div>
+        </div>
       </div>
     </div>
 
     <div id="grid"></div>
 
     <div class="feature-strip mono reveal">
-      <span><strong>ANITECH PERFORMANCE</strong> · learn · build · experiment</span>
-      <span><strong>2026</strong> · PHP · Laravel · Redis · RabbitMQ · Vue</span>
+      <span><strong>ANITECH PERFORMANCE</strong> · учись · собирай · экспериментируй</span>
+      <span><strong>Сезон 1</strong> · 2026 · продолжение следует</span>
     </div>
   </div>
 </section>
 
 <footer class="wrap site-footer mono">
-  <span>Group Lab · собрано с ❤</span>
+  <span>ANITECH · конец сезона</span>
   <span class="footer-git">
     <span class="spinner"></span>
-    git submodules
+    15 репозиториев · один сериал
   </span>
 </footer>
 
@@ -1423,6 +1709,15 @@
     gsapReady = true;
   }
 
+  // «Сложность» текстом → звёзды: высокая 4, средняя–высокая 3, средняя 2, остальное 1
+  function difficultyStars(text) {
+    var t = String(text).toLowerCase();
+    var n = t.indexOf('средняя–высокая') !== -1 ? 3
+      : t.indexOf('высок') !== -1 ? 4
+      : t.indexOf('средн') !== -1 ? 2 : 1;
+    return '★★★★'.slice(0, n) + '<i>' + '★★★★'.slice(n) + '</i>';
+  }
+
   function cardHtml(p, i) {
     var openHtml = p.open
       ? '<a href="' + p.open + '" target="_blank" rel="noopener" class="card-open">Открыть методичку</a>'
@@ -1436,10 +1731,11 @@
       <article class="card reveal" data-key="${p.key}" tabindex="0" role="link"
         aria-label="Подробнее о ${escapeHtml(p.title)}"
         style="--accent:${p.accent}; --accent-soft:${p.accentSoft}; --accent-shadow:${p.accentShadow}; transition-delay:${0.05 * i}s">
-        <div class="card-number">${String(i + 1).padStart(2, '0')}</div>
+        <div class="card-ep"><span>серия</span><b>${String(i + 1).padStart(2, '0')}</b></div>
         <div class="card-media">
           <img src="works/images/thumbs/${p.key}.webp" data-full="${p.image}" alt="${escapeHtml(p.title)}" loading="lazy" decoding="async" width="1200" height="1200">
-          <span class="badge badge-diff">Сложность: ${p.difficulty}</span>
+          <span class="badge badge-diff" title="Сложность: ${escapeHtml(p.difficulty)}"><span class="stars">${difficultyStars(p.difficulty)}</span>${escapeHtml(p.difficulty)}</span>
+          <span class="card-stamp" aria-hidden="true">просмотрено</span>
         </div>
         <div class="card-body">
           <h3 class="card-title">${escapeHtml(p.title)}</h3>
@@ -1448,6 +1744,7 @@
           <div class="chips">${chips}</div>
           <div class="card-actions">
             ${openHtml}
+            <button type="button" class="card-watch" data-watch="${p.key}" aria-pressed="false" title="Отметить серию просмотренной" aria-label="Отметить «${escapeHtml(p.title)}» просмотренной">✓</button>
             <a href="${p.repo}" target="_blank" rel="noopener" class="card-repo" aria-label="GitHub">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 .5C5.73.5.9 5.33.9 11.6c0 4.96 3.22 9.17 7.68 10.66.56.1.77-.24.77-.54 0-.27-.01-1.15-.02-2.09-3.12.68-3.78-1.34-3.78-1.34-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.94.1-.73.39-1.22.71-1.5-2.49-.28-5.11-1.25-5.11-5.55 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.42.11-2.96 0 0 .95-.3 3.12 1.15.9-.25 1.87-.38 2.83-.38.96 0 1.93.13 2.83.38 2.17-1.45 3.12-1.15 3.12-1.15.61 1.54.23 2.68.11 2.96.72.79 1.16 1.79 1.16 3.02 0 4.31-2.63 5.26-5.13 5.54.4.35.76 1.03.76 2.08 0 1.5-.01 2.71-.01 3.08 0 .3.2.65.78.54A11.1 11.1 0 0 0 23.1 11.6C23.1 5.33 18.27.5 12 .5Z"/>
@@ -1460,9 +1757,9 @@
   }
 
   var categories = [
-    { key: 'frontend', label: 'Frontend', title: 'Фронтенд', color: '#7df9ff' },
-    { key: 'backend', label: 'Backend', title: 'Бэкенд', color: '#ff2e88' },
-    { key: 'devops', label: 'DevOps', title: 'DevOps', color: '#42d392' }
+    { key: 'frontend', label: 'Арка 1', title: 'Фронтенд', color: '#7df9ff' },
+    { key: 'backend', label: 'Арка 2', title: 'Бэкенд', color: '#ff2e88' },
+    { key: 'devops', label: 'Арка 3', title: 'Инфраструктура', color: '#42d392' }
   ];
 
   var categoryDescriptions = {
@@ -1522,7 +1819,7 @@
 
   // Слайдер скриншотов ------------------------------------------------------
   var aboutScreenshots = [
-    { src: 'docs/screenshots/1-cards.jpg', alt: 'Карточки лаб на главной странице', caption: 'Главная страница: 14 лаб карточками, сгруппированы по фронтенду, бэкенду и devops.' },
+    { src: 'docs/screenshots/1-cards.jpg', alt: 'Карточки лаб на главной странице', caption: 'Главная страница: 15 лаб карточками, сгруппированы по фронтенду, бэкенду и инфраструктуре.' },
     { src: 'docs/screenshots/2-lab-page.jpg', alt: 'Страница лабы', caption: 'Страница лабы — стек, README, ссылка на репозиторий и открытие методички.' },
     { src: 'docs/screenshots/3-toc.jpg', alt: 'Оглавление методички', caption: 'Оглавление методички: сессии и шаги, прогресс сохраняется прямо в браузере.' },
     { src: 'docs/screenshots/4-manual.jpg', alt: 'Методичка', caption: 'Сама методичка — код, «Под капотом», тренировки с ответами под спойлером.' }
@@ -1640,6 +1937,35 @@
   try { aboutModalSeen = !!localStorage.getItem('about-modal-seen'); } catch (e) {}
   if (!aboutModalSeen) openAboutModal();
 
+  function plural(n, one, few, many) {
+    var m10 = n % 10, m100 = n % 100;
+    if (m10 === 1 && m100 !== 11) return one;
+    if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return few;
+    return many;
+  }
+
+  // «Просмотрено»: список ключей лаб в localStorage. Тот же ключ читает страница серии в works/.
+  var WATCH_KEY = 'anitech-watched';
+  function getWatched() {
+    try { var v = JSON.parse(localStorage.getItem(WATCH_KEY) || '[]'); return Array.isArray(v) ? v : []; }
+    catch (e) { return []; }
+  }
+  function setWatched(list) {
+    try { localStorage.setItem(WATCH_KEY, JSON.stringify(list)); } catch (e) {}
+  }
+  function updateWatchUI() {
+    var watched = getWatched();
+    document.querySelectorAll('.card').forEach(function (card) {
+      var on = watched.indexOf(card.dataset.key) !== -1;
+      card.classList.toggle('is-watched', on);
+      var btn = card.querySelector('.card-watch');
+      if (btn) btn.setAttribute('aria-pressed', on);
+    });
+    var count = watched.filter(function (k) { return projectByKey(k); }).length;
+    document.querySelectorAll('[data-watched-count]').forEach(function (el) { el.textContent = count; });
+    document.querySelectorAll('[data-watched-fill]').forEach(function (el) { el.style.width = (count / projects.length * 100) + '%'; });
+  }
+
   function render() {
     var n = 0;
     grid.innerHTML = categories.map(function (cat) {
@@ -1651,7 +1977,7 @@
           <div class="category-head">
             <span class="category-label mono"><span class="category-dot"></span>${escapeHtml(cat.label)}</span>
             <h3 class="category-title">${escapeHtml(cat.title)}</h3>
-            <span class="category-count mono">${items.length} ${items.length === 1 ? 'лаба' : 'лабы'}</span>
+            <span class="category-count mono">${items.length} ${plural(items.length, 'серия', 'серии', 'серий')}</span>
           </div>
           <div class="grid">
             ${items.map(function (p) { n += 1; return cardHtml(p, n - 1); }).join('')}
@@ -1660,7 +1986,7 @@
       `;
     }).join('');
     observeReveal();
-    initTilt();
+    updateWatchUI();
     if (window.FlipGallery) FlipGallery.init('.card-media img, .about-photo-big');
   }
 
@@ -1677,6 +2003,11 @@
         if (entry.isIntersecting) {
           entry.target.classList.add('in-view');
           observer.unobserve(entry.target);
+          // карточки въезжают лесенкой (transition-delay), но наведение потом должно срабатывать сразу
+          if (entry.target.classList.contains('card')) {
+            var el = entry.target;
+            setTimeout(function () { el.style.transitionDelay = '0s'; }, 1600);
+          }
         }
       });
     }, { threshold: .08 });
@@ -1738,7 +2069,7 @@
   function initLayeredPanels() {
     if (!gsapReady) return;
 
-    var panels = [document.getElementById('top'), document.getElementById('intro'), document.getElementById('routes')]
+    var panels = [document.getElementById('intro'), document.getElementById('top'), document.getElementById('routes')]
       .concat(Array.prototype.slice.call(document.querySelectorAll('.category-block')))
       .filter(Boolean);
 
@@ -1857,6 +2188,16 @@
   }
 
   grid.addEventListener('click', function (e) {
+    var watchBtn = e.target.closest('.card-watch');
+    if (watchBtn) {
+      var key = watchBtn.dataset.watch;
+      var list = getWatched();
+      var i = list.indexOf(key);
+      if (i === -1) list.push(key); else list.splice(i, 1);
+      setWatched(list);
+      updateWatchUI();
+      return;
+    }
     if (e.target.closest('.card-actions')) return;
 
     var card = e.target.closest('.card');
@@ -1901,19 +2242,35 @@
 
   if (window.PageLoader) PageLoader.enter('ANITECH', '#ff2e88');
 
-  var hero = document.querySelector('.hero');
+  // ---- заставка: буквы ANITECH «влетают», вспышка, полосы-срезы, потом всё остальное ----
+  var opening = document.querySelector('.opening');
+  var opTitle = document.querySelector('.op-title-main');
+  if (opTitle) {
+    opTitle.innerHTML = opTitle.textContent.split('').map(function (ch) { return '<span class="op-ch">' + ch + '</span>'; }).join('');
+  }
+
+  function playOpening() {
+    if (!opening) return;
+    if (!gsapReady) { opening.classList.add('is-played'); return; }
+    var tl = gsap.timeline({ defaults: { ease: 'power3.out' }, onComplete: function () { opening.classList.add('is-played'); } });
+    tl.set('.op-inner', { autoAlpha: 1 })
+      .from('.op-slab-a', { xPercent: -130, duration: .55, ease: 'power4.out' })
+      .from('.op-slab-b', { xPercent: 130, duration: .55, ease: 'power4.out' }, '<.08')
+      .from('.op-ch', { yPercent: -120, scale: 2.4, autoAlpha: 0, filter: 'blur(8px)', duration: .5, stagger: .055, ease: 'back.out(2)' }, '-=.25')
+      .fromTo('.op-flash', { autoAlpha: .9 }, { autoAlpha: 0, duration: .45, ease: 'power2.out' }, '-=.1')
+      .from('.op-title-sub', { xPercent: -8, autoAlpha: 0, duration: .5 }, '<')
+      .from('.op-season, .op-tagline, .op-note, .op-actions > *, .op-stat', { y: 24, autoAlpha: 0, duration: .5, stagger: .05 }, '-=.25')
+      .from('.op-scroll', { autoAlpha: 0, duration: .4 }, '-=.1');
+  }
 
   window.addEventListener('mousemove', function (e) {
-    if (!hero) return;
-
-    var x = (e.clientX / window.innerWidth - .5) * 20;
-    var y = (e.clientY / window.innerHeight - .5) * 20;
-
-    var glowOne = document.querySelector('.hero-glow');
-    var glowTwo = document.querySelector('.hero-glow-two');
-
-    if (glowOne) glowOne.style.transform = 'translate(' + x + 'px,' + y + 'px)';
-    if (glowTwo) glowTwo.style.transform = 'translate(' + (-x) + 'px,' + (-y) + 'px)';
+    if (!opening || prefersReducedMotion()) return;
+    var x = (e.clientX / window.innerWidth - .5) * 24;
+    var y = (e.clientY / window.innerHeight - .5) * 24;
+    var lines = document.querySelector('.op-lines');
+    var tone = document.querySelector('.op-halftone');
+    if (lines) lines.style.translate = x + 'px ' + y + 'px';
+    if (tone) tone.style.translate = (-x) + 'px ' + (-y) + 'px';
   });
 
   // ---- routes: lanes x steps map + per-track highlight ----
@@ -1922,7 +2279,7 @@
     { label: 'JS / TS', sub: 'фронт и Node', nodes: ['js', 'vue', 'typescript', 'nestjs', 'graphql'] },
     { label: 'NUXT', sub: 'Vue + сервер', nodes: [null, null, null, 'nuxt'] },
     { label: 'PHP', sub: 'бэкенд', nodes: ['php', 'php-coffee', 'postgresql', 'laravel', 'rabbitmq', 'redis'] },
-    { label: 'INFRA', sub: 'devops', nodes: ['docker', 'traefik', 'kubernetes'] }
+    { label: 'ИНФРА', sub: 'инфраструктура', nodes: ['docker', 'traefik', 'kubernetes'] }
   ];
 
   // skip: drawn as a dashed arc over the lane, only shown for the tracks that use it
@@ -1959,7 +2316,7 @@
       path: ['php', 'php-coffee', 'postgresql', 'laravel', 'rabbitmq', 'redis']
     },
     {
-      key: 'devops', label: 'DevOps', color: '#42d392',
+      key: 'devops', label: 'Инфраструктура', color: '#42d392',
       title: 'Хочу в инфраструктуру',
       text: 'Docker и Bash — база под всё остальное. Затем Traefik: reverse proxy, service discovery, TLS. Kubernetes последним — его методичка прямо требует пройденных Docker Lab и Traefik Lab.',
       path: ['docker', 'traefik', 'kubernetes']
@@ -2079,6 +2436,10 @@
   render();
   initLayeredPanels();
   observeReveal();
+  playOpening();
+  // отметки могли поменяться на странице серии (вкладка вернулась из истории)
+  window.addEventListener('pageshow', updateWatchUI);
+  window.addEventListener('storage', function (e) { if (e.key === WATCH_KEY) updateWatchUI(); });
 </script>
 
 </body>
