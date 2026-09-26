@@ -6,6 +6,7 @@
   <title>ANITECH PERFORMANCE — лабораторные работы</title>
   <meta name="description" content="Сборный репозиторий лабораторных работ: PHP, Laravel, PostgreSQL, RabbitMQ, Redis, JavaScript, TypeScript, Vue, Nuxt, NestJS, GraphQL, Docker, Traefik, Kubernetes.">
 
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Onest:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -984,6 +985,14 @@
     }
 
     body { font-family: 'Onest', system-ui, -apple-system, sans-serif; }
+    /* декоративные ленты и лучи шире экрана: обрезаем по горизонтали, не ломая sticky */
+    html, body { overflow-x: clip; }
+    @media (max-width: 520px) {
+      .logo-sub { display: none; }
+      nav { gap: 12px; }
+      nav a.nav-cta { padding: 8px 11px; }
+      nav > * { white-space: nowrap; }
+    }
     .display { letter-spacing: .01em; }
     .mono { letter-spacing: .08em; }
 
@@ -1308,7 +1317,7 @@
 
 <header>
   <div class="wrap">
-    <a href="#intro" class="logo display">ANITECH PERFORMANCE</a>
+    <a href="#intro" class="logo display">ANITECH<span class="logo-sub"> PERFORMANCE</span></a>
     <nav class="mono">
       <button type="button" class="about-trigger" id="about-modal-trigger">о проекте</button>
       <a href="#top">об авторе</a>
@@ -1340,7 +1349,7 @@
       <div class="modal-body-right">
         <p class="modal-intro">Это сборный репозиторий с обучающими лабораторными работами: каждая — отдельный
           проект от первой строчки кода до финального сценария без подсказок, со своей методичкой, стеком и
-          git-историей. Работы сгруппированы по трём направлениям — фронтенд, бэкенд и devops.</p>
+          git-историей. Работы сгруппированы по трём направлениям — фронтенд, бэкенд и инфраструктура.</p>
 
         <div class="modal-tabs mono" id="about-modal-tabs" role="tablist"></div>
         <div class="modal-tab-panel" id="about-modal-tab-panel" role="tabpanel"></div>
@@ -1559,7 +1568,7 @@
       title: 'Nuxt Lab',
       subtitle: 'Help Center — SSR, SSG и SPA в одном приложении',
       image: 'nuxt/Nuxt.png',
-      desc: 'Публичный центр поддержки на Nuxt 4 и TypeScript: файловый роутинг, useFetch и гидрация, Nitro server routes, Drizzle + SQLite, общие Zod-схемы в shared/, сессии, Nuxt Content, routeRules (SSG, SWR, SPA), SEO, тесты и сборка в Docker.',
+      desc: 'Публичный центр поддержки на Nuxt 4 и TypeScript: файловый роутинг, useFetch и гидрация, Nitro server routes, Drizzle + SQLite, общие Zod-схемы в shared/, сессии и защита страниц, Nuxt Content, routeRules (SSG, SWR, SPA), SEO, тесты и сборка в Docker.',
       stack: ['Nuxt 4', 'TypeScript', 'Nitro', 'Drizzle', 'Nuxt Content'],
       difficulty: 'Высокая',
       open: 'nuxt/Nuxt_Lab_HelpCenter.html',
@@ -1703,7 +1712,7 @@
       subtitle: 'От Compose к оркестрации',
       image: 'kubernetes/kubernetes.png',
       desc: 'Миграция стека из Traefik-лабы в Kubernetes (kind): Pod и Deployment, Service и DNS, ConfigMap/Secret, Volumes и PVC, readiness/liveness-пробы, Traefik как Ingress-контроллер, HorizontalPodAutoscaler.',
-      stack: ['Kubernetes', 'kind', 'kubectl', 'Traefik'],
+      stack: ['Kubernetes v1.31.0', 'kind v0.24.0', 'kubectl', 'Traefik'],
       difficulty: 'Средняя–высокая',
       open: 'kubernetes/Kubernetes_Lab_Plan.html',
       repo: 'https://github.com/meeymirita/kubernetes-lab',
@@ -1784,8 +1793,8 @@
   ];
 
   var categoryDescriptions = {
-    frontend: 'То, что видит пользователь: реактивный UI без фреймворка на чистом JS, потом Vue 3 (компоненты, роутинг, состояние) и TypeScript поверх этого — типы, generics, сквозная типизация от API до браузера.',
-    backend: 'Серверная часть: ООП и чистый PHP без фреймворка, Laravel «изнутри», NestJS с нуля (DI, Guards, WebSocket) и GraphQL над тем же бэкендом — резолверы вместо REST-контроллеров, и PostgreSQL изнутри — то, что происходит под ORM.',
+    frontend: 'То, что видит пользователь: реактивный UI без фреймворка на чистом JS, потом Vue 3 (компоненты, роутинг, состояние), TypeScript поверх этого — типы, generics, сквозная типизация от API до браузера, и Nuxt — тот же Vue с сервером: SSR, Nitro и режимы рендеринга.',
+    backend: 'Серверная часть: ООП и чистый PHP без фреймворка, Laravel «изнутри», очереди на RabbitMQ и кэш с локами на Redis, NestJS с нуля (DI, Guards, WebSocket), GraphQL — самостоятельный каталог фильмов с резолверами и DataLoader, и PostgreSQL изнутри — то, что происходит под ORM.',
     devops: 'Инфраструктура вокруг кода: Docker и Bash с нуля, Traefik как reverse proxy, и Kubernetes — миграция того же стека из Compose в настоящий кластер.'
   };
 

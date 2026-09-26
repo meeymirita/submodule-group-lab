@@ -6,6 +6,7 @@
 <title>Хронология — ANITECH PERFORMANCE</title>
 <meta name="description" content="Полная хронология проекта: что добавлялось, менялось и убиралось в каждой лабе и на сайте, коммит за коммитом, с самого первого дня.">
 
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Onest:wght@400;500;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -157,6 +158,10 @@
   /* ===== редизайн «аниме-опенинг»: та же стилистика, что на главной ===== */
   :root { --paper: #f4efe6; --ink: #050407; --halftone: radial-gradient(rgba(247,242,245,.16) 1.1px, transparent 1.6px) 0 0 / 9px 9px; }
   .mono { letter-spacing: .08em; }
+  html, body { overflow-x: clip; }
+  @media (max-width: 520px) { .logo-sub { display: none; } nav > * { white-space: nowrap; } }
+  /* длинные имена файлов и репозиториев в тексте событий переносятся, а не вылезают за экран */
+  .cl-text { overflow-wrap: anywhere; }
   header { background: rgba(5,4,7,.86); border-bottom: 2px solid var(--pink); }
   .logo { font-size: 17px; letter-spacing: .02em; }
   nav a.nav-cta { border-radius: 4px; box-shadow: 3px 3px 0 var(--cyan); transition: transform .15s ease, box-shadow .15s ease; }
@@ -175,7 +180,7 @@
     transform: skewX(-12deg); box-shadow: 4px 4px 0 var(--pink);
   }
   .kicker::before { content: ""; width: 8px; height: 8px; background: var(--pink); }
-  .cl-h1 { font-size: clamp(38px,6.4vw,76px); line-height: 1; font-weight: 400; }
+  .cl-h1 { font-size: clamp(30px,8.6vw,76px); line-height: 1; font-weight: 400; }
   .cl-h1 .accent-word { position: relative; z-index: 0; color: var(--ink); padding: 0 .1em; }
   .cl-h1 .accent-word::before { content: ""; position: absolute; inset: .08em -.02em .02em; z-index: -1; background: var(--pink); transform: skewX(-10deg); }
   .cl-stat { padding: 12px 16px; background: rgba(5,4,7,.7); border: 1px solid var(--line); border-left: 4px solid var(--pink); }
@@ -202,7 +207,7 @@
 
 <header>
   <div class="wrap">
-    <a href="index.html#intro" class="logo display">ANITECH PERFORMANCE</a>
+    <a href="index.html#intro" class="logo display">ANITECH<span class="logo-sub"> PERFORMANCE</span></a>
     <nav class="mono">
       <a href="index.html#routes">маршруты</a>
       <a href="index.html#works">лабы</a>
@@ -447,6 +452,7 @@ var DAYS = [
   {lab:'nuxt', type:'changed', text:'<b>Методичка вычитана и исправлена</b> (8 частей, 10 находок): два <code>useFetch</code> с одним URL в разных строках не делят данные — автоключ включает место вызова, шаг 2.2 переписан на явный <code>key</code>; комментарий в конце строки <code>COPY</code> ломал сборку prod-образа в шаге 6.4; «чужое» обращение №3 в шаге 4.3 на деле принадлежит Борису; фильтр «В работе» и поиск по «пароль» возвращают больше, чем в ожидаемом результате; middleware первой страницы повторяется в браузере при гидрации; мелочи в деревьях <code>.nuxt/</code> и проекта. Удалены пустые заглушки <code>docker-compose.yml</code> и <code>Makefile</code>.', milestone:true},
   {lab:'site', type:'changed', text:'В <code>fixes/</code>: <code>nuxt.md</code> с находками, таблица вычитки — Nuxt «✅ пройдено 26.09» (10 находок), решение по варианту A применено; <code>prep.py</code> умеет нарезать Nuxt.'},
   {lab:'site', type:'changed', text:'Слайды категорий в «Работах» получили пустое место снизу: у высоких категорий (бэкенд) нижний ряд карточек стоял вплотную к краю экрана, и кнопку «Открыть методичку» сразу перекрывал следующий слайд.'},
+  {lab:'site', type:'changed', text:'Проверка всего сайта после редизайна: на телефоне шапка больше не шире экрана, декоративные ленты не дают сдвигать страницу вбок, длинные названия лаб (KUBERNETES, POSTGRESQL) помещаются в заголовок, код в «Хронологии» переносится. Появилась иконка вкладки. Скриншоты в «О проекте» и README пересняты в новом дизайне; выровнены данные лаб между главной и страницами (стек JS и Kubernetes, описание Nuxt), обновлены устаревшие тексты в README и в описаниях направлений.'},
   {lab:'site', type:'changed', text:'<b>Редизайн «аниме-опенинг»</b>: сайт стал обучающей платформой в стилистике аниме-заставки. Первый экран — анимированный заголовок ANITECH со вспышкой, лучами и глитчем; лабы пронумерованы, категории стали направлениями, разделы — главами с плашками; карточки в рамках манги с жёсткой тенью и звёздами сложности; на карте маршрутов у каждой лабы окошко «к карточке / методичка». Все 15 страниц лаб — в том же стиле, с превью предыдущей и следующей лабы; «Хронология» — тоже. Шрифты с кириллицей: Dela Gothic One, Onest, JetBrains Mono.', milestone:true},
   {lab:'site', type:'renamed', text:'<b>Общий репозиторий переименован</b>: <code>submodule-group-lab</code> → <code>anitech-performance</code>, под бренд сайта. Ссылки в README всех 15 лаб, на главной и в хронологии ведут на новое имя; старые ссылки GitHub перенаправляет сам.', milestone:true},
 ]},
