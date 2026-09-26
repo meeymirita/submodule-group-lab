@@ -1145,6 +1145,58 @@
     .route-step { border-radius: 0; transform: scale(0) rotate(-8deg); }
     .route-node.is-on .route-step { transform: scale(1) rotate(-8deg); }
 
+    /* окошко над лабой на карте: к карточке на странице или сразу в методичку */
+    .route-node { cursor: pointer; }
+    .route-node:hover, .route-node:focus-within, .route-node.is-open { z-index: 20; }
+    .route-node:focus-visible { outline: 3px solid var(--sun); outline-offset: 3px; }
+    .route-pop {
+      position: absolute; left: 50%; bottom: calc(100% + 12px); z-index: 30;
+      width: 210px; display: grid; gap: 8px; padding: 12px;
+      background: var(--ink); border: 2px solid var(--paper); box-shadow: 6px 6px 0 var(--accent);
+      translate: -50% 6px; opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity .15s ease, translate .15s ease, visibility 0s linear .15s;
+      cursor: default;
+    }
+    /* невидимый мостик, чтобы курсор не «ронял» окошко по пути от лабы к кнопкам */
+    .route-pop::before { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 16px; }
+    .route-pop::after {
+      content: ""; position: absolute; left: 50%; top: 100%; translate: -50% 0;
+      border: 8px solid transparent; border-top-color: var(--paper);
+    }
+    .route-node.pop-below .route-pop { bottom: auto; top: calc(100% + 12px); translate: -50% -6px; }
+    .route-node.pop-below .route-pop::before { top: auto; bottom: 100%; }
+    .route-node.pop-right .route-pop { left: auto; right: -2px; translate: 0 6px; }
+    .route-node.pop-right.pop-below .route-pop { translate: 0 -6px; }
+    .route-node.pop-right .route-pop::after { left: auto; right: 30px; translate: 0 0; }
+    .route-node.pop-below .route-pop::after { top: auto; bottom: 100%; border-top-color: transparent; border-bottom-color: var(--paper); }
+    .route-node:hover .route-pop, .route-node:focus-within .route-pop, .route-node.is-open .route-pop {
+      opacity: 1; visibility: visible; pointer-events: auto; translate: -50% 0;
+      transition: opacity .15s ease, translate .15s ease, visibility 0s;
+    }
+    .route-node.pop-right:hover .route-pop, .route-node.pop-right:focus-within .route-pop, .route-node.pop-right.is-open .route-pop { translate: 0 0; }
+    .route-pop-title { font: 400 13px 'Dela Gothic One', sans-serif; text-transform: uppercase; color: var(--paper); padding-bottom: 6px; border-bottom: 2px dashed var(--line); }
+    .route-pop-btn {
+      display: block; width: 100%; padding: 9px 10px; text-align: left;
+      border: 2px solid var(--line); background: transparent; color: var(--paper);
+      font: 700 12px 'Onest', sans-serif; cursor: pointer;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+    }
+    .route-pop-btn:hover { transform: translate(-2px,-2px); border-color: var(--paper); box-shadow: 3px 3px 0 var(--paper); }
+    .route-pop-main { background: var(--accent); border-color: var(--accent); color: var(--ink); }
+    .route-pop-main:hover { border-color: var(--accent); }
+    .route-pop-btn.is-disabled { opacity: .45; cursor: not-allowed; }
+    .route-pop-btn.is-disabled:hover { transform: none; box-shadow: none; border-color: var(--line); }
+    /* приглушённые лабы вне трека тоже открывают окошко — во время наведения возвращаем им цвет */
+    .route-map.has-track .route-node.is-off:hover, .route-map.has-track .route-node.is-off.is-open { opacity: 1; filter: none; }
+
+    /* карточка, к которой перешли с карты: вспышка рамки */
+    .card.is-spotlight { animation: card-spotlight 2.2s ease; }
+    @keyframes card-spotlight {
+      0%, 30%, 60% { outline: 4px solid var(--sun); outline-offset: 6px; }
+      15%, 45% { outline: 4px solid var(--accent); outline-offset: 10px; }
+      100% { outline: 4px solid transparent; outline-offset: 6px; }
+    }
+
     /* ---------- ленты-перебивки ---------- */
     .tapes { position: relative; z-index: 1; background: var(--bg); padding: 46px 0; overflow: hidden; }
     .tapes .marquee { border: none; padding: 12px 0; width: 110%; margin-left: -5%; }
@@ -1402,7 +1454,7 @@
       <div class="route-map-scroll">
         <div class="route-map" id="route-map"></div>
       </div>
-      <p class="route-hint mono"><span class="route-hint-mobile">← листай карту вбок → · </span>клик по лабе открывает её методичку · пунктир — «можно перепрыгнуть»</p>
+      <p class="route-hint mono"><span class="route-hint-mobile">← листай карту вбок → · </span>наведи или нажми на лабу — перейти к её карточке или в методичку · пунктир — «можно перепрыгнуть»</p>
     </div>
   </div>
 </section>
@@ -2275,12 +2327,19 @@
       lane.nodes.forEach(function (key, col) {
         var p = key && projectByKey(key);
         if (!p) return;
-        html += '<a class="route-node" data-key="' + key + '" href="' + (p.open || p.repo) + '" target="_blank" rel="noopener"'
+        html += '<div class="route-node' + (row === 0 ? ' pop-below' : '') + (col >= 4 ? ' pop-right' : '') + '" data-key="' + key + '" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false"'
           + ' style="grid-row:' + (row + 1) + ';grid-column:' + (col + 2) + ';--accent:' + p.accent + '">'
           + '<span class="route-step"></span>'
           + '<span class="route-node-title">' + escapeHtml(p.title.replace(/ Lab$/, '')) + '</span>'
           + '<span class="route-node-diff">' + escapeHtml(p.difficulty) + '</span>'
-          + '</a>';
+          + '<span class="route-pop" role="menu">'
+          +   '<span class="route-pop-title">' + escapeHtml(p.title) + '</span>'
+          +   '<button type="button" class="route-pop-btn" data-go-card="' + key + '" role="menuitem">К карточке ↓</button>'
+          +   (p.open
+                ? '<a class="route-pop-btn route-pop-main" href="' + p.open + '" target="_blank" rel="noopener" role="menuitem">Методичка ↗</a>'
+                : '<span class="route-pop-btn is-disabled">Методичка скоро</span>')
+          + '</span>'
+          + '</div>';
       });
     });
     routeMap.innerHTML = html;
@@ -2359,6 +2418,45 @@
 
     drawRouteEdges();
   }
+
+  function closeRoutePops(except) {
+    routeMap.querySelectorAll('.route-node.is-open').forEach(function (el) {
+      if (el === except) return;
+      el.classList.remove('is-open');
+      el.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  function scrollToCard(key) {
+    var card = grid.querySelector('.card[data-key="' + key + '"]');
+    if (!card) return;
+    var header = document.querySelector('header');
+    var top = card.getBoundingClientRect().top + window.scrollY - (header ? header.offsetHeight : 0) - 90;
+    window.scrollTo({ top: top, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+    card.classList.remove('is-spotlight');
+    void card.offsetWidth;                      // перезапустить анимацию, если кликнули повторно
+    card.classList.add('is-spotlight');
+    setTimeout(function () { card.classList.remove('is-spotlight'); }, 2400);
+  }
+
+  routeMap.addEventListener('click', function (e) {
+    var go = e.target.closest('[data-go-card]');
+    if (go) { closeRoutePops(); scrollToCard(go.dataset.goCard); return; }
+    if (e.target.closest('.route-pop')) return;            // ссылка на методичку работает сама
+    var node = e.target.closest('.route-node');
+    if (!node) return;
+    var open = !node.classList.contains('is-open');
+    closeRoutePops(node);
+    node.classList.toggle('is-open', open);
+    node.setAttribute('aria-expanded', open);
+  });
+  routeMap.addEventListener('keydown', function (e) {
+    var node = e.target.closest('.route-node');
+    if (!node) return;
+    if ((e.key === 'Enter' || e.key === ' ') && e.target === node) { e.preventDefault(); node.click(); }
+    if (e.key === 'Escape') { closeRoutePops(); node.focus(); }
+  });
+  document.addEventListener('click', function (e) { if (!e.target.closest('.route-node')) closeRoutePops(); });
 
   renderRouteMap();
   routeTabs.addEventListener('click', function (e) {
