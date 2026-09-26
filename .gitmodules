@@ -43,3 +43,6 @@
 [submodule "postgresql"]
 	path = postgresql
 	url = https://github.com/meeymirita/postgresql-lab.git
+[submodule "fixes"]
+	path = fixes
+	url = https://github.com/meeymirita/lab-fixes.git
