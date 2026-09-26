@@ -39,7 +39,7 @@
 | 13 | [`laravel`](laravel) | Laravel 13 изнутри — TaskFlow (таск-трекер с ролями) | Высокая | [laravel-lab](https://github.com/meeymirita/laravel-lab) |
 | 14 | [`postgresql`](postgresql) | PostgreSQL — Coffee Shop изнутри (EXPLAIN, индексы, изоляция, блокировки, MVCC) | Средняя–высокая | [postgresql-lab](https://github.com/meeymirita/postgresql-lab) |
 | 15 | [`nuxt`](nuxt) | Nuxt 4 — Help Center (SSR/SSG/SWR/SPA, Nitro, Drizzle, Nuxt Content) | Высокая | [nuxt-lab](https://github.com/meeymirita/nuxt-lab) |
-| 16 | [`angular`](angular) | Angular — фреймворк целиком на TypeScript · *заглушка* | Высокая | [angular-lab](https://github.com/meeymirita/angular-lab) |
+| 16 | [`angular`](angular) | Angular 22 — RoomBook (сигналы, DI, httpResource, Signal Forms, RxJS) | Высокая | [angular-lab](https://github.com/meeymirita/angular-lab) |
 
 > Личный прогресс (моя пометка, не часть плана репозитория): ✅ пройдено — RabbitMQ. 🔵 сейчас прохожу — OOP (`php-coffee`).
 
@@ -368,11 +368,25 @@
 
 ---
 
-## 16. Angular Lab (`angular/`)
+## 16. Angular Lab — RoomBook (`angular/`)
 
-> **Заглушка — методичка ещё не написана.** Репозиторий, карточка на главной и страница `works/angular.html` уже на месте; кнопка «Открыть методичку» появится, когда методичка ляжет в `angular/`. Место в карте маршрутов и зависимости от других лаб определятся после вычитки.
+> **Сложность: высокая.** Проект полностью самостоятельный (свой репозиторий `angular-lab`), кода из других лаб не берёт. TypeScript — на уровне сессий 1–3 TS-лабы; всё специфичное для Angular (декораторы, DI, сигналы) объясняется в самой лабе. Опыт Vue полезен для сравнений, но не обязателен. Во фронтенд-треке идёт последней, после Nuxt: теория начинается с «зачем Angular после Vue и Nuxt».
 
-**О чём:** Angular с нуля — standalone-компоненты, сигналы, DI, RxJS, роутинг, формы и тесты. Тема, стек и план по сессиям появятся вместе с методичкой.
+**О чём:** внутренний сервис бронирования переговорных — каталог комнат, расписание дня, форма брони с проверкой пересечений, «мои брони», живые обновления, админка. Современный Angular — это сигналы + DI: реактивность без zone.js, сервисы и провайдеры, `httpResource`, Signal Forms, guards по ролям и RxJS там, где он правда нужен. Почти в каждой сессии — шаг «сломать → починить»: мутация массива, которую OnPush не видит, гонка ответов поиска, провайдер не на том уровне DI, 409 после проверки «свободно», утечка броней при смене пользователя, накопление SSE-соединений.
+
+**Стек:** Angular 22 (standalone, zoneless, OnPush по умолчанию), Angular CLI + `@angular/build`, `HttpClient` + интерцепторы + `httpResource`, Signal Forms и Reactive Forms, RxJS 7 + rxjs-interop, Vitest через `ng test`; готовый API — `api/server.mjs` на Node 22 без зависимостей; Docker Compose, в проде nginx.
+
+**Формат:** методичка [`Angular_Lab_RoomBook.html`](angular/Angular_Lab_RoomBook.html) — методичка готова, прохождение впереди. У каждого шага: код → «зачем» → команда → ожидаемый результат → «проверь себя».
+
+**Что внутри (6 сессий, 26 шагов, ~20,5 ч):**
+- **Сессия 1** (~3 ч) — стенд и основы: готовый API и `ng new`, компоненты с `input`/`output` и `@for`, `signal`/`computed`/`model`/`linkedSignal`/`effect`; ломаем OnPush + zoneless мутацией массива (счётчик растёт, а сетка нет)
+- **Сессия 2** (~3,5 ч) — DI и HTTP: сервисы, уровни провайдеров и `InjectionToken` (провайдер не на том уровне), `HttpClient` + `toSignal`, `httpResource` с фильтрами на сервере, поиск без гонки ответов (`mergeMap` → `switchMap`), интерцепторы лога и ошибок
+- **Сессия 3** (~3 ч) — роутер: маршруты, lazy-загрузка, AppShell, дочерние маршруты расписания (и параметры родителя), resolver и индикатор навигации, query params как состояние
+- **Сессия 4** (~4 ч) — формы: Signal Forms (модель и схема), межполевая валидация, `validateHttp` для проверки свободного слота, submit и 409 после «свободно», свой контрол, Reactive Forms в админке
+- **Сессия 5** (~3,5 ч) — авторизация, состояние, потоки: AuthStore, вход, токен и 401, guards `canActivate`/`canMatch`/`canDeactivate`, стор на сигналах и утечка броней при смене пользователя, SSE + RxJS и `takeUntilDestroyed`
+- **Сессия 6** (~3,5 ч) — качество и продакшн: pipe и `@defer`, тесты (компонент, стор, guard) на Vitest, сборка, runtime-конфиг и nginx, финальная карта и сравнение с Vue/Nuxt
+
+Разделы 1–9 методички — теория (зачем Angular после Vue и Nuxt, азбука, реактивность на сигналах, DI под капотом, RxJS в 2026 году, роутер, формы, HTTP, стек и структура проекта), раздел 10 — шесть сессий заданий, разделы 11–14 — чек-лист, глоссарий, вопросы для собеседования, что дальше.
 
 ---
 

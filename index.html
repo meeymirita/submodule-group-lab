@@ -1580,12 +1580,12 @@
       key: 'angular',
       category: 'frontend',
       title: 'Angular Lab',
-      subtitle: 'Фреймворк целиком на TypeScript',
+      subtitle: 'RoomBook — бронирование переговорных',
       image: 'angular/Angular.png',
-      desc: 'Заглушка — методичка ещё не написана. Angular с нуля: standalone-компоненты, сигналы, DI, RxJS, роутинг, формы и тесты. Тема и план по сессиям появятся вместе с методичкой.',
-      stack: ['Angular', 'TypeScript', 'RxJS', 'Signals'],
+      desc: 'Внутренний сервис бронирования переговорных на Angular 22: сигналы и OnPush без zone.js, DI и провайдеры, HttpClient, интерцепторы и httpResource, роутер с lazy-загрузкой и guards по ролям, Signal Forms с серверной проверкой слота, RxJS для поиска и живого расписания через SSE, тесты на Vitest и сборка под nginx.',
+      stack: ['Angular 22', 'TypeScript', 'Signals', 'Signal Forms', 'RxJS'],
       difficulty: 'Высокая',
-      open: null, // TODO: 'angular/<методичка>.html' когда будет готова
+      open: 'angular/Angular_Lab_RoomBook.html',
       repo: 'https://github.com/meeymirita/angular-lab',
       accent: '#CC26D5', accentSoft: '#CC26D522', accentShadow: 'rgba(204,38,213,.28)'
     },
@@ -1807,7 +1807,7 @@
   ];
 
   var categoryDescriptions = {
-    frontend: 'То, что видит пользователь: реактивный UI без фреймворка на чистом JS, потом Vue 3 (компоненты, роутинг, состояние), TypeScript поверх этого — типы, generics, сквозная типизация от API до браузера, и Nuxt — тот же Vue с сервером: SSR, Nitro и режимы рендеринга. Скоро — Angular: второй большой фреймворк, целиком на TypeScript.',
+    frontend: 'То, что видит пользователь: реактивный UI без фреймворка на чистом JS, потом Vue 3 (компоненты, роутинг, состояние), TypeScript поверх этого — типы, generics, сквозная типизация от API до браузера, и Nuxt — тот же Vue с сервером: SSR, Nitro и режимы рендеринга. И Angular — платформа «всё в коробке»: сигналы, DI, формы и роутер от одной команды.',
     backend: 'Серверная часть: ООП и чистый PHP без фреймворка, Laravel «изнутри», очереди на RabbitMQ и кэш с локами на Redis, NestJS с нуля (DI, Guards, WebSocket), GraphQL — самостоятельный каталог фильмов с резолверами и DataLoader, и PostgreSQL изнутри — то, что происходит под ORM.',
     devops: 'Инфраструктура вокруг кода: Docker и Bash с нуля, Traefik как reverse proxy, и Kubernetes — миграция того же стека из Compose в настоящий кластер.'
   };
@@ -2288,14 +2288,14 @@
   // row = lane, col = step inside the lane (1-based)
   var routeLanes = [
     { label: 'JS / TS', sub: 'фронт и Node', nodes: ['js', 'vue', 'typescript', 'nestjs', 'graphql'] },
-    { label: 'NUXT', sub: 'Vue + сервер', nodes: [null, null, null, 'nuxt'] },
+    { label: 'NUXT · NG', sub: 'Nuxt и Angular', nodes: [null, null, null, 'nuxt', 'angular'] },
     { label: 'PHP', sub: 'бэкенд', nodes: ['php', 'php-coffee', 'postgresql', 'laravel', 'rabbitmq', 'redis'] },
     { label: 'ИНФРА', sub: 'инфраструктура', nodes: ['docker', 'traefik', 'kubernetes'] }
   ];
 
   // skip: drawn as a dashed arc over the lane, only shown for the tracks that use it
   var routeEdges = [
-    ['js', 'vue'], ['vue', 'typescript'], ['typescript', 'nestjs'], ['nestjs', 'graphql'], ['typescript', 'nuxt'],
+    ['js', 'vue'], ['vue', 'typescript'], ['typescript', 'nestjs'], ['nestjs', 'graphql'], ['typescript', 'nuxt'], ['nuxt', 'angular'],
     ['js', 'typescript', { skip: true, tracks: ['node'] }],
     ['php', 'php-coffee'], ['php-coffee', 'postgresql'], ['postgresql', 'laravel'], ['laravel', 'rabbitmq'], ['rabbitmq', 'redis'],
     ['docker', 'traefik'], ['traefik', 'kubernetes']
@@ -2306,13 +2306,13 @@
       key: 'all', label: 'Весь путь', color: '#f8c8dc',
       title: 'Хочу пройти всё',
       text: 'Docker первым — контейнеры понадобятся почти в каждой следующей лабе. Дальше PHP-ветка целиком, потом JavaScript-ветка, а в конце оркестрация: Traefik и Kubernetes, когда уже есть что деплоить.',
-      path: ['docker', 'php', 'php-coffee', 'postgresql', 'laravel', 'rabbitmq', 'redis', 'js', 'vue', 'typescript', 'nuxt', 'nestjs', 'graphql', 'traefik', 'kubernetes']
+      path: ['docker', 'php', 'php-coffee', 'postgresql', 'laravel', 'rabbitmq', 'redis', 'js', 'vue', 'typescript', 'nuxt', 'angular', 'nestjs', 'graphql', 'traefik', 'kubernetes']
     },
     {
       key: 'front', label: 'Фронтенд', color: '#7df9ff',
       title: 'Хочу во фронтенд',
-      text: 'Начни с чистого JavaScript — без замыканий, event loop и прототипов Vue будет казаться магией. Потом Vue: компоненты, Pinia, роутер. Потом TypeScript — в его финале типизируются API и Vue-приложение насквозь. Nuxt в конце: тот же Vue, но с сервером, SSR и режимами рендеринга.',
-      path: ['js', 'vue', 'typescript', 'nuxt']
+      text: 'Начни с чистого JavaScript — без замыканий, event loop и прототипов Vue будет казаться магией. Потом Vue: компоненты, Pinia, роутер. Потом TypeScript — в его финале типизируются API и Vue-приложение насквозь. Потом Nuxt: тот же Vue, но с сервером, SSR и режимами рендеринга. Angular в конце — вторая большая школа фронтенда: сигналы, DI, формы и guards из коробки, и его методичка всё время сравнивает с Vue и Nuxt.',
+      path: ['js', 'vue', 'typescript', 'nuxt', 'angular']
     },
     {
       key: 'node', label: 'Бэкенд на Node', color: '#E0234E',

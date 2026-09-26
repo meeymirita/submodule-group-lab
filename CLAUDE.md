@@ -19,7 +19,7 @@
 | `redis` | redis-lab | кэш, локи, rate limit, Streams |
 | `js` | js-lab | Чистый JS (это лаба, а не скрипты сайта) |
 | `vue` / `typescript` / `nuxt` | vue-lab / typescript-lab / nuxt-lab | фронтенд |
-| `angular` | angular-lab | фронтенд; **заглушка** с 26.09, методичку делают в другом чате. В карте маршрутов её пока нет — расставить после вычитки |
+| `angular` | angular-lab | Angular 22 — RoomBook (методичка с 26.09, ещё не вычитана) |
 | `nestjs` / `graphql` | nestjs-lab / graphql-lab | бэкенд на Node |
 | `laravel` | laravel-lab | Laravel 13 изнутри |
 | `postgresql` | postgresql-lab | EXPLAIN, индексы, MVCC |
