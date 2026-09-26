@@ -1,4 +1,4 @@
-# Group Lab: Docker, Traefik, Kubernetes, PHP, OOP, RabbitMQ, Redis, Laravel, JS, Vue, TypeScript, NestJS, GraphQL, PostgreSQL
+# Group Lab: Docker, Traefik, Kubernetes, PHP, OOP, RabbitMQ, Redis, Laravel, JS, Vue, TypeScript, Nuxt, NestJS, GraphQL, PostgreSQL
 
 ![Group Lab](https://raw.githubusercontent.com/meeymirita/works-lab/main/images/banner.png)
 
@@ -380,7 +380,7 @@
 Репозиторий использует submodule, поэтому клонировать нужно с флагом `--recurse-submodules`:
 
 ```bash
-git clone --recurse-submodules https://github.com/meeymirita/submodule-group-lab.git
+git clone --recurse-submodules https://github.com/meeymirita/anitech-performance.git
 ```
 
 Если репозиторий уже склонирован без этого флага:
