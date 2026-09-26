@@ -49,3 +49,6 @@
 [submodule "nuxt"]
 	path = nuxt
 	url = https://github.com/meeymirita/nuxt-lab.git
+[submodule "angular"]
+	path = angular
+	url = https://github.com/meeymirita/angular-lab.git

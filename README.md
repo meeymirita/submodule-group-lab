@@ -1,4 +1,4 @@
-# ANITECH PERFORMANCE — обучающая платформа: Docker, Traefik, Kubernetes, PHP, OOP, RabbitMQ, Redis, Laravel, JS, Vue, TypeScript, Nuxt, NestJS, GraphQL, PostgreSQL
+# ANITECH PERFORMANCE — обучающая платформа: Docker, Traefik, Kubernetes, PHP, OOP, RabbitMQ, Redis, Laravel, JS, Vue, TypeScript, Nuxt, Angular, NestJS, GraphQL, PostgreSQL
 
 ![ANITECH PERFORMANCE](https://raw.githubusercontent.com/meeymirita/works-lab/main/images/banner.png)
 
@@ -39,6 +39,7 @@
 | 13 | [`laravel`](laravel) | Laravel 13 изнутри — TaskFlow (таск-трекер с ролями) | Высокая | [laravel-lab](https://github.com/meeymirita/laravel-lab) |
 | 14 | [`postgresql`](postgresql) | PostgreSQL — Coffee Shop изнутри (EXPLAIN, индексы, изоляция, блокировки, MVCC) | Средняя–высокая | [postgresql-lab](https://github.com/meeymirita/postgresql-lab) |
 | 15 | [`nuxt`](nuxt) | Nuxt 4 — Help Center (SSR/SSG/SWR/SPA, Nitro, Drizzle, Nuxt Content) | Высокая | [nuxt-lab](https://github.com/meeymirita/nuxt-lab) |
+| 16 | [`angular`](angular) | Angular — фреймворк целиком на TypeScript · *заглушка* | Высокая | [angular-lab](https://github.com/meeymirita/angular-lab) |
 
 > Личный прогресс (моя пометка, не часть плана репозитория): ✅ пройдено — RabbitMQ. 🔵 сейчас прохожу — OOP (`php-coffee`).
 
@@ -364,6 +365,14 @@
 - **Сессия 6** — SEO и продакшн: `useSeoMeta`, sitemap/robots, `runtimeConfig`, тесты (unit, компонент, e2e), `nuxt build` и multi-stage Dockerfile, финал «Vue Lab vs Nuxt Lab»
 
 Разделы 1–10 методички — теория (зачем Nuxt поверх Vue, азбука, рендеринг и гидрация под капотом, режимы рендеринга, данные, Nitro, состояние на SSR, авторизация, контент и SEO, структура проекта), раздел 11 — шесть сессий заданий, разделы 12–15 — чек-лист, глоссарий, вопросы для собеседования, что дальше.
+
+---
+
+## 16. Angular Lab (`angular/`)
+
+> **Заглушка — методичка ещё не написана.** Репозиторий, карточка на главной и страница `works/angular.html` уже на месте; кнопка «Открыть методичку» появится, когда методичка ляжет в `angular/`. Место в карте маршрутов и зависимости от других лаб определятся после вычитки.
+
+**О чём:** Angular с нуля — standalone-компоненты, сигналы, DI, RxJS, роутинг, формы и тесты. Тема, стек и план по сессиям появятся вместе с методичкой.
 
 ---
 

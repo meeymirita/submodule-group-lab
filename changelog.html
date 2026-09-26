@@ -250,6 +250,7 @@ var LABS = {
   graphql:     { label: 'GraphQL Lab',            color: '#E535AB' },
   postgresql:  { label: 'PostgreSQL Lab',         color: '#4A90D9' },
   nuxt:        { label: 'Nuxt Lab',               color: '#00DC82' },
+  angular:     { label: 'Angular Lab',            color: '#CC26D5' },
 };
 
 var TYPES = {
@@ -437,7 +438,7 @@ var DAYS = [
   {lab:'site', type:'added', text:'В блок «об авторе» добавлен чип PostgreSQL.'},
   {lab:'site', type:'changed', text:'В <code>fixes/</code> PostgreSQL добавлена в порядок прохождения (самостоятельная, №14) и в таблицу вычитки — пока не начата.'},
 ]},
-{date:'2026-09-26', title:'PostgreSQL, RabbitMQ и Nuxt вычитаны, родилась Nuxt-лаба — пятнадцатая', items:[
+{date:'2026-09-26', title:'PostgreSQL, RabbitMQ и Nuxt вычитаны, родились Nuxt- и Angular-лабы — пятнадцатая и шестнадцатая', items:[
   {lab:'postgresql', type:'changed', text:'<b>Методичка вычитана построчно</b> (13 частей, 10 находок) и исправлена: диаграмма схемы данных (<code>inventory</code> 8 000 → 4 000), оборванная фраза про background writer, тренировка на <code>\\gset</code> использовала ещё не созданную таблицу <code>customers</code>, число активных заказов в шаге 4.2 (0,3% → 0,15%) и неверный индекс в сравнении размеров, перепутанный субъект в объяснении <code>SKIP LOCKED</code>, дедлок на бонусах падал на собственный <code>CHECK</code>, отсутствующий <code>DROP INDEX</code> перед пересозданием <code>CONCURRENTLY</code> в шаге 10.1.', milestone:true},
   {lab:'site', type:'changed', text:'В <code>fixes/</code> таблица вычитки: PostgreSQL — «✅ пройдено 26.09» (10 находок), решение по варианту A применено.'},
   {lab:'rabbitmq', type:'changed', text:'<b>Методичка вычитана дополнительно</b>, хотя лаба уже пройдена пользователем без замеченных ошибок (5 частей, 6 находок) и исправлена: quorum-очереди не «ограниченно», а вообще не поддерживают <code>x-max-priority</code>; consumer priority — с RabbitMQ 3.2, а не «3.8+»; перечитывание <code>definitions.json</code> через <code>docker compose restart</code> вместо <code>down -v</code>, сносившего volume postgres; таблица outbox называла таблицу «outbox» вместо <code>outbox_messages</code>; <code>LAB_CRASH_BEFORE_ACK</code>/<code>LAB_SIMULATE_SMTP_FAILURE</code> не долетали до воркеров (только <code>env_file</code>, без <code>environment:</code>) — оба crash-теста не воспроизводились как написано; перенумерован глоссарий (термины 18–21 не совпадали с порядком появления в тексте).', milestone:true},
@@ -455,6 +456,9 @@ var DAYS = [
   {lab:'site', type:'changed', text:'Проверка всего сайта после редизайна: на телефоне шапка больше не шире экрана, декоративные ленты не дают сдвигать страницу вбок, длинные названия лаб (KUBERNETES, POSTGRESQL) помещаются в заголовок, код в «Хронологии» переносится. Появилась иконка вкладки. Скриншоты в «О проекте» и README пересняты в новом дизайне; выровнены данные лаб между главной и страницами (стек JS и Kubernetes, описание Nuxt), обновлены устаревшие тексты в README и в описаниях направлений.'},
   {lab:'site', type:'changed', text:'<b>Редизайн «аниме-опенинг»</b>: сайт стал обучающей платформой в стилистике аниме-заставки. Первый экран — анимированный заголовок ANITECH со вспышкой, лучами и глитчем; лабы пронумерованы, категории стали направлениями, разделы — главами с плашками; карточки в рамках манги с жёсткой тенью и звёздами сложности; на карте маршрутов у каждой лабы окошко «к карточке / методичка». Все 15 страниц лаб — в том же стиле, с превью предыдущей и следующей лабы; «Хронология» — тоже. Шрифты с кириллицей: Dela Gothic One, Onest, JetBrains Mono.', milestone:true},
   {lab:'site', type:'renamed', text:'<b>Общий репозиторий переименован</b>: <code>submodule-group-lab</code> → <code>anitech-performance</code>, под бренд сайта. Ссылки в README всех 15 лаб, на главной и в хронологии ведут на новое имя; старые ссылки GitHub перенаправляет сам.', milestone:true},
+  {lab:'php-coffee', type:'changed', text:'<b>Прохождение OOP Lab начато заново</b> по исправленной методичке: первая попытка (Laravel-скелет, <code>docker-compose.yaml</code>, <code>Makefile</code>, <code>lab0/</code> шагов 1.2–1.5) удалена, старт снова с шага 1.1.'},
+  {lab:'angular', type:'added', text:'<b>Родился репозиторий Angular Lab</b> и подключён сабмодулем <code>angular/</code>: заглушка с README и обложкой (<code>Angular.png</code>) и её WebP-превью.', milestone:true},
+  {lab:'site', type:'added', text:'Лаба Angular появилась на сайте: карточка на лендинге (фронтенд, пока «Методичка скоро»), страница <code>works/angular.html</code>, раздел 16 в README; счётчики лаб — 16. Место в карте маршрутов — после вычитки методички.'},
 ]},
 ];
 

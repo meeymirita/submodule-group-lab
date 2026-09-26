@@ -19,6 +19,7 @@
 | `redis` | redis-lab | кэш, локи, rate limit, Streams |
 | `js` | js-lab | Чистый JS (это лаба, а не скрипты сайта) |
 | `vue` / `typescript` / `nuxt` | vue-lab / typescript-lab / nuxt-lab | фронтенд |
+| `angular` | angular-lab | фронтенд; **заглушка** с 26.09, методичку делают в другом чате. В карте маршрутов её пока нет — расставить после вычитки |
 | `nestjs` / `graphql` | nestjs-lab / graphql-lab | бэкенд на Node |
 | `laravel` | laravel-lab | Laravel 13 изнутри |
 | `postgresql` | postgresql-lab | EXPLAIN, индексы, MVCC |
@@ -57,7 +58,7 @@ README лабы; строка в таблице и нумерованный ра
 5. **Redis** (RabbitMQ уже пройдена ✅).
 6. **Laravel изнутри**.
 
-Отложено: JS, Vue, TypeScript, Nuxt, Kubernetes. Traefik — по желанию; NestJS/GraphQL — только если захочется второй бэкенд-язык.
+Отложено: JS, Vue, TypeScript, Nuxt, Angular, Kubernetes. Traefik — по желанию; NestJS/GraphQL — только если захочется второй бэкенд-язык.
 
 Возможная работа между занятиями: прогнать лабу из плана целиком «на сухую» во временной папке вне репозитория (не спойлерить пользователю), найденное записать в `fixes/<лаба>.md` и исправить в методичке. ООП-лабу целиком в Laravel и Docker ещё не собирали — вычитка проверяла только доменный код.
 
